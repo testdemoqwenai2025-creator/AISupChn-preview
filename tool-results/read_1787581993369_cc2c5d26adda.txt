@@ -1,0 +1,415 @@
+     1→<!DOCTYPE html>
+     2→<html lang="en">
+     3→<head>
+     4→  <meta charset="UTF-8">
+     5→  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     6→  <title>AI Supply Chain Risk Predictor — Predict Disruptions Before They Happen</title>
+     7→  <meta name="description" content="Real-time AI-powered supply chain risk intelligence. Predict disruptions, monitor suppliers, forecast demand, and ensure compliance with explainable machine learning.">
+     8→  <link rel="preconnect" href="https://fonts.googleapis.com">
+     9→  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    10→  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    11→  <link rel="stylesheet" href="css/style.css">
+    12→</head>
+    13→<body>
+    14→
+    15→  <canvas id="particle-canvas"></canvas>
+    16→  <div class="grid-lines"></div>
+    17→
+    18→  <!-- NAVIGATION -->
+    19→  <nav class="nav">
+    20→    <a href="index.html" class="nav-brand">
+    21→      <div class="brand-icon">SC</div>
+    22→      <span>AI Supply Chain</span>
+    23→    </a>
+    24→    <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+    25→    <ul class="nav-links">
+    26→      <li><a href="index.html" class="active">Home</a></li>
+    27→      <li><a href="vision.html">Vision</a></li>
+    28→      <li><a href="platform.html">Platform</a></li>
+    29→      <li><a href="intelligence.html">Intelligence</a></li>
+    30→      <li><a href="ma-matching.html">M&amp;A</a></li>
+    31→      <li><a href="hitl.html">HITL</a></li>
+    32→      <li><a href="roadmap.html">Roadmap</a></li>
+    33→      <li><a href="contact.html" class="nav-cta">Get Started</a></li>
+    34→    </ul>
+    35→  </nav>
+    36→
+    37→  <!-- HERO -->
+    38→  <section class="hero-full">
+    39→    <div class="orb orb-emerald" style="width:600px;height:600px;top:-200px;right:-200px;"></div>
+    40→    <div class="orb orb-cyan" style="width:500px;height:500px;bottom:-150px;left:-150px;"></div>
+    41→    <div class="orb orb-violet" style="width:400px;height:400px;top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+    42→    <div class="hero-tag"><span class="pulse-dot"></span>Next-Generation Supply Chain Intelligence</div>
+    43→    <h1 class="hero-title">See the <span class="gradient-text">invisible risks</span><span class="line-break">before they become crises</span></h1>
+    44→    <p class="hero-subtitle">An AI-powered platform that transforms raw supply chain data into predictive intelligence. Detect supplier failures, forecast demand shocks, and ensure regulatory compliance — all in real time with explainable models you can trust.</p>
+    45→    <div class="hero-actions">
+    46→      <a href="platform.html" class="btn btn-primary">
+    47→        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+    48→        Explore the Platform
+    49→      </a>
+    50→      <a href="intelligence.html" class="btn btn-ghost">
+    51→        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+    52→        Read the Research
+    53→      </a>
+    54→    </div>
+    55→  </section>
+    56→
+    57→  <!-- MARQUEE -->
+    58→  <div class="marquee-wrap">
+    59→    <div class="marquee-track">
+    60→      <div class="marquee-item"><span class="dot"></span>Explainable AI (SHAP)</div>
+    61→      <div class="marquee-item"><span class="dot"></span>Real-Time WebSocket Streaming</div>
+    62→      <div class="marquee-item"><span class="dot"></span>90-Day Demand Forecasting</div>
+    63→      <div class="marquee-item"><span class="dot"></span>6 Regulatory Frameworks</div>
+    64→      <div class="marquee-item"><span class="dot"></span>Automated Drift Detection</div>
+    65→      <div class="marquee-item"><span class="dot"></span>Conversational AI Advisor</div>
+    66→      <div class="marquee-item"><span class="dot"></span>Geospatial Risk Mapping</div>
+    67→      <div class="marquee-item"><span class="dot"></span>Multi-Model Ensemble</div>
+    68→      <div class="marquee-item"><span class="dot"></span>Explainable AI (SHAP)</div>
+    69→      <div class="marquee-item"><span class="dot"></span>Real-Time WebSocket Streaming</div>
+    70→      <div class="marquee-item"><span class="dot"></span>90-Day Demand Forecasting</div>
+    71→      <div class="marquee-item"><span class="dot"></span>6 Regulatory Frameworks</div>
+    72→      <div class="marquee-item"><span class="dot"></span>Automated Drift Detection</div>
+    73→      <div class="marquee-item"><span class="dot"></span>Conversational AI Advisor</div>
+    74→      <div class="marquee-item"><span class="dot"></span>Geospatial Risk Mapping</div>
+    75→      <div class="marquee-item"><span class="dot"></span>Multi-Model Ensemble</div>
+    76→    </div>
+    77→  </div>
+    78→
+    79→  <!-- STATS -->
+    80→  <section class="section" style="padding-top:40px;">
+    81→    <div class="section-inner">
+    82→      <div class="stats-row reveal">
+    83→        <div class="stat-card"><div class="stat-number" data-count="90.6" data-suffix="%">0%</div><div class="stat-label">Model AUC Score</div></div>
+    84→        <div class="stat-card"><div class="stat-number" data-count="15" data-suffix="+">0+</div><div class="stat-label">Suppliers Monitored</div></div>
+    85→        <div class="stat-card"><div class="stat-number" data-count="8">0</div><div class="stat-label">Intelligence Views</div></div>
+    86→        <div class="stat-card"><div class="stat-number" data-count="6">0</div><div class="stat-label">Compliance Frameworks</div></div>
+    87→        <div class="stat-card"><div class="stat-number" data-count="10" data-suffix="s" data-prefix="~">~0s</div><div class="stat-label">Alert Latency</div></div>
+    88→      </div>
+    89→    </div>
+    90→  </section>
+    91→
+    92→  <!-- THE PROBLEM -->
+    93→  <section class="section">
+    94→    <div class="section-inner">
+    95→      <div class="section-header reveal">
+    96→        <div class="section-label">The Problem</div>
+    97→        <h2 class="section-title">Supply chains are black boxes until they break</h2>
+    98→        <p class="section-desc">Global supply chains generate millions of data points daily — supplier financials, geopolitical signals, shipping delays, regulatory changes. Yet most organizations discover disruptions only after they have already impacted production. The average cost of a single supply chain disruption now exceeds $184 million. Legacy tools offer dashboards that show you what already happened. We built a system that shows you what is about to.</p>
+    99→      </div>
+   100→      <div class="feature-grid reveal">
+   101→        <div class="feature-card">
+   102→          <div class="feature-icon rose">&#x26A0;</div>
+   103→          <h3>Reactive, Not Predictive</h3>
+   104→          <p>Most supply chain tools are backward-looking reporting systems. By the time a risk flag appears in a traditional dashboard, the disruption is already in motion — materials are stranded, production lines stall, and customer SLAs are breached. You are always one step behind.</p>
+   105→        </div>
+   106→        <div class="feature-card">
+   107→          <div class="feature-icon amber">&#x1F50D;</div>
+   108→          <h3>Blind Spots Everywhere</h3>
+   109→          <p>Tier-2 and tier-3 suppliers remain invisible. Financial health, geopolitical risk, climate exposure, and regulatory compliance are tracked in disconnected spreadsheets — if they are tracked at all. Critical correlations between risk signals go undetected until it is too late.</p>
+   110→        </div>
+   111→        <div class="feature-card">
+   112→          <div class="feature-icon violet">&#x1F9EC;</div>
+   113→          <h3>Black-Box Models</h3>
+   114→          <p>When existing AI tools flag a supplier, procurement teams cannot explain why. Without interpretable predictions, risk managers cannot build confidence in the system, cannot justify decisions to leadership, and cannot identify the right corrective actions to take.</p>
+   115→        </div>
+   116→      </div>
+   117→    </div>
+   118→  </section>
+   119→
+   120→  <!-- CORE CAPABILITIES -->
+   121→  <section class="section">
+   122→    <div class="section-inner">
+   123→      <div class="section-header reveal">
+   124→        <div class="section-label">Core Capabilities</div>
+   125→        <h2 class="section-title">Eight intelligence views. One unified nervous system.</h2>
+   126→        <p class="section-desc">Every screen is purpose-built for a specific dimension of supply chain risk. Together, they form an interconnected intelligence layer that turns fragmented data into coordinated, actionable foresight.</p>
+   127→      </div>
+   128→      <div class="feature-grid reveal">
+   129→        <div class="feature-card">
+   130→          <div class="feature-icon emerald"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+   131→          <h3>Command Center</h3>
+   132→          <p>The central nervous system of your supply chain. A single pane of glass showing live KPIs, risk event trends, a regional heatmap, and a supply base risk gauge — all updating in real time. Dark and light modes for 24/7 operations.</p>
+   133→        </div>
+   134→        <div class="feature-card">
+   135→          <div class="feature-icon cyan"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+   136→          <h3>Supplier Directory</h3>
+   137→          <p>Search, filter, and sort your entire supply base by region, risk level, financial health, and on-time delivery rate. Every supplier carries a composite risk score built from six interrelated dimensions.</p>
+   138→        </div>
+   139→        <div class="feature-card">
+   140→          <div class="feature-icon violet"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+   141→          <h3>Risk Intelligence</h3>
+   142→          <p>Select any supplier to see their SHAP-based risk factor breakdown — the exact features driving their risk score. A six-axis radar profile maps financial, operational, geographic, compliance, demand, and relationship risk.</p>
+   143→        </div>
+   144→        <div class="feature-card">
+   145→          <div class="feature-icon amber"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+   146→          <h3>Demand Forecasting</h3>
+   147→          <p>90-day demand projections with confidence bands for every SKU. Prophet-style forecasts reveal predicted demand, upper and lower bounds, and volatility metrics so you can size inventory buffers with precision.</p>
+   148→        </div>
+   149→        <div class="feature-card">
+   150→          <div class="feature-icon rose"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+   151→          <h3>Real-Time Alert Hub</h3>
+   152→          <p>A live WebSocket feed streams supply chain risk events as they happen — every ~10 seconds. Acknowledge alerts, filter by severity and status, and track notification channels. The intelligence comes to you.</p>
+   153→        </div>
+   154→        <div class="feature-card">
+   155→          <div class="feature-icon emerald"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></div>
+   156→          <h3>Compliance Hub</h3>
+   157→          <p>Track compliance across UFLPA, EUDR, EU CSDDD, SOX, GDPR, and REACH simultaneously. Per-supplier status indicators, progress bars, and complete audit trails keep you always ready for regulatory scrutiny.</p>
+   158→        </div>
+   159→        <div class="feature-card">
+   160→          <div class="feature-icon cyan"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+   161→          <h3>AI Risk Advisor</h3>
+   162→          <p>Ask questions about your supply chain in plain language. The GLM-powered advisor provides contextual, actionable insights — from deteriorating suppliers to regional risk drivers. Suggestion buttons guide exploration.</p>
+   163→        </div>
+   164→        <div class="feature-card">
+   165→          <div class="feature-icon violet"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.604.852.997 1.51 1H21a2 2 0 0 1 0 4h-.09c-.658.003-1.25.396-1.51 1z"/></svg></div>
+   166→          <h3>Model Operations</h3>
+   167→          <p>Monitor model health with AUC, F1, Precision, Recall, and PSI drift metrics. Track performance across versions, detect data drift before it degrades predictions, and view global SHAP feature importance rankings.</p>
+   168→        </div>
+   169→      </div>
+   170→    </div>
+   171→  </section>
+   172→
+   173→  <!-- PLATFORM PREVIEW -->
+   174→  <section class="section" style="padding-top:40px;">
+   175→    <div class="section-inner">
+   176→      <div class="section-header reveal">
+   177→        <div class="section-label">Live Platform Preview</div>
+   178→        <h2 class="section-title">Built for operators, not just analysts</h2>
+   179→        <p class="section-desc">Every view is designed for the people who make decisions under pressure — procurement leads, risk managers, compliance officers, and operations directors. Real data, real alerts, real time.</p>
+   180→      </div>
+   181→      <div class="screenshot-grid reveal">
+   182→        <div class="screenshot-card">
+   183→          <img src="screenshots/preview_01_command_center.png" alt="Command Center Dark Mode Dashboard" loading="lazy">
+   184→          <div class="card-body">
+   185→            <div class="card-tag">Command Center</div>
+   186→            <h3>Dark Mode Operations Dashboard</h3>
+   187→            <p>Full-screen risk overview with live KPIs, event trend charts, regional heatmap, and supply base gauge — optimized for 24/7 monitoring in operations centers.</p>
+   188→          </div>
+   189→        </div>
+   190→        <div class="screenshot-card">
+   191→          <img src="screenshots/preview_09_command_center_light.png" alt="Command Center Light Mode Dashboard" loading="lazy">
+   192→          <div class="card-body">
+   193→            <div class="card-tag">Command Center</div>
+   194→            <h3>Light Mode with Persistent Preference</h3>
+   195→            <p>One-click theme toggle that remembers your preference. Both modes are designed for extended use without eye strain during long shift rotations.</p>
+   196→          </div>
+   197→        </div>
+   198→        <div class="screenshot-card">
+   199→          <img src="screenshots/preview_02_suppliers.png" alt="Supplier Directory with Search and Filters" loading="lazy">
+   200→          <div class="card-body">
+   201→            <div class="card-tag">Supplier Directory</div>
+   202→            <h3>Searchable Multi-Parameter Directory</h3>
+   203→            <p>Filter by region, risk level, and financial health. See on-time delivery rates, geographic risk scores, and composite risk ratings for all tracked suppliers.</p>
+   204→          </div>
+   205→        </div>
+   206→        <div class="screenshot-card">
+   207→          <img src="screenshots/preview_03_risk_intelligence.png" alt="SHAP Risk Intelligence Analysis" loading="lazy">
+   208→          <div class="card-body">
+   209→            <div class="card-tag">Risk Intelligence</div>
+   210→            <h3>Explainable AI Risk Breakdown</h3>
+   211→            <p>SHAP value decomposition shows exactly why each supplier was flagged. A six-axis radar profile maps financial, operational, geographic, compliance, demand, and relationship risk.</p>
+   212→          </div>
+   213→        </div>
+   214→        <div class="screenshot-card">
+   215→          <img src="screenshots/preview_04_demand_forecast.png" alt="90-Day Demand Forecasting" loading="lazy">
+   216→          <div class="card-body">
+   217→            <div class="card-tag">Demand Forecasting</div>
+   218→            <h3>Confidence Band Demand Projections</h3>
+   219→            <p>Prophet-style 90-day forecasts with upper and lower confidence bounds. Select any SKU to see predicted demand curves and volatility tracking over the forecast horizon.</p>
+   220→          </div>
+   221→        </div>
+   222→        <div class="screenshot-card">
+   223→          <img src="screenshots/preview_05_alert_hub.png" alt="Real-Time Alert Hub" loading="lazy">
+   224→          <div class="card-body">
+   225→            <div class="card-tag">Alert Hub</div>
+   226→            <h3>Live WebSocket Event Stream</h3>
+   227→            <p>Real-time alerts stream every ~10 seconds with severity badges, supplier identification, and one-click acknowledge actions. Filter by status and notification channel.</p>
+   228→          </div>
+   229→        </div>
+   230→        <div class="screenshot-card">
+   231→          <img src="screenshots/preview_06_compliance.png" alt="Compliance Hub Multi-Regulation Tracking" loading="lazy">
+   232→          <div class="card-body">
+   233→            <div class="card-tag">Compliance Hub</div>
+   234→            <h3>Six-Framework Regulatory Monitoring</h3>
+   235→            <p>UFLPA, EUDR, EU CSDDD, SOX, GDPR, and REACH compliance cards show per-supplier status, completion rates with progress bars, and full audit trail history.</p>
+   236→          </div>
+   237→        </div>
+   238→        <div class="screenshot-card">
+   239→          <img src="screenshots/preview_07_ai_advisor.png" alt="AI Risk Advisor Chat Interface" loading="lazy">
+   240→          <div class="card-body">
+   241→            <div class="card-tag">AI Advisor</div>
+   242→            <h3>Conversational Intelligence Interface</h3>
+   243→            <p>GLM-powered natural language advisor with suggestion buttons for common queries. Ask about deteriorating suppliers, regional risk drivers, or compliance gaps in plain English.</p>
+   244→          </div>
+   245→        </div>
+   246→        <div class="screenshot-card">
+   247→          <img src="screenshots/preview_08_model_ops.png" alt="Model Operations MLOps Dashboard" loading="lazy">
+   248→          <div class="card-body">
+   249→            <div class="card-tag">Model Operations</div>
+   250→            <h3>Full MLOps Observability</h3>
+   251→            <p>Version tracking, PSI drift detection, AUC/F1/Precision/Recall metrics, and global SHAP feature importance rankings — all in a single model health dashboard.</p>
+   252→          </div>
+   253→        </div>
+   254→      </div>
+   255→    </div>
+   256→  </section>
+   257→
+   258→  <!-- HOW IT WORKS -->
+   259→  <section class="section">
+   260→    <div class="section-inner">
+   261→      <div class="section-header reveal">
+   262→        <div class="section-label">How It Works</div>
+   263→        <h2 class="section-title">From raw signals to decisive intelligence in three layers</h2>
+   264→        <p class="section-desc">The platform ingests, analyzes, and surfaces risk intelligence through a three-layer architecture designed for both speed and interpretability.</p>
+   265→      </div>
+   266→      <div class="feature-grid reveal" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+   267→        <div class="glass-card" style="position:relative;">
+   268→          <div style="position:absolute;top:28px;right:28px;font-size:0.72rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;opacity:0.6;">Layer 01</div>
+   269→          <div class="feature-icon emerald" style="margin-bottom:24px;">
+   270→            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+   271→          </div>
+   272→          <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:12px;">Signal Ingestion</h3>
+   273→          <p style="color:var(--text-secondary);font-size:0.95rem;line-height:1.7;">Continuous data pipelines pull from supplier databases, financial APIs, geopolitical feeds, shipping trackers, and regulatory databases. Real-time WebSocket connections ensure the system is always processing the latest signals — not yesterday's snapshots. Every data point is timestamped, normalized, and enriched with contextual metadata before entering the analysis layer.</p>
+   274→        </div>
+   275→        <div class="glass-card" style="position:relative;">
+   276→          <div style="position:absolute;top:28px;right:28px;font-size:0.72rem;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:0.1em;opacity:0.6;">Layer 02</div>
+   277→          <div class="feature-icon cyan" style="margin-bottom:24px;">
+   278→            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+   279→          </div>
+   280→          <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:12px;">Predictive Analysis</h3>
+   281→          <p style="color:var(--text-secondary);font-size:0.95rem;line-height:1.7;">An ensemble of machine learning models evaluates every supplier across six risk dimensions simultaneously. SHAP values decompose each prediction into its contributing features, creating an audit trail of why a risk score changed. Population Stability Index monitoring catches data drift before it silently degrades model accuracy. The result: predictions you can explain, trust, and act on.</p>
+   282→        </div>
+   283→        <div class="glass-card" style="position:relative;">
+   284→          <div style="position:absolute;top:28px;right:28px;font-size:0.72rem;font-weight:700;color:var(--violet);text-transform:uppercase;letter-spacing:0.1em;opacity:0.6;">Layer 03</div>
+   285→          <div class="feature-icon violet" style="margin-bottom:24px;">
+   286→            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+   287→          </div>
+   288→          <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:12px;">Intelligent Surfacing</h3>
+   289→          <p style="color:var(--text-secondary);font-size:0.95rem;line-height:1.7;">Risk intelligence does not wait in a dashboard for someone to find it. Real-time alerts push to the Alert Hub via WebSocket. The AI advisor answers natural language questions about the supply chain. The Command Center aggregates KPIs for leadership. And every insight carries its full provenance — the data sources, model features, and confidence levels that generated it.</p>
+   290→        </div>
+   291→      </div>
+   292→    </div>
+   293→  </section>
+   294→
+   295→  <!-- DIFFERENTIATOR -->
+   296→  <section class="section" style="padding-top:40px;">
+   297→    <div class="section-inner">
+   298→      <div class="two-col reveal">
+   299→        <div class="col-content">
+   300→          <div class="section-label">Why This Platform</div>
+   301→          <h2>Explainability isn't a feature — it's the architecture</h2>
+   302→          <p>Most AI tools tell you <em>what</em> to worry about. This platform tells you <em>why</em>. Every risk score comes with SHAP-based feature attributions that show the exact contribution of each factor — financial leverage, geographic concentration, compliance gaps, demand volatility, delivery reliability, and relationship tenure.</p>
+   303→          <p>Risk managers can finally walk into executive meetings with a clear narrative: "Supplier 14's risk score increased 23% this quarter because of a 40% rise in financial leverage combined with new UFLPA exposure in their sourcing region. Our recommended action is to initiate dual-sourcing within 60 days." That is the difference between a dashboard and a decision-support system.</p>
+   304→          <a href="intelligence.html" class="btn btn-primary" style="margin-top:8px;">Dive Into the Intelligence</a>
+   305→        </div>
+   306→        <div class="col-visual">
+   307→          <img src="screenshots/preview_03_risk_intelligence.png" alt="SHAP Risk Intelligence Breakdown showing explainable AI feature attributions" loading="lazy">
+   308→        </div>
+   309→      </div>
+   310→    </div>
+   311→  </section>
+   312→
+   313→  <!-- TECH STACK -->
+   314→  <section class="section">
+   315→    <div class="section-inner">
+   316→      <div class="section-header reveal">
+   317→        <div class="section-label">Technology</div>
+   318→        <h2 class="section-title">Production-grade stack, no shortcuts</h2>
+   319→        <p class="section-desc">Built with modern frameworks chosen for reliability, performance, and developer experience. Every component is designed for real-world deployment at scale.</p>
+   320→      </div>
+   321→      <div class="tech-grid reveal">
+   322→        <div class="tech-card">
+   323→          <div class="tech-icon">
+   324→            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+   325→          </div>
+   326→          <h4>Next.js 16</h4>
+   327→          <p>Full-stack React framework with server components and streaming SSR</p>
+   328→        </div>
+   329→        <div class="tech-card">
+   330→          <div class="tech-icon">
+   331→            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+   332→          </div>
+   333→          <h4>TypeScript</h4>
+   334→          <p>End-to-end type safety from database queries to UI components</p>
+   335→        </div>
+   336→        <div class="tech-card">
+   337→          <div class="tech-icon">
+   338→            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="circle"><path d="M12 3v18"/><path d="M5.5 6.5l13 11"/><path d="M2 12h20"/><path d="M5.5 17.5l13-11"/><circle cx="12" cy="12" r="10"/></svg>
+   339→          </div>
+   340→          <h4>Tailwind CSS 4</h4>
+   341→          <p>Utility-first styling with design tokens and dark mode support</p>
+   342→        </div>
+   343→        <div class="tech-card">
+   344→          <div class="tech-icon">
+   345→            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+   346→          </div>
+   347→          <h4>Recharts</h4>
+   348→          <p>Composable charting for interactive data visualizations</p>
+   349→        </div>
+   350→        <div class="tech-card">
+   351→          <div class="tech-icon">
+   352→            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+   353→          </div>
+   354→          <h4>Socket.IO</h4>
+   355→          <p>Real-time bidirectional event streaming for live alerts</p>
+   356→        </div>
+   357→        <div class="tech-card">
+   358→          <div class="tech-icon">
+   359→            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--rose)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+   360→          </div>
+   361→          <h4>Prisma</h4>
+   362→          <p>Type-safe ORM with migrations and query builder</p>
+   363→        </div>
+   364→      </div>
+   365→    </div>
+   366→  </section>
+   367→
+   368→  <!-- CTA -->
+   369→  <section class="section">
+   370→    <div class="section-inner">
+   371→      <div class="animated-border reveal" style="max-width:800px;margin:0 auto;text-align:center;">
+   372→        <div class="card-inner" style="padding:60px 48px;">
+   373→          <div class="section-label" style="justify-content:center;">Get Started</div>
+   374→          <h2 class="section-title" style="font-size:clamp(1.6rem,3vw,2.2rem);">Ready to see your supply chain in a new light?</h2>
+   375→          <p class="section-desc" style="margin:16px auto 32px;max-width:560px;">Whether you are a procurement leader managing supplier risk, a compliance officer tracking regulatory obligations, or an operations director planning for resilience — this platform was built for you.</p>
+   376→          <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+   377→            <a href="contact.html" class="btn btn-primary">
+   378→              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+   379→              Request a Demo
+   380→            </a>
+   381→            <a href="roadmap.html" class="btn btn-ghost">View the Roadmap</a>
+   382→          </div>
+   383→        </div>
+   384→      </div>
+   385→    </div>
+   386→  </section>
+   387→
+   388→  <!-- FOOTER -->
+   389→  <footer class="site-footer">
+   390→    <div class="footer-inner">
+   391→      <div class="footer-brand">
+   392→        <div class="brand-icon" style="width:28px;height:28px;font-size:0.7rem;">SC</div>
+   393→        AI Supply Chain Risk Predictor
+   394→      </div>
+   395→      <div class="footer-links">
+   396→        <a href="vision.html">Vision</a>
+   397→        <a href="platform.html">Platform</a>
+   398→        <a href="intelligence.html">Intelligence</a>
+   399→        <a href="ma-matching.html">M&amp;A</a>
+   400→        <a href="hitl.html">HITL</a>
+   401→        <a href="roadmap.html">Roadmap</a>
+   402→        <a href="contact.html">Contact</a>
+   403→      </div>
+   404→    </div>
+   405→    <div class="footer-copy">
+   406→      Built with Next.js 16, TypeScript, Tailwind CSS 4, shadcn/ui, Recharts, Socket.IO, Prisma
+   407→      <br style="margin-top:4px;">
+   408→      Confidential — For authorized viewers only
+   409→    </div>
+   410→  </footer>
+   411→
+   412→  <script src="js/main.js"></script>
+   413→</body>
+   414→</html>
+   415→

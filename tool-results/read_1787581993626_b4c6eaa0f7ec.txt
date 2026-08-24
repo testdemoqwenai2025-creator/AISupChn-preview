@@ -1,0 +1,302 @@
+     1→<!DOCTYPE html>
+     2→<html lang="en">
+     3→<head>
+     4→  <meta charset="UTF-8">
+     5→  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     6→  <title>Intelligence — AI Supply Chain Risk Predictor</title>
+     7→  <meta name="description" content="Deep dive into the machine learning architecture behind AI Supply Chain Risk Predictor — XGBoost ensemble models, SHAP explainability, PSI drift detection, and the feature engineering pipeline that drives 90.6% AUC risk predictions.">
+     8→  <link rel="preconnect" href="https://fonts.googleapis.com">
+     9→  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    10→  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    11→  <link rel="stylesheet" href="css/style.css">
+    12→</head>
+    13→<body>
+    14→
+    15→  <canvas id="particle-canvas"></canvas>
+    16→  <div class="grid-lines"></div>
+    17→
+    18→  <!-- NAVIGATION -->
+    19→  <nav class="nav">
+    20→    <a href="index.html" class="nav-brand">
+    21→      <div class="brand-icon">SC</div>
+    22→      <span>AI Supply Chain</span>
+    23→    </a>
+    24→    <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+    25→    <ul class="nav-links">
+    26→      <li><a href="index.html">Home</a></li>
+    27→      <li><a href="vision.html">Vision</a></li>
+    28→      <li><a href="platform.html">Platform</a></li>
+    29→      <li><a href="intelligence.html" class="active">Intelligence</a></li>
+    30→      <li><a href="ma-matching.html">M&amp;A</a></li>
+    31→      <li><a href="hitl.html">HITL</a></li>
+    32→      <li><a href="roadmap.html">Roadmap</a></li>
+    33→      <li><a href="contact.html" class="nav-cta">Get Started</a></li>
+    34→    </ul>
+    35→  </nav>
+    36→
+    37→  <!-- PAGE HERO -->
+    38→  <section class="page-hero reveal">
+    39→    <div class="orb orb-emerald" style="width:600px;height:600px;top:-200px;right:-150px;"></div>
+    40→    <div class="orb orb-violet" style="width:400px;height:400px;bottom:-100px;left:-100px;"></div>
+    41→    <span class="hero-tag reveal">AI Intelligence</span>
+    42→    <h1><span class="gradient-text">Machine Learning That Explains Itself</span></h1>
+    43→    <p class="reveal">Moving beyond black-box predictions to a new standard of AI transparency in supply chain management — every risk score comes with a full, auditable explanation of exactly which signals drove the decision and why.</p>
+    44→  </section>
+    45→
+    46→  <!-- ARCHITECTURE: SIGNAL INGESTION LAYER -->
+    47→  <section class="section">
+    48→    <div class="section-inner">
+    49→      <div class="section-header reveal">
+    50→        <div class="section-label">Architecture</div>
+    51→        <h2 class="section-title">Ensemble Intelligence Pipeline</h2>
+    52→        <p class="section-desc">Multiple AI models work in concert — ingesting raw signals from the open internet, normalizing them into a unified feature space, and producing risk assessments that are both accurate and fully explainable. This is not a single model making guesses in isolation. It is a layered, ensemble architecture where each component has a clear role and every prediction can be traced back to its contributing inputs.</p>
+    53→      </div>
+    54→
+    55→      <div class="two-col reveal">
+    56→        <div class="col-content">
+    57→          <h2>Signal Ingestion Layer</h2>
+    58→          <p>The platform transforms the open internet into a massive sensor network for supply chain risk. Seven distinct data streams feed into the ingestion layer simultaneously: NewsAPI delivers real-time news articles and sentiment analysis across 50,000+ sources in 12 languages. GDELT (Global Database of Events, Language, and Tone) provides event-level geopolitical signals — protests, military movements, government crises — coded by the CAMEO event taxonomy for structured analysis. World Bank Worldwide Governance Indicators supply country-level governance metrics covering voice and accountability, political stability, regulatory quality, and rule of law.</p>
+    59→          <p>SEC EDGAR filings are parsed programmatically to extract financial health indicators from 10-K annual reports, 10-Q quarterly filings, and 8-K current reports for every publicly traded supplier in your network. UN Comtrade data feeds bilateral trade flow volumes and commodity-level import/export patterns, revealing shifting trade relationships and emerging concentration risks. ACLED (Armed Conflict Location and Event Data) provides granular conflict-event records — battles, explosions, remote violence, and riots — geolocated to the district level so the system knows precisely which suppliers sit in harm's way. Yahoo Finance APIs deliver real-time and historical market data including stock prices, trading volumes, volatility indices, and credit default swap spreads that serve as leading indicators of financial distress.</p>
+    60→          <p>Each source undergoes a multi-stage normalization process: raw payloads are cleaned, deduplicated, and transformed into a consistent schema. Categorical variables are encoded, numerical features are scaled, temporal signals are aligned to a common cadence, and missing values are imputed using domain-aware strategies rather than naive mean substitution. The result is a feature store of 120+ engineered features per supplier, updated on a configurable schedule and versioned alongside every model training run for full reproducibility.</p>
+    61→        </div>
+    62→        <div class="col-visual">
+    63→          <div class="glass-card" style="padding:32px;">
+    64→            <div style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--text-muted);margin-bottom:24px;">Data Flow Pipeline</div>
+    65→            <!-- Stage 1: Data Sources -->
+    66→            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;">
+    67→              <span style="display:inline-block;padding:6px 14px;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);border-radius:8px;font-size:0.75rem;color:var(--accent);font-weight:600;">NewsAPI</span>
+    68→              <span style="display:inline-block;padding:6px 14px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.25);border-radius:8px;font-size:0.75rem;color:var(--cyan);font-weight:600;">GDELT</span>
+    69→              <span style="display:inline-block;padding:6px 14px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.25);border-radius:8px;font-size:0.75rem;color:var(--violet);font-weight:600;">World Bank WGI</span>
+    70→              <span style="display:inline-block;padding:6px 14px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.25);border-radius:8px;font-size:0.75rem;color:var(--amber);font-weight:600;">SEC EDGAR</span>
+    71→              <span style="display:inline-block;padding:6px 14px;background:rgba(244,63,94,0.1);border:1px solid rgba(244,63,94,0.25);border-radius:8px;font-size:0.75rem;color:var(--rose);font-weight:600;">UN Comtrade</span>
+    72→              <span style="display:inline-block;padding:6px 14px;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);border-radius:8px;font-size:0.75rem;color:var(--accent);font-weight:600;">ACLED</span>
+    73→              <span style="display:inline-block;padding:6px 14px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.25);border-radius:8px;font-size:0.75rem;color:var(--cyan);font-weight:600;">Yahoo Finance</span>
+    74→            </div>
+    75→            <!-- Arrow -->
+    76→            <div style="display:flex;justify-content:center;margin-bottom:20px;">
+    77→              <div style="width:2px;height:24px;background:linear-gradient(to bottom,var(--accent),var(--cyan));"></div>
+    78→            </div>
+    79→            <!-- Stage 2: Normalization -->
+    80→            <div style="padding:16px 20px;background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.2);border-radius:12px;margin-bottom:20px;">
+    81→              <div style="font-size:0.85rem;font-weight:700;color:var(--cyan);margin-bottom:4px;">Normalization Engine</div>
+    82→              <div style="font-size:0.75rem;color:var(--text-muted);line-height:1.5;">Schema alignment · Missing-value imputation · Feature scaling · Categorical encoding · Temporal alignment</div>
+    83→            </div>
+    84→            <!-- Arrow -->
+    85→            <div style="display:flex;justify-content:center;margin-bottom:20px;">
+    86→              <div style="width:2px;height:24px;background:linear-gradient(to bottom,var(--cyan),var(--violet));"></div>
+    87→            </div>
+    88→            <!-- Stage 3: Feature Store -->
+    89→            <div style="padding:16px 20px;background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.2);border-radius:12px;margin-bottom:20px;">
+    90→              <div style="font-size:0.85rem;font-weight:700;color:var(--violet);margin-bottom:4px;">Feature Store</div>
+    91→              <div style="font-size:0.75rem;color:var(--text-muted);line-height:1.5;">120+ engineered features per supplier · Version-controlled · Cadence-aligned · Reproducible</div>
+    92→            </div>
+    93→            <!-- Arrow -->
+    94→            <div style="display:flex;justify-content:center;margin-bottom:20px;">
+    95→              <div style="width:2px;height:24px;background:linear-gradient(to bottom,var(--violet),var(--accent));"></div>
+    96→            </div>
+    97→            <!-- Stage 4: Model Ensemble -->
+    98→            <div style="padding:16px 20px;background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.2);border-radius:12px;">
+    99→              <div style="font-size:0.85rem;font-weight:700;color:var(--accent);margin-bottom:4px;">Model Ensemble</div>
+   100→              <div style="font-size:0.75rem;color:var(--text-muted);line-height:1.5;">XGBoost gradient-boosted trees · Optuna-tuned · SHAP-explained · 90.6% AUC</div>
+   101→            </div>
+   102→          </div>
+   103→        </div>
+   104→      </div>
+   105→    </div>
+   106→  </section>
+   107→
+   108→  <!-- MODELS: XGBOOST + SHAP -->
+   109→  <section class="section">
+   110→    <div class="section-inner">
+   111→      <div class="section-header reveal">
+   112→        <div class="section-label">Models</div>
+   113→        <h2 class="section-title">XGBoost + SHAP Explainability</h2>
+   114→        <p class="section-desc">The risk engine combines the raw predictive power of gradient-boosted decision trees with a mathematical framework for decomposing every prediction into its contributing factors — delivering accuracy without sacrificing the transparency that enterprise decision-making demands.</p>
+   115→      </div>
+   116→
+   117→      <div class="feature-grid">
+   118→        <div class="feature-card reveal">
+   119→          <div class="feature-icon emerald">
+   120→            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+   121→          </div>
+   122→          <h3>XGBoost Ensemble</h3>
+   123→          <p>At the core of the risk engine sits an XGBoost (eXtreme Gradient Boosting) ensemble — a cascade of decision trees where each successive tree corrects the residual errors of its predecessors, producing a composite model that captures complex, non-linear interactions between features that linear models and simple logistic regressions fundamentally cannot represent. The ensemble is trained on historical disruption data spanning thousands of confirmed supply chain events across multiple industries and geographies, giving it a rich baseline understanding of what risk looks like in practice rather than in theory.</p>
+   124→          <p style="margin-top:12px;">Hyperparameter optimization is handled by Optuna, a Bayesian optimization framework that systematically explores the configuration space — tree depth, learning rate, subsample ratio, regularization parameters, minimum child weight, and column sampling rate — using a TPE (Tree-structured Parzen Estimator) sampler that converges on high-performing configurations far more efficiently than grid search or random search. The current production model achieves 90.6% AUC (Area Under the Receiver Operating Characteristic Curve) on the held-out test set, meaning it correctly ranks a high-risk supplier above a low-risk supplier roughly 91 times out of 100. This is not a laboratory benchmark. It is a production metric measured against real-world disruption outcomes, with a precision-recall tradeoff tuned to minimize the false-negative rate that matters most in risk applications — missing a genuine threat is far more costly than investigating a false alarm.</p>
+   125→        </div>
+   126→        <div class="feature-card reveal">
+   127→          <div class="feature-icon cyan">
+   128→            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+   129→          </div>
+   130→          <h3>SHAP Feature Attribution</h3>
+   131→          <p>Every risk score produced by the platform is not just a number — it is a fully decomposed, mathematically rigorous explanation of which features pushed the prediction upward and which pulled it downward. SHAP (SHapley Additive exPlanations) computes feature contributions using concepts from cooperative game theory: each feature's contribution is calculated as its marginal contribution to the prediction across all possible feature coalitions, guaranteeing that the sum of all SHAP values equals the difference between the model's output and the expected baseline prediction. This property — local accuracy — means the explanation is not an approximation or a post-hoc interpretation. It is an exact decomposition of the model's reasoning for that specific supplier at that specific point in time.</p>
+   132→          <p style="margin-top:12px;">In practice, this manifests as interactive SHAP waterfall charts in the platform UI: a supplier receiving a risk score of 0.82 will show, for instance, that lead-time volatility contributed +0.14, a declining current ratio added +0.11, geographic concentration in a conflict-adjacent region contributed +0.09, and strong ESG certification scores offset the risk by −0.07. This level of granularity gives procurement directors, risk managers, and compliance officers an auditable trail they can present to leadership, auditors, and regulators. It transforms the AI from an opaque oracle into a transparent analyst — one that shows its work, admits its assumptions, and invites human judgment rather than demanding blind trust.</p>
+   133→        </div>
+   134→        <div class="feature-card reveal">
+   135→          <div class="feature-icon violet">
+   136→            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+   137→          </div>
+   138→          <h3>PSI Drift Detection</h3>
+   139→          <p>Machine learning models are only as reliable as the data flowing through them, and in supply chain environments, data distributions shift continuously — economies cycle, geopolitical landscapes restructure, regulatory regimes change, and macroeconomic conditions evolve in ways that the training data could not have anticipated. The platform monitors for these shifts using the Population Stability Index (PSI), a statistical measure that quantifies the divergence between the distribution of feature values the model was trained on and the distribution it encounters in production. PSI is calculated by binning each feature into decile buckets, comparing the proportion of observations in each bucket between training and serving distributions, and summing the log-ratio differences into a single scalar score.</p>
+   140→          <p style="margin-top:12px;">A PSI below 0.1 indicates negligible drift — the model is operating within its calibrated domain. A PSI between 0.1 and 0.25 signals moderate drift that warrants monitoring and may affect prediction calibration at the tails. A PSI above 0.25 indicates significant distributional shift that is likely degrading model accuracy, triggering an automated alert to the MLOps team and, if configured, initiating a retraining pipeline that ingests the most recent data to recalibrate the model against current conditions. This continuous feedback loop ensures that the platform's predictions remain reliable not just in the weeks immediately following deployment, but over months and years of shifting supply chain dynamics without requiring manual intervention to stay current.</p>
+   141→        </div>
+   142→      </div>
+   143→    </div>
+   144→  </section>
+   145→
+   146→  <!-- DEEP DIVE: FEATURE ENGINEERING -->
+   147→  <section class="section">
+   148→    <div class="section-inner">
+   149→      <div class="section-header reveal">
+   150→        <div class="section-label">Deep Dive</div>
+   151→        <h2 class="section-title">The Feature Engineering Story</h2>
+   152→        <p class="section-desc">Prediction accuracy is not primarily a function of model architecture. It is a function of the quality, breadth, and domain-relevance of the features that architecture operates on. Here is the taxonomy of signals that transform raw data into predictive intelligence.</p>
+   153→      </div>
+   154→
+   155→      <div class="animated-border reveal">
+   156→        <div class="card-inner">
+   157→          <div style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--text-muted);margin-bottom:28px;">Feature Taxonomy · 120+ Engineered Features</div>
+   158→
+   159→          <!-- Financial Health -->
+   160→          <div style="display:flex;align-items:flex-start;gap:20px;padding:18px 0;border-bottom:1px solid var(--border-glass);">
+   161→            <div style="min-width:160px;"><div style="font-size:0.88rem;font-weight:700;color:var(--accent);margin-bottom:2px;">Financial Health</div><div style="font-size:0.72rem;color:var(--text-muted);">Quantitative solvency</div></div>
+   162→            <div style="display:flex;flex-wrap:wrap;gap:8px;flex:1;">
+   163→              <span style="display:inline-block;padding:5px 12px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.18);border-radius:6px;font-size:0.75rem;color:var(--text-secondary);">Altman Z-Score</span>
+   164→              <span style="display:inline-block;padding:5px 12px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.18);border-radius:6px;font-size:0.75rem;color:var(--text-secondary);">Current Ratio</span>
+   165→              <span style="display:inline-block;padding:5px 12px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.18);border-radius:6px;font-size:0.75rem;color:var(--text-secondary);">Debt-to-Equity</span>
+   166→              <span style="display:inline-block;padding:5px 12px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.18);border-radius:6px;font-size:0.75rem;color:var(--text-secondary);">Revenue Volatility</span>
+   167→            </div>
+   168→          </div>
+   169→
+   170→          <!-- Geopolitical -->
+   171→          <div style="display:flex;align-items:flex-start;gap:20px;padding:18px 0;border-bottom:1px solid var(--border-glass);">
+   172→            <div style="min-width:160px;"><div style="font-size:0.88rem;font-weight:700;color:var(--violet);margin-bottom:2px;">Geopolitical</div><div style="font-size:0.72rem;color:var(--text-muted);">Country & region risk</div></div>
+   173→            <div style="display:flex;flex-wrap:wrap;gap:8px;flex:1;">
+   174→              <span style="display:inline-block;padding:5px 12px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.18);border-radius:6px;font-size:0.75rem;color:var(--text-secondary);">Country Risk Index</span>
+   175→              <span style="display:inline-block;padding:5px 12px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.18);border-radius:6px;font-size:0.75rem;color:var(--text-secondary);">Sanctions Exposure</span>
+   176→              <span style="display:inline-block;padding:5px 12px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.18);border-radius:6px;font-size:0.75rem;color:var(--text-secondary);">Trade Policy Stability</span>
+   177→            </div>
+   178→          </div>
+   179→
+   180→          <!-- Operational -->
+   181→          <div style="display:flex;align-items:flex-start;gap:20px;padding:18px 0;border-bottom:1px solid var(--border-glass);">
+   182→            <div style="min-width:160px;"><div style="font-size:0.88rem;font-weight:700;color:var(--cyan);margin-bottom:2px;">Operational</div><div style="font-size:0.72rem;color:var(--text-muted);">Performance & capacity</div></div>
+   183→            <div style="display:flex;flex-wrap:wrap;gap:8px;flex:1;">
+   184→              <span style="display:inline-block;padding:5px 12px;background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.18);border-radius:6px;font-size:0.75rem;color:var(--text-secondary);">On-Time Delivery Rate</span>
+   185→              <span style="display:inline-block;padding:5px 12px;background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.18);border-radius:6px;font-size:0.75rem;color:var(--text-secondary);">Quality Score</span>
+   186→              <span style="display:inline-block;padding:5px 12px;background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.18);border-radius:6px;font-size:0.75rem;color:var(--text-secondary);">Capacity Utilization</span>
+   187→            </div>
+   188→          </div>
+   189→
+   190→          <!-- Compliance -->
+   191→          <div style="display:flex;align-items:flex-start;gap:20px;padding:18px 0;border-bottom:1px solid var(--border-glass);">
+   192→            <div style="min-width:160px;"><div style="font-size:0.88rem;font-weight:700;color:var(--amber);margin-bottom:2px;">Compliance</div><div style="font-size:0.72rem;color:var(--text-muted);">Regulatory & ESG</div></div>
+   193→            <div style="display:flex;flex-wrap:wrap;gap:8px;flex:1;">
+   194→              <span style="display:inline-block;padding:5px 12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.18);border-radius:6px;font-size:0.75rem;color:var(--text-secondary);">Regulatory Audit History</span>
+   195→              <span style="display:inline-block;padding:5px 12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.18);border-radius:6px;font-size:0.75rem;color:var(--text-secondary);">Certification Status</span>
+   196→              <span style="display:inline-block;padding:5px 12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.18);border-radius:6px;font-size:0.75rem;color:var(--text-secondary);">ESG Scores</span>
+   197→            </div>
+   198→          </div>
+   199→
+   200→          <!-- Network -->
+   201→          <div style="display:flex;align-items:flex-start;gap:20px;padding:18px 0;">
+   202→            <div style="min-width:160px;"><div style="font-size:0.88rem;font-weight:700;color:var(--rose);margin-bottom:2px;">Network</div><div style="font-size:0.72rem;color:var(--text-muted);">Topology & dependency</div></div>
+   203→            <div style="display:flex;flex-wrap:wrap;gap:8px;flex:1;">
+   204→              <span style="display:inline-block;padding:5px 12px;background:rgba(244,63,94,0.08);border:1px solid rgba(244,63,94,0.18);border-radius:6px;font-size:0.75rem;color:var(--text-secondary);">Supplier Dependency Ratio</span>
+   205→              <span style="display:inline-block;padding:5px 12px;background:rgba(244,63,94,0.08);border:1px solid rgba(244,63,94,0.18);border-radius:6px;font-size:0.75rem;color:var(--text-secondary);">Geographic Concentration</span>
+   206→              <span style="display:inline-block;padding:5px 12px;background:rgba(244,63,94,0.08);border:1px solid rgba(244,63,94,0.18);border-radius:6px;font-size:0.75rem;color:var(--text-secondary);">Single-Source Risk</span>
+   207→            </div>
+   208→          </div>
+   209→
+   210→          <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border-glass);font-size:0.78rem;color:var(--text-muted);line-height:1.6;">Each category generates 15–35 individual features through temporal aggregation (7/30/90-day windows), cross-feature interactions (e.g., financial health × geopolitical exposure), and rate-of-change derivatives that capture momentum — not just the current state but whether conditions are improving or deteriorating. Features are engineered to capture both level effects and trend effects, ensuring the model can distinguish between a supplier that is chronically risky and one that is rapidly deteriorating from a previously healthy baseline.</div>
+   211→        </div>
+   212→      </div>
+   213→    </div>
+   214→  </section>
+   215→
+   216→  <!-- AI CHAT: CONVERSATIONAL RISK INTELLIGENCE -->
+   217→  <section class="section">
+   218→    <div class="section-inner">
+   219→      <div class="section-header reveal">
+   220→        <div class="section-label">AI Chat</div>
+   221→        <h2 class="section-title">Conversational Risk Intelligence</h2>
+   222→        <p class="section-desc">A GLM-powered advisor that lets any stakeholder — from procurement analysts to C-suite executives — query the platform's intelligence in plain language and receive cited, actionable answers grounded in live data.</p>
+   223→      </div>
+   224→
+   225→      <div class="two-col reveal">
+   226→        <div class="col-visual" style="border:1px solid var(--border-glass);border-radius:var(--radius);overflow:hidden;">
+   227→          <img src="screenshots/preview_07_ai_advisor.png" alt="AI Risk Advisor conversational interface" style="width:100%;display:block;">
+   228→        </div>
+   229→        <div class="col-content">
+   230→          <h2>Ask Anything About Your Supply Chain</h2>
+   231→          <p>The AI Risk Advisor is a GLM (General Language Model) powered conversational interface that transforms how stakeholders interact with supply chain intelligence. Instead of navigating dashboards, filtering tables, and interpreting charts, users simply ask questions in natural language: "Which Tier-2 suppliers in Southeast Asia saw the largest risk-score increase this quarter?" or "Explain why Acme Corp's risk score jumped from 0.34 to 0.71 last month." The advisor retrieves the relevant data from the feature store, cross-references it with model predictions and SHAP explanations, and synthesizes a comprehensive answer — complete with data citations, trend context, and specific numerical references — in seconds rather than the hours it would take a human analyst to compile the same report manually.</p>
+   232→          <p>Crucially, the advisor can explain model predictions in plain language. When a stakeholder asks why a particular supplier received a high-risk score, the advisor translates the underlying SHAP decomposition into a narrative explanation: "Acme Corp's risk score increased primarily due to a 23% quarter-over-quarter decline in their current ratio, combined with elevated conflict-event activity in their manufacturing region as tracked by ACLED data, and a 40% reduction in orders from their largest customer reported in their latest 10-Q filing." This capability bridges the gap between data science teams who understand SHAP values and business leaders who need to make decisions based on model outputs, making AI-driven risk intelligence accessible to the entire organization without requiring statistical literacy.</p>
+   233→          <p>Beyond reactive Q&A, the advisor proactively suggests next steps based on the current risk posture. If a supplier's drift metrics are trending upward, the advisor might recommend initiating a backup supplier qualification process, adjusting safety stock levels, or scheduling a supplier audit. These suggestions are not generic best practices — they are contextually informed by the specific combination of risk factors affecting that supplier, the criticality of the components they provide, and the availability of alternative sources in the platform's supplier directory. The result is an always-on strategic advisor that makes the platform's intelligence not just visible but actionable, turning data into decisions and insights into outcomes.</p>
+   234→        </div>
+   235→      </div>
+   236→    </div>
+   237→  </section>
+   238→
+   239→  <!-- MLOPS: MODEL LIFECYCLE MANAGEMENT -->
+   240→  <section class="section">
+   241→    <div class="section-inner">
+   242→      <div class="section-header reveal">
+   243→        <div class="section-label">MLOps</div>
+   244→        <h2 class="section-title">Model Lifecycle Management</h2>
+   245→        <p class="section-desc">A model is a living artifact, not a static artifact. The MLOps infrastructure tracks every iteration, monitors every metric, and automates the retraining loops that keep predictions accurate as the world changes around them.</p>
+   246→      </div>
+   247→
+   248→      <div class="feature-grid">
+   249→        <div class="feature-card reveal">
+   250→          <div class="feature-icon amber">
+   251→            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+   252→          </div>
+   253→          <h3>Version Tracking</h3>
+   254→          <p>Every model training run produces a versioned artifact with a complete performance fingerprint: AUC on the validation set, F1 score at the optimal classification threshold, precision and recall broken out by risk tier, calibration curves comparing predicted probabilities against observed outcomes, and a full SHAP summary showing how global feature importance shifted compared to the previous iteration. This metadata is stored alongside the model weights and the exact feature snapshot used for training, enabling full reproducibility — any model version can be rebuilt identically from its archived configuration and data snapshot.</p>
+   255→          <p style="margin-top:12px;">The version comparison interface lets data scientists and risk managers select any two model iterations and view them side by side: if AUC dropped from 90.6% to 88.2% between v3.2 and v3.3, the system highlights which features changed importance, which training data differed, and which hyperparameters were modified, making it trivial to diagnose regressions and decide whether to promote the new version or roll back to the previous one with a single click. This auditability is essential for regulated industries where model governance requires documented justification for every production deployment decision.</p>
+   256→        </div>
+   257→        <div class="feature-card reveal">
+   258→          <div class="feature-icon rose">
+   259→            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+   260→          </div>
+   261→          <h3>Automated Retraining</h3>
+   262→          <p>The retraining pipeline is triggered automatically by PSI drift detection: when any feature's Population Stability Index crosses the configurable threshold — default 0.25 for critical features and 0.40 for secondary features — the system queues a retraining job that ingests the most recent data from the feature store, re-splits the data with temporal holdout to prevent leakage, runs the Optuna hyperparameter search with the current best configuration as the starting point, evaluates the candidate model against the production baseline, and if the new model outperforms the incumbent on all primary metrics, promotes it to production with zero-downtime blue-green deployment.</p>
+   263→          <p style="margin-top:12px;">This closed-loop architecture creates a continuous improvement cycle: the model encounters new data distributions, drift detection identifies when the model's assumptions no longer hold, retraining recalibrates the model against current conditions, and the version tracker records the entire lineage for audit and analysis. Over time, this loop accumulates institutional learning — the model's understanding of your specific supply chain ecosystem deepens with each cycle, capturing seasonal patterns, emerging risk factors, and the unique structural characteristics of your supplier network that no generic off-the-shelf model could ever replicate.</p>
+   264→        </div>
+   265→        <div class="feature-card reveal">
+   266→          <div class="feature-icon emerald">
+   267→            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+   268→          </div>
+   269→          <h3>Performance Dashboard</h3>
+   270→          <p>The MLOps dashboard provides a real-time view into model health that is designed for both technical and non-technical stakeholders. At the top level, summary tiles display the production model's current AUC, F1, precision, recall, and average PSI across all monitored features — each metric color-coded green, amber, or red based on configurable thresholds so that any degradation is immediately visible without reading numbers. A dedicated drift panel visualizes the PSI trend for each feature over time as a sparkline chart, making it trivial to spot which specific features are drifting and whether the drift is accelerating, stabilizing, or reversing.</p>
+   271→          <p style="margin-top:12px;">The global SHAP importance ranking panel shows the top 15 features by mean absolute SHAP value for the current production model, updated in real time as new predictions are generated. When a feature that was historically the 8th most important variable suddenly rises to 3rd, it signals a structural shift in what is driving risk across the supplier network — an early warning that often precedes measurable performance degradation by weeks. This dashboard transforms model monitoring from a reactive debugging exercise into a proactive intelligence function, giving the data science team the lead time to investigate, retrain, and redeploy before prediction quality impacts downstream business decisions.</p>
+   272→        </div>
+   273→      </div>
+   274→    </div>
+   275→  </section>
+   276→
+   277→  <!-- FOOTER -->
+   278→  <footer class="site-footer">
+   279→    <div class="footer-inner">
+   280→      <div class="footer-brand">
+   281→        <div class="brand-icon" style="width:28px;height:28px;font-size:0.7rem;">SC</div>
+   282→        AI Supply Chain Risk Predictor
+   283→      </div>
+   284→      <div class="footer-links">
+   285→        <a href="index.html">Home</a>
+   286→        <a href="vision.html">Vision</a>
+   287→        <a href="platform.html">Platform</a>
+   288→        <a href="intelligence.html">Intelligence</a>
+   289→        <a href="ma-matching.html">M&amp;A</a>
+   290→        <a href="hitl.html">HITL</a>
+   291→        <a href="roadmap.html">Roadmap</a>
+   292→        <a href="contact.html">Contact</a>
+   293→      </div>
+   294→    </div>
+   295→    <div class="footer-copy">
+   296→      &copy; 2025 AI Supply Chain Risk Predictor. All rights reserved.
+   297→    </div>
+   298→  </footer>
+   299→
+   300→  <script src="js/main.js"></script>
+   301→</body>
+   302→</html>
