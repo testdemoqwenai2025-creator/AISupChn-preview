@@ -6,11 +6,35 @@ import {
   Search, Filter, TrendingUp, TrendingDown, Minus, Eye, MessageSquare,
   BarChart3, PieChart, Zap, Globe, Lock, Bot, Users, Target,
   ArrowRight, Play, Pause, RefreshCw, Download, Settings, Bell,
-  ChevronRight, ChevronDown, Star, Clock, MapPin, Building2,
-  Package, Truck, Factory, Database, Cpu, Wifi, Radio
+  ChevronRight, ChevronDown, ChevronUp, Star, Clock, MapPin, Building2,
+  Package, Truck, Factory, Database, Cpu, Wifi, Radio, Mail, Phone,
+  Send, X, Plus, Edit3, Trash2, Save, Calendar, FileText, Scale,
+  Gavel, ClipboardCheck, Fingerprint, ShieldCheck, AlertCircle,
+  Info, ExternalLink, Maximize2, Minimize2, HelpCircle, UserCheck,
+  Building, MapPinned, CreditCard, DollarSign, Percent, Hash,
+  Link2, Unlock, LockKeyhole, BadgeCheck, Certificate, Award,
+  Thermometer, Droplets, Leaf, Recycle, Wind, Sun, Battery,
+  WifiOff, Server, Cloud, CloudRain, Snowflake, Flame,
+  Heart, Stethoscope, Pill, Syringe, TestTubes, Microscope,
+  Car, Plane, Ship, Train, Bike, Rocket,
+  Coffee, Wheat, Apple, Fish, Beef, Milk, Egg,
+  Shirt, Gem, Hammer, Wrench, Paintbrush,
+  BookOpen, GraduationCap, Briefcase, Handshake,
+  ChevronLeft, MoreVertical, Copy, Share2, Printer,
+  Upload, FolderOpen, Archive, Tag, Tags,
+  Camera, Mic, Video, FileUp, Image,
+  Key, EyeOff, UserPlus, UserMinus,
+  ThumbsUp, ThumbsDown, Flag, Bookmark,
+  RefreshCccw, RotateCcw, History, Clock4,
+  LayoutGrid, List, Kanban, Table2,
+  ScanLine, Radar, Satellite, Telescope,
+  GitBranch, Merge, Fork, PullRequest,
+  Terminal, Code, Brackets, FileCode,
+  Layers, Box, PackageOpen, ShoppingCart,
+  Receipt, Invoice, Calculator, Abacus
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
@@ -33,9 +57,24 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet'
 import { useToast } from '@/hooks/use-toast'
-
-// Recharts imports for interactive charts
 import {
   AreaChart,
   Area,
@@ -62,47 +101,45 @@ import {
 } from 'recharts'
 
 // ============================================
-// TYPES & INTERFACES
+// TYPES (Simplified for file size)
 // ============================================
 
 interface Supplier {
-  id: string
-  name: string
-  region: string
-  tier: number
-  riskScore: number
-  riskLevel: 'LOW' | 'MEDIUM' | 'HIGH'
-  category: string
-  onTimeDelivery: number
-  financialHealth: number
-  complianceScore: number
-  trend: 'up' | 'down' | 'stable'
+  id: string; name: string; region: string; tier: number;
+  riskScore: number; riskLevel: 'LOW' | 'MEDIUM' | 'HIGH';
+  category: string; onTimeDelivery: number; financialHealth: number;
+  complianceScore: number; trend: 'up' | 'down' | 'stable';
+  legalName: string; registrationNumber: string; taxId: string;
+  foundedDate: string; companyType: string; address: string;
+  city: string; country: string; postalCode: string;
+  contactName: string; contactEmail: string; contactPhone: string;
+  annualRevenue: number; employeeCount: number; creditRating: string;
+  status: 'active' | 'inactive' | 'under-review' | 'suspended';
 }
 
-interface Alert {
-  id: string
-  severity: 'critical' | 'high' | 'medium' | 'low'
-  supplier: string
-  type: string
-  message: string
-  timestamp: Date
-  acknowledged: boolean
+interface RiskAlert {
+  id: string; severity: 'critical' | 'high' | 'medium' | 'low';
+  supplier: string; category: string; title: string;
+  message: string; timestamp: Date; acknowledged: boolean;
+  status: string; probability: number; confidence: number;
+  impact: string; mitigationActions: Array<{action: string; owner: string; dueDate: string; status: string}>;
+}
+
+interface DemandForecast {
+  id: string; product: string; sku: string; period: string;
+  actual: number | null; forecast: number; lowerBound: number; upperBound: number;
+  confidence: number; trend: string; anomaly?: string;
+}
+
+interface ComplianceItem {
+  framework: string; acronym: string; score: number;
+  status: 'compliant' | 'partial' | 'non-compliant'; lastAudit: string;
+  nextAudit: string; requirements: Array<{title: string; status: string; severity: string}>;
+  upcomingDeadlines: Array<{date: string; requirement: string; priority: string}>;
 }
 
 interface ChatMessage {
-  id: string
-  role: 'user' | 'assistant'
-  content: string
-  timestamp: Date
-}
-
-interface RoadmapMilestone {
-  phase: string
-  title: string
-  description: string
-  status: 'completed' | 'in-progress' | 'upcoming'
-  date: string
-  items: string[]
+  id: string; role: 'user' | 'assistant'; content: string; timestamp: Date;
 }
 
 // ============================================
@@ -110,1891 +147,880 @@ interface RoadmapMilestone {
 // ============================================
 
 const suppliersData: Supplier[] = [
-  { id: '1', name: 'TechComponents Ltd', region: 'Taiwan', tier: 1, riskScore: 0.12, riskLevel: 'LOW', category: 'Semiconductors', onTimeDelivery: 98.5, financialHealth: 92, complianceScore: 95, trend: 'stable' },
-  { id: '2', name: 'GlobalLogistics Corp', region: 'Singapore', tier: 1, riskScore: 0.28, riskLevel: 'MEDIUM', category: 'Logistics', onTimeDelivery: 94.2, financialHealth: 88, complianceScore: 91, trend: 'up' },
-  { id: '3', name: 'PrecisionParts Vietnam', region: 'Vietnam', tier: 2, riskScore: 0.45, riskLevel: 'MEDIUM', category: 'Manufacturing', onTimeDelivery: 89.7, financialHealth: 75, complianceScore: 82, trend: 'down' },
-  { id: '4', name: 'Shanghai Electronics', region: 'China', tier: 1, riskScore: 0.67, riskLevel: 'HIGH', category: 'Electronics', onTimeDelivery: 82.3, financialHealth: 68, complianceScore: 71, trend: 'down' },
-  { id: '5', name: 'EuroMaterials GmbH', region: 'Germany', tier: 1, riskScore: 0.08, riskLevel: 'LOW', category: 'Raw Materials', onTimeDelivery: 99.1, financialHealth: 96, complianceScore: 98, trend: 'stable' },
-  { id: '6', name: 'IndiaTech Solutions', region: 'India', tier: 2, riskScore: 0.35, riskLevel: 'MEDIUM', category: 'Software', onTimeDelivery: 91.5, financialHealth: 82, complianceScore: 88, trend: 'up' },
-  { id: '7', name: 'BrazilMetals SA', region: 'Brazil', tier: 2, riskScore: 0.52, riskLevel: 'MEDIUM', category: 'Raw Materials', onTimeDelivery: 86.4, financialHealth: 71, complianceScore: 78, trend: 'stable' },
-  { id: '8', name: 'KoreaDisplay Co', region: 'South Korea', tier: 1, riskScore: 0.19, riskLevel: 'LOW', category: 'Displays', onTimeDelivery: 96.8, financialHealth: 90, complianceScore: 93, trend: 'up' },
-  { id: '9', name: 'MexicoAssembly Inc', region: 'Mexico', tier: 2, riskScore: 0.41, riskLevel: 'MEDIUM', category: 'Assembly', onTimeDelivery: 88.9, financialHealth: 78, complianceScore: 85, trend: 'stable' },
-  { id: '10', name: 'JapanPrecision KK', region: 'Japan', tier: 1, riskScore: 0.05, riskLevel: 'LOW', category: 'Precision Parts', onTimeDelivery: 99.5, financialHealth: 98, complianceScore: 99, trend: 'stable' },
+  { id: 'SUP-001', name: 'TechComponents Ltd', region: 'Taiwan', tier: 1, riskScore: 12, riskLevel: 'LOW', category: 'Semiconductors', onTimeDelivery: 98.5, financialHealth: 92, complianceScore: 95, trend: 'stable', legalName: 'TechComponents International Ltd', registrationNumber: 'TW-2020-08847', taxId: 'TW-987654321', foundedDate: '2015-03-15', companyType: 'Public Ltd', address: '123 Science Park Road', city: 'Hsinchu', country: 'Taiwan', postalCode: '30093', contactName: 'David Chen', contactEmail: 'david.chen@techcomp.com', contactPhone: '+886-3-567-8901', annualRevenue: 850000000, employeeCount: 4500, creditRating: 'A+', status: 'active' },
+  { id: 'SUP-002', name: 'GlobalLogistics Corp', region: 'Singapore', tier: 1, riskScore: 28, riskLevel: 'MEDIUM', category: 'Logistics', onTimeDelivery: 94.2, financialHealth: 88, complianceScore: 91, trend: 'up', legalName: 'Global Logistics Pte Ltd', registrationNumber: 'SG-202109456H', taxId: 'SG-987654321X', foundedDate: '2008-07-22', companyType: 'Private Ltd', address: '500 HarbourFront Ave', city: 'Singapore', country: 'Singapore', postalCode: '098543', contactName: 'Rachel Tan', contactEmail: 'rachel.tan@globallog.com', contactPhone: '+65-6234-5678', annualRevenue: 320000000, employeeCount: 2800, creditRating: 'A', status: 'active' },
+  { id: 'SUP-003', name: 'PrecisionParts Vietnam', region: 'Vietnam', tier: 2, riskScore: 45, riskLevel: 'MEDIUM', category: 'Manufacturing', onTimeDelivery: 89.7, financialHealth: 75, complianceScore: 82, trend: 'down', legalName: 'Precision Parts VN JSC', registrationNumber: 'VN-0100345678', taxId: 'VN-010034567-001', foundedDate: '2018-09-10', companyType: 'Joint Stock', address: 'Lot B3 VSIP II', city: 'Binh Duong', country: 'Vietnam', postalCode: '700000', contactName: 'Nguyen Van Minh', contactEmail: 'minh.nguyen@precision.vn', contactPhone: '+84-274-222-8888', annualRevenue: 45000000, employeeCount: 850, creditRating: 'BBB+', status: 'active' },
+  { id: 'SUP-004', name: 'Shanghai Electronics', region: 'China', tier: 1, riskScore: 67, riskLevel: 'HIGH', category: 'Electronics', onTimeDelivery: 82.3, financialHealth: 68, complianceScore: 71, trend: 'down', legalName: 'Shanghai Electronics Co Ltd', registrationNumber: 'SH-310115002345678', taxId: '91310115MA1K2L3M4N', foundedDate: '2010-05-20', companyType: 'LLC', address: '88 Zhangjiang High Tech Park', city: 'Shanghai', country: 'China', postalCode: '201203', contactName: 'Li Wei', contactEmail: 'li.wei@shanghaielec.cn', contactPhone: '+86-21-5876-5432', annualRevenue: 180000000, employeeCount: 5200, creditRating: 'BBB', status: 'under-review' },
+  { id: 'SUP-005', name: 'EuroMaterials GmbH', region: 'Germany', tier: 1, riskScore: 8, riskLevel: 'LOW', category: 'Raw Materials', onTimeDelivery: 99.1, financialHealth: 96, complianceScore: 98, trend: 'stable', legalName: 'EuroMaterials GmbH', registrationNumber: 'DE-HRB-123456', taxId: 'DE-123456789', foundedDate: '1995-04-12', companyType: 'GmbH', address: 'Industriestraße 42', city: 'Stuttgart', country: 'Germany', postalCode: '70499', contactName: 'Dr. Hans Mueller', contactEmail: 'hans.mueller@euromat.de', contactPhone: '+49-711-987-6543', annualRevenue: 420000000, employeeCount: 3200, creditRating: 'AAA', status: 'active' }
 ]
 
-const alertsData: Alert[] = [
-  { id: '1', severity: 'critical', supplier: 'Shanghai Electronics', type: 'Financial Risk', message: 'Credit rating downgraded by Moody\'s - immediate review required', timestamp: new Date(Date.now() - 1000 * 60 * 5), acknowledged: false },
-  { id: '2', severity: 'high', supplier: 'PrecisionParts Vietnam', type: 'Operational', message: 'Lead time increased by 45% due to capacity constraints', timestamp: new Date(Date.now() - 1000 * 60 * 23), acknowledged: false },
-  { id: '3', severity: 'high', supplier: 'GlobalLogistics Corp', type: 'Geopolitical', message: 'New trade regulations affecting Singapore-EU shipping routes', timestamp: new Date(Date.now() - 1000 * 60 * 45), acknowledged: true },
-  { id: '4', severity: 'medium', supplier: 'BrazilMetals SA', type: 'Environmental', message: 'EUDR compliance documentation pending - deadline in 14 days', timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2), acknowledged: false },
-  { id: '5', severity: 'medium', supplier: 'IndiaTech Solutions', type: 'Cybersecurity', message: 'Security audit flagged outdated encryption protocols', timestamp: new Date(Date.now() - 1000 * 60 * 60 * 3), acknowledged: true },
-  { id: '6', severity: 'low', supplier: 'MexicoAssembly Inc', type: 'Quality', message: 'Minor quality deviation detected in batch #4521', timestamp: new Date(Date.now() - 1000 * 60 * 60 * 5), acknowledged: true },
+const alertsData: RiskAlert[] = [
+  { id: 'ALT-001', severity: 'critical', supplier: 'Shanghai Electronics', category: 'Compliance', title: 'UFLPA Review Required', message: 'Incomplete traceability documentation for Xinjiang-sourced materials', timestamp: new Date(Date.now() - 1000 * 60 * 5), acknowledged: false, status: 'open', probability: 85, confidence: 92, impact: '$2.5M inventory at risk, production stoppage possible', mitigationActions: [{action: 'Request full traceability docs', owner: 'Amy Chen', dueDate: '2025-03-20', status: 'pending'}, {action: 'Engage UFLPA auditor', owner: 'Legal', dueDate: '2025-03-25', status: 'pending'}] },
+  { id: 'ALT-002', severity: 'high', supplier: 'PrecisionParts Vietnam', category: 'Operational', title: 'Capacity Constraints', message: 'Lead time increased 45% due to capacity issues at 91% utilization', timestamp: new Date(Date.now() - 1000 * 60 * 23), acknowledged: false, status: 'investigating', probability: 75, confidence: 88, impact: '$180K revenue impact if unresolved in 4 weeks', mitigationActions: [{action: 'Emergency supplier meeting', owner: 'Amy Chen', dueDate: '2025-03-17', status: 'in-progress'}] },
+  { id: 'ALT-003', severity: 'high', supplier: 'GlobalLogistics Corp', category: 'Geopolitical', title: 'New EU Trade Regulations', message: 'New customs requirements affecting Singapore-EU routes effective April 1', timestamp: new Date(Date.now() - 1000 * 60 * 45), acknowledged: true, status: 'mitigating', probability: 95, confidence: 98, impact: '2-3 day delay on EU shipments, €15-25 additional cost/shipment', mitigationActions: [{action: 'Update shipping templates', owner: 'GlobalLogistics', dueDate: '2025-03-20', status: 'completed'}] },
+  { id: 'ALT-004', severity: 'medium', supplier: 'BrazilMetals SA', category: 'Environmental', title: 'EUDR Documentation Pending', message: 'EUDR compliance deadline in 14 days - documentation missing', timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2), acknowledged: false, status: 'open', probability: 60, confidence: 85, impact: 'Potential shipment rejection at EU customs ($450K value)', mitigationActions: [] },
+  { id: 'ALT-005', severity: 'medium', supplier: 'IndiaTech Solutions', category: 'Cybersecurity', title: 'Outdated Encryption Protocols', message: 'TLS 1.0/1.1 detected in legacy systems - security audit finding', timestamp: new Date(Date.now() - 1000 * 60 * 60 * 3), acknowledged: true, status: 'investigating', probability: 35, confidence: 90, impact: 'Data breach risk, PCI-DSS compliance issue', mitigationActions: [] },
+  { id: 'ALT-006', severity: 'low', supplier: 'MexicoAssembly Inc', category: 'Quality', title: 'Minor Quality Deviation', message: 'Dimensional tolerance deviation in batch #4521 (±0.02mm)', timestamp: new Date(Date.now() - 1000 * 60 * 60 * 5), acknowledged: true, status: 'resolved', probability: 15, confidence: 95, impact: 'Minor rework $2,200, no production impact', mitigationActions: [] }
 ]
 
-const riskTrendData = [
-  { date: 'Jan', score: 0.32, threshold: 0.6 },
-  { date: 'Feb', score: 0.35, threshold: 0.6 },
-  { date: 'Mar', score: 0.29, threshold: 0.6 },
-  { date: 'Apr', score: 0.38, threshold: 0.6 },
-  { date: 'May', score: 0.42, threshold: 0.6 },
-  { date: 'Jun', score: 0.39, threshold: 0.6 },
-  { date: 'Jul', score: 0.45, threshold: 0.6 },
-  { date: 'Aug', score: 0.41, threshold: 0.6 },
-  { date: 'Sep', score: 0.36, threshold: 0.6 },
-  { date: 'Oct', score: 0.33, threshold: 0.6 },
-  { date: 'Nov', score: 0.38, threshold: 0.6 },
-  { date: 'Dec', score: 0.34, threshold: 0.6 },
+const forecastData: DemandForecast[] = [
+  { id: 'DF-001', product: 'TC-7000 Series MCU', sku: 'TC-MCU-7000', period: 'W12', actual: 12500, forecast: 12100, lowerBound: 11200, upperBound: 13000, confidence: 89, trend: 'increasing' },
+  { id: 'DF-002', product: 'TC-8000 Memory Module', sku: 'TC-MEM-8000', period: 'W12', actual: 3800, forecast: 3950, lowerBound: 3600, upperBound: 4300, confidence: 87, trend: 'stable' },
+  { id: 'DF-003', product: 'Aluminum Housing PP-100', sku: 'PP-AH-100', period: 'W12', actual: 18500, forecast: 18200, lowerBound: 17000, upperBound: 19400, confidence: 92, trend: 'increasing' },
+  { id: 'DF-004', product: 'EuroPoly EM-100', sku: 'EP-POLY-100', period: 'March', actual: 420, forecast: 435, lowerBound: 400, upperBound: 470, confidence: 94, trend: 'stable' },
+  { id: 'DF-005', product: 'PCBA Assembly SE-500', sku: 'SE-PCBA-500', period: 'W12', actual: null, forecast: 8500, lowerBound: 7200, upperBound: 9800, confidence: 78, trend: 'volatile', anomaly: 'High uncertainty due to China trade situation' }
 ]
 
-const demandForecastData = [
-  { week: 'W1', actual: 1200, forecast: 1180, lower: 1100, upper: 1260 },
-  { week: 'W2', actual: 1350, forecast: 1320, lower: 1240, upper: 1400 },
-  { week: 'W3', actual: 1280, forecast: 1300, lower: 1220, upper: 1380 },
-  { week: 'W4', actual: 1420, forecast: 1400, lower: 1320, upper: 1480 },
-  { week: 'W5', actual: null, forecast: 1450, lower: 1370, upper: 1530 },
-  { week: 'W6', actual: null, forecast: 1520, lower: 1440, upper: 1600 },
-  { week: 'W7', actual: null, forecast: 1480, lower: 1400, upper: 1560 },
-  { week: 'W8', actual: null, forecast: 1550, lower: 1470, upper: 1630 },
-  { week: 'W9', actual: null, forecast: 1600, lower: 1520, upper: 1680 },
-  { week: 'W10', actual: null, forecast: 1580, lower: 1500, upper: 1660 },
-  { week: 'W11', actual: null, forecast: 1650, lower: 1570, upper: 1730 },
-  { week: 'W12', actual: null, forecast: 1700, lower: 1620, upper: 1780 },
+const complianceData: ComplianceItem[] = [
+  { framework: 'Uyghur Forced Labor Prevention Act', acronym: 'UFLPA', score: 94, status: 'compliant', lastAudit: '2025-02-15', nextAudit: '2025-08-15', requirements: [
+    {title: 'Supply Chain Traceability', status: 'compliant', severity: 'mandatory'},
+    {title: 'Forced Labor Attestation', status: 'compliant', severity: 'mandatory'},
+    {title: 'Xinjiang Region Exclusion', status: 'partial', severity: 'mandatory'},
+    {title: 'CBP Entry Documentation', status: 'compliant', severity: 'required'}
+  ], upcomingDeadlines: [
+    {date: '2025-04-15', requirement: 'Tier 2 traceability completion', priority: 'high'},
+    {date: '2025-06-30', requirement: 'Annual recertification', priority: 'medium'}
+  ]},
+  { framework: 'EU Deforestation Regulation', acronym: 'EUDR', score: 87, status: 'partial', lastAudit: '2025-01-20', nextAudit: '2026-01-20', requirements: [
+    {title: 'Geolocation Data Collection', status: 'compliant', severity: 'mandatory'},
+    {title: 'Due Diligence Statement', status: 'compliant', severity: 'mandatory'},
+    {title: 'Deforestation-Free Certification', status: 'compliant', severity: 'mandatory'},
+    {title: 'Risk Assessment', status: 'partial', severity: 'required'}
+  ], upcomingDeadlines: [
+    {date: '2025-04-30', requirement: 'Complex product assessment', priority: 'high'},
+    {date: '2025-12-29', requirement: 'Operator compliance deadline', priority: 'high'}
+  ]},
+  { framework: 'CSDDD', acronym: 'CSDDD', score: 91, status: 'compliant', lastAudit: '2025-01-28', nextAudit: '2026-01-28', requirements: [
+    {title: 'Human Rights Due Diligence', status: 'compliant', severity: 'mandatory'},
+    {title: 'Environmental Due Diligence', status: 'compliant', severity: 'mandatory'},
+    {title: 'Climate Transition Plan', status: 'partial', severity: 'required'},
+    {title: 'Stakeholder Engagement', status: 'compliant', severity: 'required'}
+  ], upcomingDeadlines: [
+    {date: '2025-06-30', requirement: 'Climate plan adoption', priority: 'high'}
+  ]},
+  { framework: 'SOX', acronym: 'SOX', score: 98, status: 'compliant', lastAudit: '2025-03-01', nextAudit: '2025-06-01', requirements: [
+    {title: 'CEO/CFO Certification', status: 'compliant', severity: 'mandatory'},
+    {title: 'Internal Control (404)', status: 'compliant', severity: 'mandatory'},
+    {title: 'Real-Time Disclosure', status: 'compliant', severity: 'required'},
+    {title: 'Whistleblower Protection', status: 'compliant', severity: 'required'}
+  ], upcomingDeadlines: []},
+  { framework: 'GDPR', acronym: 'GDPR', score: 96, status: 'compliant', lastAudit: '2025-02-10', nextAudit: '2025-05-10', requirements: [
+    {title: 'Lawful Basis Documentation', status: 'compliant', severity: 'mandatory'},
+    {title: 'Data Subject Rights', status: 'compliant', severity: 'mandatory'},
+    {title: 'DPIA Process', status: 'compliant', severity: 'required'},
+    {title: 'Breach Notification (72hr)', status: 'compliant', severity: 'mandatory'},
+    {title: 'International Transfers', status: 'compliant', severity: 'required'}
+  ], upcomingDeadlines: []},
+  { framework: 'REACH', acronym: 'REACH', score: 89, status: 'partial', lastAudit: '2025-03-05', nextAudit: '2026-03-05', requirements: [
+    {title: 'Substance Registration', status: 'compliant', severity: 'mandatory'},
+    {title: 'SVHC Communication', status: 'compliant', severity: 'required'},
+    {title: 'Authorization Process', status: 'compliant', severity: 'mandatory'},
+    {title: 'Restriction Compliance', status: 'partial', severity: 'mandatory'}
+  ], upcomingDeadlines: [
+    {date: '2025-05-28', requirement: 'Restriction gap closure', priority: 'high'}
+  ]}
 ]
 
-const riskByRegionData = [
-  { region: 'Asia-Pacific', value: 42, count: 156 },
-  { region: 'Europe', value: 18, count: 89 },
-  { region: 'North America', value: 12, count: 67 },
-  { region: 'Latin America', value: 18, count: 45 },
-  { region: 'Middle East', value: 10, count: 23 },
-]
+const riskTrendData = Array.from({length: 12}, (_, i) => ({
+  date: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][i],
+  score: 30 + Math.random() * 20,
+  threshold: 60
+}))
 
-const riskRadarData = [
-  { subject: 'Financial', A: 85, B: 72, fullMark: 100 },
-  { subject: 'Operational', A: 78, B: 68, fullMark: 100 },
-  { subject: 'Geopolitical', A: 65, B: 82, fullMark: 100 },
-  { subject: 'Compliance', A: 92, B: 75, fullMark: 100 },
-  { subject: 'Environmental', A: 70, B: 65, fullMark: 100 },
-  { subject: 'Cyber', A: 88, B: 70, fullMark: 100 },
-]
-
-const complianceData = [
-  { framework: 'UFLPA', score: 94, status: 'compliant', lastAudit: '2025-01-15' },
-  { framework: 'EUDR', score: 87, status: 'review', lastAudit: '2025-02-20' },
-  { framework: 'CSDDD', score: 91, status: 'compliant', lastAudit: '2025-01-28' },
-  { framework: 'SOX', score: 98, status: 'compliant', lastAudit: '2025-03-01' },
-  { framework: 'GDPR', score: 96, status: 'compliant', lastAudit: '2025-02-10' },
-  { framework: 'REACH', score: 89, status: 'review', lastAudit: '2025-03-05' },
-]
-
-const roadmapData: RoadmapMilestone[] = [
-  {
-    phase: 'Phase 1',
-    title: 'Foundation',
-    description: 'Core platform infrastructure and ML pipeline setup',
-    status: 'completed',
-    date: 'Q1 2025',
-    items: ['Data ingestion pipeline', 'ML model training framework', 'Basic dashboard UI', 'User authentication']
-  },
-  {
-    phase: 'Phase 2',
-    title: 'Intelligence Core',
-    description: 'Advanced AI models and real-time processing',
-    status: 'completed',
-    date: 'Q2 2025',
-    items: ['XGBoost risk models', 'SHAP explainability', 'WebSocket alert streaming', 'Supplier profiling']
-  },
-  {
-    phase: 'Phase 3',
-    title: 'Predictive Analytics',
-    description: 'Demand forecasting and predictive capabilities',
-    status: 'in-progress',
-    date: 'Q3 2025',
-    items: ['90-day demand forecasting', 'Drift detection system', 'Model versioning', 'Confidence intervals']
-  },
-  {
-    phase: 'Phase 4',
-    title: 'Autonomous Operations',
-    description: 'Self-healing supply chain and autonomous responses',
-    status: 'upcoming',
-    date: 'Q4 2025',
-    items: ['Auto-escalation workflows', 'Digital twin integration', 'AI advisor chatbot', 'M&A matching engine']
-  },
-]
-
-const suggestedQuestions = [
-  'Which Tier-2 suppliers have the highest risk increase this month?',
-  'Show me demand forecast for Q4 2025',
-  'What are my top compliance gaps?',
-  'Identify single-source dependencies in Asia-Pacific'
+const regionRiskData = [
+  {region: 'Asia-Pacific', value: 42, critical: 18, high: 45, medium: 52},
+  {region: 'Europe', value: 18, critical: 5, high: 18, medium: 32},
+  {region: 'North America', value: 12, critical: 2, high: 10, medium: 22},
+  {region: 'Latin America', value: 18, critical: 4, high: 12, medium: 18}
 ]
 
 // ============================================
-// PARTICLE SYSTEM COMPONENT
+// REUSABLE COMPONENTS
 // ============================================
 
+function ExpandableText({ content, maxLength = 150 }: { content: string; maxLength?: number }) {
+  const [expanded, setExpanded] = useState(false)
+  if (content.length <= maxLength) return <span className="text-sm">{content}</span>
+  return (
+    <span className="text-sm">
+      {!expanded ? `${content.substring(0, maxLength)}...` : content}
+      <button onClick={() => setExpanded(!expanded)} className="ml-1 text-primary hover:underline text-xs font-medium">
+        {expanded ? 'Show less' : 'Show more'}
+      </button>
+    </span>
+  )
+}
+
+function AccordionSection({ title, children, defaultOpen = false, icon, badge }: {title: string; children: React.ReactNode; defaultOpen?: boolean; icon?: React.ReactNode; badge?: string}) {
+  const [open, setOpen] = useState(defaultOpen)
+  return (
+    <div className="border rounded-lg overflow-hidden">
+      <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between p-4 hover:bg-accent/50 transition-colors text-left">
+        <div className="flex items-center gap-2">
+          {icon}<span className="font-medium text-sm">{title}</span>
+          {badge && <Badge variant="outline" className="text-xs">{badge}</Badge>}
+        </div>
+        <ChevronDown className={`w-4 h-4 transition-transform ${open ? 'rotate-180' : ''}`} />
+      </button>
+      {open && <div className="p-4 border-t bg-muted/20">{children}</div>}
+    </div>
+  )
+}
+
+function FieldLabel({ label, required, tooltip }: {label: string; required?: boolean; tooltip?: string}) {
+  return (
+    <div className="flex items-center gap-1.5 mb-1.5">
+      <Label className="text-sm font-medium">{label}{required && <span className="text-destructive ml-0.5">*</span>}</Label>
+      {tooltip && <HelpCircle className="w-3.5 h-3.5 text-muted-foreground cursor-help" title={tooltip} />}
+    </div>
+  )
+}
+
+function ChatWidget({ context, title }: {context: string; title: string}) {
+  const [open, setOpen] = useState(false)
+  const [messages, setMessages] = useState<ChatMessage[]>([
+    {id: '1', role: 'assistant', content: `Hello! I'm your ${title} AI assistant. How can I help?`, timestamp: new Date()}
+  ])
+  const [input, setInput] = useState('')
+  
+  const sendMsg = () => {
+    if (!input.trim()) return
+    setMessages(prev => [...prev, {id: String(Date.now()), role: 'user', content: input, timestamp: new Date()}])
+    setTimeout(() => {
+      setMessages(prev => [...prev, {id: String(Date.now()+1), role: 'assistant', content: `Regarding "${input}": I can help analyze data, generate reports, or provide recommendations. What would you like to explore?`, timestamp: new Date()}])
+    }, 600)
+    setInput('')
+  }
+  
+  return (
+    <>
+      <Button onClick={() => setOpen(!open)} className="fixed bottom-6 right-6 z-50 rounded-full w-14 h-14 p-0 shadow-lg bg-primary text-primary-foreground">
+        {open ? <X className="w-6 h-6" /> : <MessageSquare className="w-6 h-6" />}
+      </Button>
+      {open && (
+        <div className="fixed bottom-24 right-6 z-50 w-96 glass rounded-xl shadow-2xl overflow-hidden flex flex-col" style={{height: '480px'}}>
+          <div className="p-4 border-b bg-gradient-to-r from-emerald-500/10 to-cyan-500/10">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2"><Bot className="w-5 h-5 text-primary" /><div><h4 className="font-semibold text-sm">{title}</h4><p className="text-xs text-muted-foreground">AI Assistant</p></div></div>
+              <Button variant="ghost" size="sm" onClick={() => setOpen(false)} className="h-8 w-8 p-0"><X className="w-4 h-4" /></Button>
+            </div>
+          </div>
+          <div className="flex-1 overflow-y-auto p-4 space-y-3">
+            {messages.map(m => (
+              <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div className={`max-w-[80%] rounded-lg px-3 py-2 text-sm ${m.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted'}`}>{m.content}</div>
+              </div>
+            ))}
+          </div>
+          <div className="p-3 border-t">
+            <div className="flex gap-2"><Input value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && sendMsg()} placeholder="Ask me anything..." /><Button onClick={sendMsg} size="icon" disabled={!input.trim()}><Send className="w-4 h-4" /></Button></div>
+          </div>
+        </div>
+      )}
+    </>
+  )
+}
+
+function QuickContact({ section }: {section: string}) {
+  const [show, setShow] = useState(false)
+  const emails: Record<string, string> = {'supply-directory': 'supplier.mgmt@company.com', 'risk-intelligence': 'risk.team@company.com', 'demand-forecasting': 'demand.plan@company.com', 'compliance': 'compliance@company.com'}
+  return (
+    <>
+      <Dialog open={show} onOpenChange={setShow}>
+        <DialogTrigger asChild><Button variant="outline" size="sm" className="gap-1.5"><Mail className="w-3.5 h-3.5" />Email</Button></DialogTrigger>
+        <DialogContent><DialogHeader><DialogTitle>Contact Team</DialogTitle></DialogHeader>
+          <div className="space-y-4 py-4">
+            <FieldLabel label="To" required /><Input defaultValue={emails[section] || 'support@company.com'} readOnly className="bg-muted" />
+            <FieldLabel label="Subject" required /><Input />
+            <FieldLabel label="Message" required /><Textarea rows={4} placeholder="Your message..." />
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShow(false)}>Cancel</Button>
+            <Button onClick={() => setShow(false)}><Send className="w-4 h-4 mr-2" />Send</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      <Button variant="outline" size="sm" className="gap-1.5"><Phone className="w-3.5 h-3.5" />Call</Button>
+    </>
+  )
+}
+
+function StatusBadge({ status}: {status: string}) {
+  const colors: Record<string, string> = {active: 'default', inactive: 'secondary', 'under-review': 'outline', suspended: 'destructive', compliant: 'default', 'non-compliant': 'destructive', partial: 'outline', open: 'destructive', investigating: 'outline', mitigating: 'default', resolved: 'secondary'}
+  return <Badge variant={(colors[status] as any) || 'secondary'} className="capitalize">{status.replace(/-/g, ' ')}</Badge>
+}
+
+function SeverityBadge({severity}: {severity: string}) {
+  const colors: Record<string, string> = {critical: 'bg-red-500 text-white', high: 'bg-orange-500 text-white', medium: 'bg-yellow-500 text-black', low: 'bg-blue-500 text-white'}
+  return <Badge className={`${colors[severity]} capitalize`}>{severity}</Badge>
+}
+
+function RiskGauge({score, level}: {score: number; level: string}) {
+  const colors: Record<string, string> = {LOW: 'text-emerald-500', MEDIUM: 'text-yellow-500', HIGH: 'text-orange-500'}
+  return (
+    <div className="flex items-center gap-2">
+      <span className={`text-xs font-bold ${colors[level] || 'text-gray-500'}`}>{level}</span>
+      <Progress value={score} className="w-16 h-1.5" />
+      <span className="text-xs text-muted-foreground">{score}%</span>
+    </div>
+  )
+}
+
+// ============================================
+// PORTAL COMPONENTS
+// ============================================
+
+function SupplyDirectoryPortal() {
+  const [search, setSearch] = useState('')
+  const [regionFilter, setRegionFilter] = useState('all')
+  const [tierFilter, setTierFilter] = useState('all')
+  const [riskFilter, setRiskFilter] = useState('all')
+  const [selected, setSelected] = useState<Supplier | null>(null)
+  const [showAddForm, setShowAddForm] = useState(false)
+  const { toast } = useToast()
+  
+  const filtered = suppliersData.filter(s => {
+    const matchSearch = !search || s.name.toLowerCase().includes(search.toLowerCase()) || s.id.toLowerCase().includes(search.toLowerCase())
+    const matchRegion = regionFilter === 'all' || s.region === regionFilter
+    const matchTier = tierFilter === 'all' || s.tier.toString() === tierFilter
+    const matchRisk = riskFilter === 'all' || s.riskLevel === riskFilter
+    return matchSearch && matchRegion && matchTier && matchRisk
+  })
+  
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div><h2 className="text-2xl font-bold flex items-center gap-2"><Building2 className="w-7 h-7 text-primary" />Supply Directory</h2>
+        <p className="text-muted-foreground mt-1">Complete supplier profiles with risk metrics & compliance</p></div>
+        <div className="flex items-center gap-2"><QuickContact section="supply-directory" /><Button onClick={() => setShowAddForm(true)} className="gap-1"><Plus className="w-4 h-4" />Add Supplier</Button></div>
+      </div>
+      
+      {/* Stats */}
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+        {[{l: 'Total', v: suppliersData.length, i: Building2, c: 'text-blue-500'}, {l: 'Active', v: suppliersData.filter(s=>s.status==='active').length, i: CheckCircle2, c: 'text-emerald-500'}, {l: 'Under Review', v: suppliersData.filter(s=>s.status==='under-review').length, i: AlertTriangle, c: 'text-yellow-500'}, {l: 'High Risk', v: suppliersData.filter(s=>s.riskLevel==='HIGH').length, i: Shield, c: 'text-red-500'}, {l: 'Avg Risk', v: Math.round(suppliersData.reduce((a,s)=>a+s.riskScore,0)/suppliersData.length)+'%', i: Activity, c: 'text-orange-500'}, {l: 'Tier 1', v: suppliersData.filter(s=>s.tier===1).length, i: Star, c: 'text-violet-500'}].map((s,i) => (<Card key={i} className="p-3"><div className="flex items-center gap-2 mb-1"><s.i className={`w-4 h-4 ${s.c}`} /><span className="text-xs text-muted-foreground">{s.l}</span></div><p className="text-xl font-bold">{s.v}</p></Card>))}</div>
+      
+      {/* Filters */}
+      <Card className="p-4">
+        <div className="flex flex-col md:flex-row gap-3">
+          <div className="flex-1 relative"><Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" /><Input placeholder="Search suppliers..." value={search} onChange={e=>setSearch(e.target.value)} className="pl-10" /></div>
+          <Select value={regionFilter} onValueChange={setRegionFilter}><SelectTrigger className="w-40"><SelectValue placeholder="Region"/></SelectTrigger><SelectContent>{['all','Asia-Pacific','Europe','North America','Latin America'].map(r=><SelectItem key={r} value={r}>{r==='all'?'All Regions':r}</SelectItem>)}</SelectContent></Select>
+          <Select value={tierFilter} onValueChange={setTierFilter}><SelectTrigger className="w-32"><SelectValue placeholder="Tier"/></SelectTrigger><SelectContent>{['all','1','2','3','4'].map(t=><SelectItem key={t} value={t}>{t==='all'?'All Tiers':`Tier ${t}`}</SelectItem>)}</SelectContent></Select>
+          <Select value={riskFilter} onValueChange={setRiskFilter}><SelectTrigger className="w-36"><SelectValue placeholder="Risk"/></SelectTrigger><SelectContent>{['all','LOW','MEDIUM','HIGH'].map(r=><SelectItem key={r} value={r}>{r==='all'?'All Levels':r}</SelectItem>)}</SelectContent></Select>
+        </div>
+      </Card>
+      
+      {/* Table */}
+      <Card className="overflow-hidden">
+        <Table>
+          <TableHeader><TableRow><TableHead>Supplier</TableHead><TableHead>ID</TableHead><TableHead>Region</TableHead><TableHead>Tier</TableHead><TableHead>Category</TableHead><TableHead>Risk</TableHead><TableHead>Status</TableHead><TableHead>Actions</TableHead></TableRow></TableHeader>
+          <TableBody>{filtered.map(s => (<TableRow key={s.id} className="cursor-pointer hover:bg-accent/50" onClick={()=>setSelected(s)}>
+            <TableCell><div><p className="font-medium">{s.name}</p><p className="text-xs text-muted-foreground">{s.category}</p></div></TableCell>
+            <TableCell><code className="text-xs bg-muted px-1.5 py-0.5 rounded">{s.id}</code></TableCell>
+            <TableCell><div className="flex items-center gap-1"><Globe className="w-3.5 h-3.5 text-muted-foreground"/>{s.region}</div></TableCell>
+            <TableCell><Badge variant={s.tier===1?'default':'secondary'}>Tier {s.tier}</Badge></TableCell>
+            <TableCell className="text-sm">{s.category}</TableCell>
+            <TableCell><RiskGauge score={s.riskScore} level={s.riskLevel}/></TableCell>
+            <TableCell><StatusBadge status={s.status}/></TableCell>
+            <TableCell><div className="flex gap-1" onClick={e=>e.stopPropagation()}>
+              <Button variant="ghost" size="icon" className="h-8 w-8"><Eye className="w-4 h-4"/></Button>
+              <Button variant="ghost" size="icon" className="h-8 w-8"><Mail className="w-4 h-4"/></Button>
+            </div></TableCell>
+          </TableRow>))}</TableBody>
+        </Table>
+      </Card>
+      
+      {/* Detail Sheet */}
+      <Sheet open={!!selected} onOpenChange={() => setSelected(null)}>
+        <SheetContent className="w-full sm:max-w-2xl overflow-y-auto">
+          {selected && (<>
+            <SheetHeader><SheetTitle className="flex items-center gap-2"><Building2 className="w-5 h-5"/>{selected.name}</SheetTitle>
+            <SheetDescription>{selected.legalName} • ID: {selected.id}</SheetDescription></SheetHeader>
+            
+            <div className="mt-6 space-y-4">
+              <AccordionSection title="Overview & Risk Metrics" defaultOpen icon={<BarChart3 className="w-4 h-4"/>} badge={`${selected.riskLevel} RISK`}>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <p className="text-sm font-medium text-muted-foreground">Key Metrics</p>
+                    <div className="space-y-1.5 text-sm"><div className="flex justify-between"><span>Risk Score</span><RiskGauge score={selected.riskScore} level={selected.riskLevel}/></div>
+                    <div className="flex justify-between"><span>On-Time Delivery</span><span className="font-medium">{selected.onTimeDelivery}%</span></div>
+                    <div className="flex justify-between"><span>Financial Health</span><span className="font-medium">{selected.financialHealth}/100</span></div>
+                    <div className="flex justify-between"><span>Compliance Score</span><span className="font-medium">{selected.complianceScore}/100</span></div>
+                    <div className="flex justify-between"><span>Trend</span><Badge variant={selected.trend==='up'?'default':selected.trend==='down'?'destructive':'secondary'} className="text-xs">{selected.trend}</Badge></div></div>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-sm font-medium text-muted-foreground">Company Details</p>
+                    <div className="space-y-1.5 text-sm"><div className="flex justify-between"><span>Type</span><span>{selected.companyType}</span></div>
+                    <div className="flex justify-between"><span>Founded</span><span>{selected.foundedDate}</span></div>
+                    <div className="flex justify-between"><span>Employees</span><span>{selected.employeeCount.toLocaleString()}</span></div>
+                    <div className="flex justify-between"><span>Revenue</span><span>${(selected.annualRevenue/1e6).toFixed(0)}M</span></div>
+                    <div className="flex justify-between"><span>Credit Rating</span><span className="font-medium">{selected.creditRating}</span></div></div>
+                  </div>
+                </div>
+                
+                <div className="mt-4 p-3 bg-primary/5 rounded-lg border border-primary/20">
+                  <p className="text-sm font-medium flex items-center gap-2 mb-2"><Brain className="w-4 h-4 text-primary"/>AI Risk Factors</p>
+                  <div className="space-y-1 text-xs">
+                    <div className="flex justify-between"><span>Geopolitical Exposure ({selected.region})</span><Badge variant="outline" className="text-xs">{selected.region==='China'?'High':'Low'}</Badge></div>
+                    <div className="flex justify-between"><span>Financial Stability</span><Badge variant={selected.financialHealth>80?'default':'destructive'} className="text-xs">{selected.financialHealth>80?'Strong':'Weak'}</Badge></div>
+                    <div className="flex justify-between"><span>Concentration Risk</span><Badge variant="outline" className="text-xs">Medium</Badge></div>
+                  </div>
+                </div>
+              </AccordionSection>
+              
+              <AccordionSection title="Contact Information" icon={<Users className="w-4 h-4"/>}>
+                <div className="space-y-3">
+                  <div className="p-3 bg-muted/50 rounded-lg">
+                    <p className="font-medium text-sm">{selected.contactName}</p>
+                    <div className="mt-2 space-y-1 text-sm text-muted-foreground">
+                      <p><Mail className="w-3 h-3 inline mr-1"/><a href={`mailto:${selected.contactEmail}`} className="text-primary hover:underline">{selected.contactEmail}</a></p>
+                      <p><Phone className="w-3 h-3 inline mr-1"/>{selected.contactPhone}</p>
+                      <p><MapPin className="w-3 h-3 inline mr-1"/>{selected.address}, {selected.city}, {selected.country} {selected.postalCode}</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <QuickContact section="supply-directory"/>
+                    <Button variant="outline" size="sm" className="gap-1"><ExternalLink className="w-3.5 h-3.5"/>Website</Button>
+                  </div>
+                </div>
+              </AccordionSection>
+              
+              <AccordionSection title="Compliance & Certifications" icon={<ShieldCheck className="w-4 h-4"/>} badge={`${selected.complianceScore}%`}>
+                <div className="space-y-3">
+                  <div className="grid grid-cols-2 gap-3">
+                    {['ISO 9001:2015','ISO 14001:2015','IATF 16949','SOC 2 Type II','ISO 27001'].map(cert => (
+                      <div key={cert} className="flex items-center gap-2 p-2 border rounded"><CheckCircle2 className="w-4 h-4 text-emerald-500"/><span className="text-sm">{cert}</span></div>
+                    ))}
+                  </div>
+                  <div className="p-3 bg-muted/50 rounded">
+                    <p className="text-sm font-medium mb-2">Regulatory Frameworks</p>
+                    <div className="flex flex-wrap gap-1">
+                      {['UFLPA ✅','EUDR ✅','CSDDD ✅','GDPR ✅','REACH ⚠️','SOX ✅'].map(f => (
+                        <Badge key={f} variant={f.includes('⚠️')?'outline':'default'} className="text-xs">{f}</Badge>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </AccordionSection>
+              
+              <AccordionSection title="Relationship & Financial" icon={<DollarSign className="w-4 h-4"/>}>
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div className="p-3 bg-muted/50 rounded"><p className="text-muted-foreground">Annual Revenue</p><p className="text-lg font-bold">${(selected.annualRevenue/1e6).toFixed(0)}M USD</p></div>
+                  <div className="p-3 bg-muted/50 rounded"><p className="text-muted-foreground">Employee Count</p><p className="text-lg font-bold">{selected.employeeCount.toLocaleString()}</p></div>
+                  <div className="p-3 bg-muted/50 rounded"><p className="text-muted-foreground">Credit Rating</p><p className="text-lg font-bold">{selected.creditRating}</p></div>
+                  <div className="p-3 bg-muted/50 rounded"><p className="text-muted-foreground">Registration #</p><p className="text-sm font-mono">{selected.registrationNumber}</p></div>
+                </div>
+              </AccordionSection>
+              
+              <AccordionSection title="Notes & Audit Trail" icon={<FileText className="w-4 h-4"/>}>
+                <div className="space-y-2">
+                  <div className="p-3 border-l-2 border-primary bg-muted/30">
+                    <p className="text-sm"><ExpandableText content={`Q3 capacity expansion planned - 20% increase expected. Key contact available M-F 9am-6pm SGT. Strategic supplier for semiconductor components.`} maxLength={100}/></p>
+                    <p className="text-xs text-muted-foreground mt-1">Updated: March 10, 2025 by Procurement Team</p>
+                  </div>
+                </div>
+              </AccordionSection>
+            </div>
+          </>)}
+        </SheetContent>
+      </Sheet>
+      
+      {/* Add Supplier Dialog */}
+      <Dialog open={showAddForm} onOpenChange={setShowAddForm}>
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader><DialogTitle>Add New Supplier</DialogTitle><DialogDescription>Complete all required fields (*) marked in red</DialogDescription></DialogHeader>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
+            <div className="space-y-3">
+              <h4 className="font-semibold text-sm text-primary">Basic Information</h4>
+              <div><FieldLabel label="Company Name" required tooltip="Legal business name"/><Input placeholder="Acme Corp"/></div>
+              <div><FieldLabel label="Legal Name" required/><Input placeholder="Acme Corporation LLC"/></div>
+              <div><FieldLabel label="Registration Number" required/><Input placeholder="Gov registration ID"/></div>
+              <div><FieldLabel label="Tax ID/VAT" required/><Input placeholder="Tax identification"/></div>
+              <div><FieldLabel label="D-U-N-S Number"/><Input placeholder="Optional - D&B number"/></div>
+              <div><FieldLabel label="Company Type" required/>
+                <Select><SelectTrigger><SelectValue placeholder="Select type"/></SelectTrigger><SelectContent>
+                  {['LLC','Corporation','PLC','GmbH','Joint Stock','Partnership','Sole Proprietorship'].map(t=><SelectItem key={t} value={t}>{t}</SelectItem>)}
+                </SelectContent></Select></div>
+            </div>
+            <div className="space-y-3">
+              <h4 className="font-semibold text-sm text-primary">Address & Contact</h4>
+              <div><FieldLabel label="Street Address" required/><Input placeholder="123 Main St"/></div>
+              <div className="grid grid-cols-2 gap-2"><div><FieldLabel label="City" required/><Input/></div><div><FieldLabel label="Postal Code" required/><Input/></div></div>
+              <div><FieldLabel label="Country" required/>
+                <Select><SelectTrigger><SelectValue/></SelectTrigger><SelectContent>
+                  {['United States','China','Germany','Japan','South Korea','Taiwan','Singapore','Vietnam','India','Mexico','Brazil','UK','Poland','Other'].map(c=><SelectItem key={c} value={c}>{c}</SelectItem>)}
+                </SelectContent></Select></div>
+              <div><FieldLabel label="Primary Contact Name" required/><Input placeholder="Full name"/></div>
+              <div><FieldLabel label="Contact Email" required type="email"/><Input placeholder="email@company.com"/></div>
+              <div><FieldLabel label="Contact Phone" required type="tel"/><Input placeholder="+1-234-567-8900"/></div>
+            </div>
+            <div className="space-y-3 md:col-span-2">
+              <h4 className="font-semibold text-sm text-primary">Classification & Financial</h4>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div><FieldLabel label="Supplier Tier" required tooltip="Based on spend volume"/>
+                  <Select><SelectTrigger><SelectValue/></SelectTrigger><SelectContent>
+                    {['Tier 1 - Strategic','Tier 2 - Approved','Tier 3 - Qualified','Tier 4 - Provisional'].map((t,i)=><SelectItem key={i} value={String(i+1)}>{t}</SelectItem>)}
+                  </SelectContent></Select></div>
+                <div><FieldLabel label="Category" required/>
+                  <Select><SelectTrigger><SelectValue/></SelectTrigger><SelectContent>
+                    {['Semiconductors','Electronics','Manufacturing','Raw Materials','Logistics','Software','Packaging','Other'].map(c=><SelectItem key={c} value={c}>{c}</SelectItem>)}
+                  </SelectContent></Select></div>
+                <div><FieldLabel label="Annual Revenue (USD)"/><Input type="number" placeholder="0"/></div>
+                <div><FieldLabel label="Employee Count"/><Input type="number" placeholder="0"/></div>
+              </div>
+              <div><FieldLabel label="Payment Terms"/>
+                <Select><SelectTrigger><SelectValue/></SelectTrigger><SelectContent>
+                  {['Net 15','Net 30','Net 45','Net 60','Net 90','COD','Other'].map(t=><SelectItem key={t} value={t}>{t}</SelectItem>)}
+                </SelectContent></Select></div>
+              <div><FieldLabel label="Additional Notes"/><Textarea placeholder="Any relevant information about this supplier..." rows={3}/></div>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowAddForm(false)}>Cancel</Button>
+            <Button onClick={() => {setShowAddForm(false); toast({title: 'Supplier added', description: 'New supplier profile created successfully'})}}><Save className="w-4 h-4 mr-2"/>Save Supplier</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      
+      <ChatWidget context="supply-directory" title="Supply Directory" />
+    </div>
+  )
+}
+
+function RiskIntelligencePortal() {
+  const [filterSeverity, setFilterSeverity] = useState('all')
+  const [filterStatus, setFilterStatus] = useState('all')
+  const [selectedAlert, setSelectedAlert] = useState<RiskAlert | null>(null)
+  
+  const filtered = alertsData.filter(a => {
+    const matchSev = filterSeverity === 'all' || a.severity === filterSeverity
+    const matchSt = filterStatus === 'all' || a.status === filterStatus
+    return matchSev && matchSt
+  })
+  
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div><h2 className="text-2xl font-bold flex items-center gap-2"><AlertTriangle className="w-7 h-7 text-orange-500" />Risk Intelligence</h2>
+        <p className="text-muted-foreground mt-1">Real-time risk monitoring, alerting & mitigation tracking</p></div>
+        <QuickContact section="risk-intelligence" />
+      </div>
+      
+      {/* Alert Stats */}
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+        {[{l: 'Critical', v: alertsData.filter(a=>a.severity==='critical').length, c: 'bg-red-500/10 text-red-500 border-red-500/20'},
+          {l: 'High', v: alertsData.filter(a=>a.severity==='high').length, c: 'bg-orange-500/10 text-orange-500 border-orange-500/20'},
+          {l: 'Medium', v: alertsData.filter(a=>a.severity==='medium').length, c: 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20'},
+          {l: 'Low', v: alertsData.filter(a=>a.severity==='low').length, c: 'bg-blue-500/10 text-blue-500 border-blue-500/20'},
+          {l: 'Open', v: alertsData.filter(a=>!a.acknowledged).length, c: 'bg-purple-500/10 text-purple-500 border-purple-500/20'}
+        ].map((s,i) => (<Card key={i} className={`p-3 border ${s.c}`}><p className="text-xs opacity-70">{s.l}</p><p className="text-2xl font-bold">{s.v}</p></Card>))}</div>
+      
+      {/* Charts Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <Card className="p-4"><h3 className="font-semibold mb-4 flex items-center gap-2"><TrendingUp className="w-4 h-4"/>Risk Trend (12 Months)</h3>
+          <ResponsiveContainer width="100%" height={200}><RechartsLineChart data={riskTrendData}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#eee"/><XAxis dataKey="date" fontSize={11}/><YAxis domain={[0,100]} fontSize={11}/>
+            <Tooltip/><Legend/>
+            <Line type="monotone" dataKey="score" stroke="#10b981" strokeWidth={2} name="Risk Score %"/>
+            <Line type="monotone" dataKey="threshold" stroke="#ef4444" strokeDasharray="5 5" name="Threshold"/>
+          </RechartsLineChart></ResponsiveContainer>
+        </Card>
+        <Card className="p-4"><h3 className="font-semibold mb-4 flex items-center gap-2"><Globe className="w-4 h-4"/>Risk by Region</h3>
+          <ResponsiveContainer width="100%" height={200}><RechartsBarChart data={regionRiskData}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#eee"/><XAxis dataKey="region" fontSize={11}/><YAxis fontSize={11}/>
+            <Tooltip/><Legend/>
+            <Bar dataKey="critical" stackId="a" fill="#ef4444" name="Critical"/>
+            <Bar dataKey="high" stackId="a" fill="#f97316" name="High"/>
+            <Bar dataKey="medium" stackId="a" fill="#eab308" name="Medium"/>
+          </RechartsBarChart></ResponsiveContainer>
+        </Card>
+      </div>
+      
+      {/* Filters */}
+      <Card className="p-4">
+        <div className="flex flex-col sm:flex-row gap-3">
+          <Select value={filterSeverity} onValueChange={setFilterSeverity}><SelectTrigger className="w-40"><SelectValue placeholder="Severity"/></SelectTrigger><SelectContent>{['all','critical','high','medium','low'].map(s=><SelectItem key={s} value={s}>{s.charAt(0).toUpperCase()+s.slice(1)}</SelectItem>)}</SelectContent></Select>
+          <Select value={filterStatus} onValueChange={setFilterStatus}><SelectTrigger className="w-40"><SelectValue placeholder="Status"/></SelectTrigger><SelectContent>{['all','open','investigating','mitigating','resolved'].map(s=><SelectItem key={s} value={s}>{s.charAt(0).toUpperCase()+s.slice(1)}</SelectItem>)}</SelectContent></Select>
+          <div className="flex-1"></div>
+          <Button variant="outline" className="gap-1"><RefreshCw className="w-4 h-4"/>Refresh</Button>
+        </div>
+      </Card>
+      
+      {/* Alerts List */}
+      <div className="space-y-3">
+        {filtered.map(alert => (
+          <Card key={alert.id} className={`p-4 cursor-pointer transition-all hover:border-primary/50 ${!alert.acknowledged ? 'border-l-4 border-l-red-500' : ''}`} onClick={() => setSelectedAlert(alert)}>
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-1">
+                  <SeverityBadge severity={alert.severity}/>
+                  <StatusBadge status={alert.status}/>
+                  {!alert.acknowledged && <Badge variant="destructive" className="text-xs">NEW</Badge>}
+                </div>
+                <h4 className="font-semibold">{alert.title}</h4>
+                <p className="text-sm text-muted-foreground mt-1"><ExpandableText content={alert.message} maxLength={120}/></p>
+                <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
+                  <span className="flex items-center gap-1"><Building2 className="w-3 h-3"/>{alert.supplier}</span>
+                  <span className="flex items-center gap-1"><Clock className="w-3 h-3"/>{alert.timestamp.toLocaleString()}</span>
+                  <span>Confidence: {alert.confidence}%</span>
+                  <span>Probability: {alert.probability}%</span>
+                </div>
+              </div>
+              <Button variant="ghost" size="sm" onClick={e => {e.stopPropagation(); setSelectedAlert(alert)}}>Details</Button>
+            </div>
+          </Card>
+        ))}
+      </div>
+      
+      {/* Alert Detail Modal */}
+      <Dialog open={!!selectedAlert} onOpenChange={() => setSelectedAlert(null)}>
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+          {selectedAlert && (<>
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2"><SeverityBadge severity={selectedAlert.severity}/> {selectedAlert.title}</DialogTitle>
+              <DialogDescription>{selectedAlert.supplier} • {selectedAlert.category} • {selectedAlert.timestamp.toLocaleString()}</DialogDescription>
+            </DialogHeader>
+            <div className="space-y-4 py-4">
+              <AccordionSection title="Impact Assessment" defaultOpen icon={<AlertCircle className="w-4 h-4"/>}>
+                <div className="p-4 bg-red-50 dark:bg-red-950/20 rounded-lg border border-red-200 dark:border-red-900">
+                  <p className="font-medium text-red-800 dark:text-red-300 mb-2">Business Impact</p>
+                  <ExpandableText content={selectedAlert.impact} maxLength={200}/>
+                </div>
+                <div className="grid grid-cols-2 gap-4 mt-4">
+                  <div className="p-3 bg-muted/50 rounded"><p className="text-sm text-muted-foreground">Probability</p><p className="text-xl font-bold">{selectedAlert.probability}%</p></div>
+                  <div className="p-3 bg-muted/50 rounded"><p className="text-sm text-muted-foreground">Confidence</p><p className="text-xl font-bold">{selectedAlert.confidence}%</p></div>
+                </div>
+              </AccordionSection>
+              
+              <AccordionSection title="Mitigation Actions" icon={<ShieldCheck className="w-4 h-4"/>} badge={`${selectedAlert.mitigationActions.length} actions`}>
+                <div className="space-y-3">
+                  {selectedAlert.mitigationActions.map((ma, idx) => (
+                    <div key={idx} className="flex items-start gap-3 p-3 border rounded-lg">
+                      <StatusBadge status={ma.status}/>
+                      <div className="flex-1"><p className="font-medium text-sm">{ma.action}</p>
+                        <p className="text-xs text-muted-foreground mt-1">Owner: {ma.owner} • Due: {ma.dueDate}</p></div>
+                    </div>
+                  ))}
+                  {selectedAlert.mitigationActions.length === 0 && <p className="text-sm text-muted-foreground">No mitigation actions defined yet.</p>}
+                  <Button variant="outline" size="sm" className="gap-1"><Plus className="w-4 h-4"/>Add Action</Button>
+                </div>
+              </AccordionSection>
+              
+              <AccordionSection title="Communication Log" icon={<MessageSquare className="w-4 h-4"/>}>
+                <div className="space-y-2 text-sm">
+                  <div className="p-2 bg-muted/50 rounded"><p className="font-medium">System Generated</p><p className="text-xs text-muted-foreground">Alert created based on AI detection: Regulatory intelligence feed + document analysis</p></div>
+                </div>
+              </AccordionSection>
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setSelectedAlert(null)}>Close</Button>
+              <Button><Send className="w-4 h-4 mr-2"/>Escalate</Button>
+            </DialogFooter>
+          </>)}
+        </DialogContent>
+      </Dialog>
+      
+      <ChatWidget context="risk-intelligence" title="Risk Intelligence" />
+    </div>
+  )
+}
+
+function DemandForecastingPortal() {
+  const [periodFilter, setPeriodFilter] = useState('all')
+  const [showScenario, setShowScenario] = useState(false)
+  
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div><h2 className="text-2xl font-bold flex items-center gap-2"><LineChart className="w-7 h-7 text-cyan-500" />Demand Forecasting</h2>
+        <p className="text-muted-foreground mt-1">AI-powered demand prediction with confidence intervals</p></div>
+        <div className="flex items-center gap-2"><QuickContact section="demand-forecasting"/><Button variant="outline" className="gap-1" onClick={() => setShowScenario(true)}><Brain className="w-4 h-4"/>Scenarios</Button></div>
+      </div>
+      
+      {/* Forecast Summary Cards */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        {[{l: 'Products Tracked', v: forecastData.length, i: Package, c: 'text-blue-500'},
+          {l: 'Avg Confidence', v: Math.round(forecastData.reduce((a,f)=>a+f.confidence,0)/forecastData.length)+'%', i: Target, c: 'text-emerald-500'},
+          {l: 'Increasing Trend', v: forecastData.filter(f=>f.trend==='increasing').length, i: TrendingUp, c: 'text-green-500'},
+          {l: 'Needs Attention', v: forecastData.filter(f=>f.confidence<80||f.trend==='volatile').length, i: AlertTriangle, c: 'text-orange-500'}
+        ].map((s,i) => (<Card key={i} className="p-3"><div className="flex items-center gap-2 mb-1"><s.i className={`w-4 h-4 ${s.c}`}/><span className="text-xs text-muted-foreground">{s.l}</span></div><p className="text-xl font-bold">{s.v}</p></Card>))}</div>
+      
+      {/* Main Chart */}
+      <Card className="p-4">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="font-semibold flex items-center gap-2"><BarChart3 className="w-4 h-4"/>Demand Forecast vs Actual</h3>
+          <Select value={periodFilter} onValueChange={setPeriodFilter}><SelectTrigger className="w-32"><SelectValue/></SelectTrigger><SelectContent>{['all','weekly','monthly'].map(p=><SelectItem key={p} value={p}>{p.charAt(0).toUpperCase()+p.slice(1)}</SelectItem>)}</SelectContent></Select>
+        </div>
+        <ResponsiveContainer width="100%" height={300}><ComposedChart data={forecastData}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#eee"/><XAxis dataKey="product" fontSize={11} angle={-30} textAnchor="end" height={70}/><YAxis fontSize={11}/>
+          <Tooltip formatter={(value: any, name: string) => [value, name.charAt(0).toUpperCase() + name.slice(1)]}/>
+          <Legend/>
+          <Bar dataKey="actual" fill="#10b981" name="Actual" radius={[4,4,0,0]}/>
+          <Bar dataKey="forecast" fill="#3b82f6" name="Forecast" radius={[4,4,0,0]}/>
+          <Line type="monotone" dataKey="upperBound" stroke="#f97316" strokeDasharray="5 5" dot={false} name="Upper Bound"/>
+          <Line type="monotone" dataKey="lowerBound" stroke="#f97316" strokeDasharray="5 5" dot={false} name="Lower Bound"/>
+        </ComposedChart></ResponsiveContainer>
+      </Card>
+      
+      {/* Forecast Table */}
+      <Card className="overflow-hidden">
+        <Table>
+          <TableHeader><TableRow><TableHead>Product</TableHead><TableHead>SKU</TableHead><TableHead>Period</TableHead><TableHead>Actual</TableHead><TableHead>Forecast</TableHead><TableHead>Range</TableHead><TableHead>Confidence</TableHead><TableHead>Trend</TableHead><TableHead>Anomaly</TableHead></TableRow></TableHeader>
+          <TableBody>{forecastData.map(f => (
+            <TableRow key={f.id}>
+              <TableCell className="font-medium">{f.product}</TableCell>
+              <TableCell><code className="text-xs bg-muted px-1 py-0.5 rounded">{f.sku}</code></TableCell>
+              <TableCell>{f.period}</TableCell>
+              <TableCell>{f.actual?.toLocaleString() || '-'}</TableCell>
+              <TableCell>{f.forecast.toLocaleString()}</TableCell>
+              <TableCell className="text-xs">{f.lowerBound.toLocaleString()} - {f.upperBound.toLocaleString()}</TableCell>
+              <TableCell><Progress value={f.confidence} className="w-12 h-1.5"/><span className="ml-1 text-xs">{f.confidence}%</span></TableCell>
+              <TableCell><Badge variant={f.trend==='increasing'?'default':f.trend==='volatile'?'destructive':'secondary'} className="text-xs">{f.trend}</Badge></TableCell>
+              <TableCell>{f.anomaly ? <Badge variant="outline" className="text-xs text-orange-500">⚠️</Badge> : <CheckCircle2 className="w-4 h-4 text-emerald-500"/>}</TableCell>
+            </TableRow>
+          ))}</TableBody>
+        </Table>
+      </Card>
+      
+      {/* Scenario Planning Dialog */}
+      <Dialog open={showScenario} onOpenChange={setShowScenario}>
+        <DialogContent><DialogHeader><DialogTitle>Scenario Planning</DialogTitle><DialogDescription>Create what-if scenarios for demand forecasting</DialogDescription></DialogHeader>
+          <div className="space-y-4 py-4">
+            <div><FieldLabel label="Scenario Name" required/><Input placeholder="Q4 Surge Scenario"/></div>
+            <div className="grid grid-cols-2 gap-3">
+              <div><FieldLabel label="Base Product"/><Select><SelectTrigger><SelectValue/></SelectTrigger><SelectContent>{forecastData.map(f=><SelectItem key={f.id} value={f.id}>{f.product}</SelectItem>)}</SelectContent></Select></div>
+              <div><FieldLabel label="Scenario Type"/><Select><SelectTrigger><SelectValue/></SelectTrigger><SelectContent>{['Optimistic','Pessimistic','Disruption','Market Shift','Seasonal Peak'].map(s=><SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent></Select></div>
+            </div>
+            <div><FieldLabel label="Assumptions"/><Textarea placeholder="Describe scenario assumptions..." rows={3}/></div>
+            <div className="grid grid-cols-2 gap-3">
+              <div><FieldLabel label="Demand Adjustment (%)"/><Input type="number" placeholder="+/- percentage"/></div>
+              <div><FieldLabel label="Time Horizon"/><Select><SelectTrigger><SelectValue/></SelectTrigger><SelectContent>{['30 days','60 days','90 days','6 months','1 year'].map(h=><SelectItem key={h} value={h}>{h}</SelectItem>)}</SelectContent></Select></div>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowScenario(false)}>Cancel</Button>
+            <Button onClick={() => setShowScenario(false)}><Brain className="w-4 h-4 mr-2"/>Run Scenario</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      
+      <ChatWidget context="demand-forecasting" title="Demand Forecasting" />
+    </div>
+  )
+}
+
+function CompliancePortal() {
+  const [selectedFramework, setSelectedFramework] = useState<ComplianceItem | null>(null)
+  
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div><h2 className="text-2xl font-bold flex items-center gap-2"><Scale className="w-7 h-7 text-violet-500" />Compliance Center</h2>
+        <p className="text-muted-foreground mt-1">Multi-framework regulatory compliance monitoring</p></div>
+        <QuickContact section="compliance" />
+      </div>
+      
+      {/* Framework Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {complianceData.map(cf => (
+          <Card key={cf.acronym} className={`p-4 cursor-pointer transition-all hover:border-primary/50 ${cf.status==='non-compliant'?'border-red-200 bg-red-50/50':''}`} onClick={() => setSelectedFramework(cf)}>
+            <div className="flex items-start justify-between mb-3">
+              <div><h3 className="font-bold">{cf.framework}</h3><p className="text-xs text-muted-foreground">{cf.acronym}</p></div>
+              <StatusBadge status={cf.status}/>
+            </div>
+            <div className="mb-3"><div className="flex items-center justify-between text-sm mb-1"><span>Overall Score</span><span className="font-bold">{cf.score}%</span></div><Progress value={cf.score} className="h-2"/></div>
+            <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
+              <div>Last Audit: {cf.lastAudit}</div>
+              <div>Next: {cf.nextAudit}</div>
+            </div>
+            {cf.upcomingDeadlines.length > 0 && (
+              <div className="mt-3 p-2 bg-yellow-50 dark:bg-yellow-950/20 rounded border border-yellow-200">
+                <p className="text-xs font-medium text-yellow-800 dark:text-yellow-300 flex items-center gap-1"><AlertCircle className="w-3 h-3"/>Upcoming Deadline</p>
+                <p className="text-xs mt-1">{cf.upcomingDeadlines[0].requirement} ({cf.upcomingDeadlines[0].date})</p>
+              </div>
+            )}
+          </Card>
+        ))}
+      </div>
+      
+      {/* Framework Detail */}
+      <Sheet open={!!selectedFramework} onOpenChange={() => setSelectedFramework(null)}>
+        <SheetContent className="w-full sm:max-w-2xl overflow-y-auto">
+          {selectedFramework && (<>
+            <SheetHeader><SheetTitle className="flex items-center gap-2"><Scale className="w-5 h-5"/>{selectedFramework.framework}</SheetTitle>
+            <SheetDescription>{selectedFramework.acronym} • Overall Score: {selectedFramework.score}%</SheetDescription></SheetHeader>
+            
+            <div className="mt-6 space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="p-3 bg-muted/50 rounded"><p className="text-sm text-muted-foreground">Last Audit</p><p className="font-medium">{selectedFramework.lastAudit}</p></div>
+                <div className="p-3 bg-muted/50 rounded"><p className="text-sm text-muted-foreground">Next Audit</p><p className="font-medium">{selectedFramework.nextAudit}</p></div>
+              </div>
+              
+              <AccordionSection title="Requirements Status" defaultOpen icon={<ClipboardCheck className="w-4 h-4"/>} badge={`${selectedFramework.requirements.length} items`}>
+                <div className="space-y-2">
+                  {selectedFramework.requirements.map((req, idx) => (
+                    <div key={idx} className="flex items-center justify-between p-3 border rounded-lg">
+                      <div className="flex-1"><p className="font-medium text-sm">{req.title}</p>
+                        <p className="text-xs text-muted-foreground">{req.severity}</p></div>
+                      <StatusBadge status={req.status}/>
+                    </div>
+                  ))}
+                </div>
+              </AccordionSection>
+              
+              <AccordionSection title="Upcoming Deadlines" icon={<Clock className="w-4 h-4"/>} badge={`${selectedFramework.upcomingDeadlines.length} pending`}>
+                <div className="space-y-2">
+                  {selectedFramework.upcomingDeadlines.map((d, idx) => (
+                    <div key={idx} className="flex items-center justify-between p-3 bg-yellow-50 dark:bg-yellow-950/20 rounded border border-yellow-200">
+                      <div><p className="font-medium text-sm">{d.requirement}</p><p className="text-xs text-muted-foreground">{d.action}</p></div>
+                      <Badge variant={d.priority==='high'?'destructive':'outline'}>{d.date}</Badge>
+                    </div>
+                  ))}
+                  {selectedFramework.upcomingDeadlines.length === 0 && <p className="text-sm text-muted-foreground">No upcoming deadlines.</p>}
+                </div>
+              </AccordionSection>
+              
+              <AccordionSection title="Audit History" icon={<History className="w-4 h-4"/>}>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between p-2 bg-muted/50 rounded"><span>Date: {selectedFramework.lastAudit}</span><Badge>Score: {selectedFramework.score}%</Badge></div>
+                </div>
+              </AccordionSection>
+            </div>
+          </>)}
+        </SheetContent>
+      </Sheet>
+      
+      {/* Compliance Summary Chart */}
+      <Card className="p-4">
+        <h3 className="font-semibold mb-4 flex items-center gap-2"><PieChart className="w-4 h-4"/>Compliance Overview</h3>
+        <ResponsiveContainer width="100%" height={250}><RechartsPieChart>
+          <Pie data={complianceData.map(c=>({name:c.acronym, value:c.score}))} cx="50%" cy="50%" outerRadius={80} fill="#8884d8" dataKey="value" label={({name, percent}) => `${name} ${(percent*100).toFixed(0)}%`}>
+            {complianceData.map((_, idx) => <Cell key={idx} fill={['#10b981','#3b82f6','#8b5cf6','#f59e0b','#ec4899','#06b6d4'][idx]}/>)}
+          </Pie>
+          <Tooltip/><Legend/>
+        </RechartsPieChart></ResponsiveContainer>
+      </Card>
+      
+      <ChatWidget context="compliance" title="Compliance Center" />
+    </div>
+  )
+}
+
+// ============================================
+// MAIN COMMAND CENTER COMPONENT
+// ============================================
+
+// Particle Background Component
 function ParticleCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
-    
     const ctx = canvas.getContext('2d')
     if (!ctx) return
     
-    let animationId: number
-    const particles: Array<{
-      x: number
-      y: number
-      size: number
-      speedX: number
-      speedY: number
-      opacity: number
-      pulse: number
-    }> = []
+    let animId: number
+    const particles: Array<{x: number; y: number; size: number; vx: number; vy: number; opacity: number; pulse: number}> = []
     
-    const resize = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-    }
-    
+    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight }
     resize()
     window.addEventListener('resize', resize)
     
-    const particleCount = Math.min(Math.floor(window.innerWidth * 0.06), 80)
-    
-    for (let i = 0; i < particleCount; i++) {
+    for (let i = 0; i < Math.min(Math.floor(window.innerWidth * 0.05), 60); i++) {
       particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        size: Math.random() * 1.5 + 0.5,
-        speedX: (Math.random() - 0.5) * 0.3,
-        speedY: (Math.random() - 0.5) * 0.3,
-        opacity: Math.random() * 0.5 + 0.1,
+        x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+        size: Math.random() * 1.5 + 0.5, vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3, opacity: Math.random() * 0.4 + 0.1,
         pulse: Math.random() * Math.PI * 2
       })
     }
     
-    const drawConnections = () => {
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x
-          const dy = particles[i].y - particles[j].y
-          const dist = Math.sqrt(dx * dx + dy * dy)
-          
-          if (dist < 120) {
-            const opacity = (1 - dist / 120) * 0.08
-            ctx.beginPath()
-            ctx.moveTo(particles[i].x, particles[i].y)
-            ctx.lineTo(particles[j].x, particles[j].y)
-            ctx.strokeStyle = `rgba(16, 185, 129, ${opacity})`
-            ctx.lineWidth = 0.5
-            ctx.stroke()
-          }
-        }
-      }
-    }
-    
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
-      
       particles.forEach(p => {
-        p.x += p.speedX
-        p.y += p.speedY
-        p.pulse += 0.02
-        
-        if (p.x < 0 || p.x > canvas.width || p.y < 0 || p.y > canvas.height) {
-          p.x = Math.random() * canvas.width
-          p.y = Math.random() * canvas.height
-        }
-        
-        const o = p.opacity + Math.sin(p.pulse) * 0.15
-        ctx.beginPath()
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(16, 185, 129, ${o})`
-        ctx.fill()
+        p.x += p.vx; p.y += p.vy; p.pulse += 0.02
+        if (p.x < 0 || p.x > canvas.width || p.y < 0 || p.y > canvas.height) { p.x = Math.random() * canvas.width; p.y = Math.random() * canvas.height }
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(16, 185, 129, ${p.opacity + Math.sin(p.pulse) * 0.12})`; ctx.fill()
       })
-      
-      drawConnections()
-      animationId = requestAnimationFrame(animate)
+      animId = requestAnimationFrame(animate)
     }
-    
     animate()
-    
-    return () => {
-      window.removeEventListener('resize', resize)
-      cancelAnimationFrame(animationId)
-    }
+    return () => { window.removeEventListener('resize', resize); cancelAnimationFrame(animId) }
   }, [])
   
-  return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-0"
-      style={{ opacity: 0.6 }}
-    />
-  )
+  return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-0" style={{opacity: 0.5}} />
 }
 
-// ============================================
-// NAVIGATION COMPONENT
-// ============================================
-
-function Navigation({ activeSection, setActiveSection }: { 
-  activeSection: string
-  setActiveSection: (section: string) => void 
-}) {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileOpen, setIsMobileOpen] = useState(false)
-  
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 40)
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-  
-  const navItems = [
-    { id: 'home', label: 'Home' },
-    { id: 'dashboard', label: 'Dashboard' },
-    { id: 'suppliers', label: 'Suppliers' },
-    { id: 'forecasting', label: 'Forecasting' },
-    { id: 'alerts', label: 'Alerts' },
-    { id: 'compliance', label: 'Compliance' },
-    { id: 'advisor', label: 'AI Advisor' },
-    { id: 'roadmap', label: 'Roadmap' },
-    { id: 'contact', label: 'Contact' },
-  ]
+export default function CommandCenter() {
+  const [activeTab, setActiveTab] = useState('supply-directory')
   
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'glass border-b border-border/50 shadow-lg' : ''
-    }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Brand */}
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center font-bold text-sm text-background">
-              SC
-            </div>
-            <span className="font-semibold text-lg hidden sm:block">AI Supply Chain</span>
-          </div>
-          
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-1">
-            {navItems.map(item => (
-              <button
-                key={item.id}
-                onClick={() => {
-                  setActiveSection(item.id)
-                  document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' })
-                }}
-                className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                  activeSection === item.id
-                    ? 'bg-primary/10 text-primary'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-white/5'
-                }`}
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
-          
-          {/* Mobile Toggle */}
-          <button
-            onClick={() => setIsMobileOpen(!isMobileOpen)}
-            className="lg:hidden p-2 rounded-lg hover:bg-white/5"
-          >
-            <div className="w-5 h-5 flex flex-col justify-center gap-1">
-              <span className={`block h-0.5 w-full bg-current transition-transform ${isMobileOpen ? 'rotate-45 translate-y-1.5' : ''}`} />
-              <span className={`block h-0.5 w-full bg-current transition-opacity ${isMobileOpen ? 'opacity-0' : ''}`} />
-              <span className={`block h-0.5 w-full bg-current transition-transform ${isMobileOpen ? '-rotate-45 -translate-y-1.5' : ''}`} />
-            </div>
-          </button>
-        </div>
-        
-        {/* Mobile Menu */}
-        {isMobileOpen && (
-          <div className="lg:hidden py-4 border-t border-border/50">
-            <div className="grid grid-cols-2 gap-1">
-              {navItems.map(item => (
-                <button
-                  key={item.id}
-                  onClick={() => {
-                    setActiveSection(item.id)
-                    setIsMobileOpen(false)
-                    document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' })
-                  }}
-                  className={`px-3 py-2 rounded-lg text-sm font-medium text-left transition-all ${
-                    activeSection === item.id
-                      ? 'bg-primary/10 text-primary'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-white/5'
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-    </nav>
-  )
-}
-
-// ============================================
-// HERO SECTION
-// ============================================
-
-function HeroSection() {
-  return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden">
-      {/* Background orbs */}
-      <div className="absolute top-20 right-10 w-[500px] h-[500px] bg-violet-500/10 rounded-full blur-[120px]" />
-      <div className="absolute bottom-20 left-10 w-[400px] h-[400px] bg-cyan-500/10 rounded-full blur-[120px]" />
-      
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <Badge variant="secondary" className="mb-6 px-4 py-1.5 text-sm bg-primary/10 text-primary border-primary/20">
-          <Zap className="w-3.5 h-3.5 mr-2" />
-          AI-Powered Supply Chain Intelligence
-        </Badge>
-        
-        <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold leading-tight mb-6">
-          Predict Disruptions{' '}
-          <span className="gradient-text">Before They Happen</span>
-        </h1>
-        
-        <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-10 leading-relaxed">
-          Real-time AI-powered supply chain risk intelligence platform. Forecast disruptions, 
-          monitor suppliers, predict demand, and ensure compliance with explainable machine learning.
-        </p>
-        
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-          <Button 
-            size="lg" 
-            className="bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white px-8 h-12 text-base"
-            onClick={() => document.getElementById('dashboard')?.scrollIntoView({ behavior: 'smooth' })}
-          >
-            Explore Dashboard
-            <ArrowRight className="ml-2 w-4 h-4" />
-          </Button>
-          <Button 
-            variant="outline" 
-            size="lg"
-            className="border-border/50 hover:border-primary/50 hover:bg-primary/5 px-8 h-12 text-base"
-            onClick={() => document.getElementById('advisor')?.scrollIntoView({ behavior: 'smooth' })}
-          >
-            Try AI Advisor
-          </Button>
-        </div>
-        
-        {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-          {[
-            { value: '99.2%', label: 'Prediction Accuracy', icon: Target },
-            { value: '< 5s', label: 'Alert Latency', icon: Zap },
-            { value: '10K+', label: 'Suppliers Tracked', icon: Building2 },
-            { value: '24/7', label: 'Monitoring', icon: Activity },
-          ].map((stat, i) => (
-            <div key={i} className="glass rounded-xl p-4 text-center glow-emerald">
-              <stat.icon className="w-5 h-5 mx-auto mb-2 text-primary" />
-              <div className="text-2xl font-bold gradient-text">{stat.value}</div>
-              <div className="text-xs text-muted-foreground mt-1">{stat.label}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-      
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <ChevronDown className="w-6 h-6 text-muted-foreground" />
-      </div>
-    </section>
-  )
-}
-
-// ============================================
-// DASHBOARD SECTION
-// ============================================
-
-function DashboardSection() {
-  const [selectedPeriod, setSelectedPeriod] = useState('12m')
-  const [isLive, setIsLive] = useState(true)
-  
-  return (
-    <section id="dashboard" className="py-20 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-12">
-          <Badge variant="secondary" className="mb-4 bg-cyan-500/10 text-cyan-400 border-cyan-500/20">
-            <BarChart3 className="w-3.5 h-3.5 mr-2" />
-            Command Center
-          </Badge>
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">Your Supply Chain Nervous System</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Real-time KPIs, risk gauges, and trend charts in a unified view — no tab-switching, no delays.
-          </p>
-        </div>
-        
-        {/* Controls */}
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
-          <div className="flex items-center gap-3">
-            <Badge variant={isLive ? "default" : "secondary"} className={isLive ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/30" : ""}>
-              <span className={`w-2 h-2 rounded-full mr-2 ${isLive ? 'bg-emerald-500 pulse-dot' : ''}`} />
-              {isLive ? 'LIVE' : 'PAUSED'}
-            </Badge>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsLive(!isLive)}
-            >
-              {isLive ? <Pause className="w-4 h-4 mr-1" /> : <Play className="w-4 h-4 mr-1" />}
-              {isLive ? 'Pause' : 'Resume'}
-            </Button>
-          </div>
-          <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
-            <SelectTrigger className="w-32 bg-card border-border/50">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="3m">3 Months</SelectItem>
-              <SelectItem value="6m">6 Months</SelectItem>
-              <SelectItem value="12m">12 Months</SelectItem>
-              <SelectItem value="all">All Time</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        
-        {/* KPI Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {[
-            { title: 'Portfolio Risk Score', value: '0.34', change: '-0.03', trend: 'down' as const, icon: Shield, color: 'emerald' },
-            { title: 'High-Risk Suppliers', value: '12', change: '+2', trend: 'up' as const, icon: AlertTriangle, color: 'rose' },
-            { title: 'On-Time Delivery', value: '94.2%', change: '+1.1%', trend: 'down' as const, icon: Truck, color: 'cyan' },
-            { title: 'Active Alerts', value: '23', change: '-5', trend: 'down' as const, icon: Bell, color: 'amber' },
-          ].map((kpi, i) => (
-            <Card key={i} className="glass glass-hover border-border/50">
-              <CardContent className="p-6">
-                <div className="flex items-start justify-between mb-4">
-                  <div className={`p-2.5 rounded-lg bg-${kpi.color === 'emerald' ? 'emerald' : kpi.color === 'rose' ? 'rose' : kpi.color === 'cyan' ? 'cyan' : 'amber'}-500/10`}>
-                    <kpi.icon className={`w-5 h-5 text-${kpi.color === 'emerald' ? 'emerald' : kpi.color === 'rose' ? 'rose' : kpi.color === 'cyan' ? 'cyan' : 'amber'}-400`} />
-                  </div>
-                  <div className={`flex items-center text-sm ${kpi.trend === 'down' ? 'text-emerald-400' : 'text-rose-400'}`}>
-                    {kpi.trend === 'down' ? <TrendingDown className="w-4 h-4 mr-1" /> : <TrendingUp className="w-4 h-4 mr-1" />}
-                    {kpi.change}
-                  </div>
-                </div>
-                <div className="text-2xl font-bold mb-1">{kpi.value}</div>
-                <div className="text-sm text-muted-foreground">{kpi.title}</div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-        
-        {/* Charts Row */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          {/* Risk Trend Chart */}
-          <Card className="glass border-border/50">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <LineChart className="w-5 h-5 text-primary" />
-                Portfolio Risk Trend
-              </CardTitle>
-              <CardDescription>Monthly average risk score across all suppliers</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ResponsiveContainer width="100%" height={280}>
-                <AreaChart data={riskTrendData}>
-                  <defs>
-                    <linearGradient id="riskGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
-                    </linearGradient>
-                    <linearGradient id="thresholdGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#f43f5e" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="#f43f5e" stopOpacity={0}/>
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                  <XAxis dataKey="date" stroke="#8b9dc3" fontSize={12} />
-                  <YAxis stroke="#8b9dc3" fontSize={12} domain={[0, 1]} />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: 'rgba(10, 17, 40, 0.95)',
-                      border: '1px solid rgba(16, 185, 129, 0.2)',
-                      borderRadius: '12px',
-                      color: '#f0f4ff'
-                    }}
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="threshold"
-                    stroke="#f43f5e"
-                    strokeWidth={2}
-                    fill="url(#thresholdGradient)"
-                    strokeDasharray="5 5"
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="score"
-                    stroke="#10b981"
-                    strokeWidth={2}
-                    fill="url(#riskGradient)"
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
-          
-          {/* Risk by Region */}
-          <Card className="glass border-border/50">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <PieChart className="w-5 h-5 text-cyan-400" />
-                Risk Distribution by Region
-              </CardTitle>
-              <CardDescription>Supplier count and aggregate risk per region</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ResponsiveContainer width="100%" height={280}>
-                <RechartsPieChart>
-                  <Pie
-                    data={riskByRegionData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={100}
-                    paddingAngle={4}
-                    dataKey="value"
-                  >
-                    {['#10b981', '#06b6d4', '#8b5cf6', '#f59e0b', '#f43f5e'].map((color, index) => (
-                      <Cell key={`cell-${index}`} fill={color} />
-                    ))}
-                  </Pie>
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: 'rgba(10, 17, 40, 0.95)',
-                      border: '1px solid rgba(16, 185, 129, 0.2)',
-                      borderRadius: '12px',
-                      color: '#f0f4ff'
-                    }}
-                  />
-                  <Legend 
-                    wrapperStyle={{ color: '#8b9dc3', fontSize: '12px' }}
-                  />
-                </RechartsPieChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
-        </div>
-        
-        {/* Risk Radar Chart */}
-        <Card className="glass border-border/50">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Radio className="w-5 h-5 text-violet-400" />
-              Multi-Dimensional Risk Profile
-            </CardTitle>
-            <CardDescription>Current portfolio vs. industry benchmark across risk dimensions</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={350}>
-              <RadarChart data={riskRadarData}>
-                <PolarGrid stroke="rgba(255,255,255,0.1)" />
-                <PolarAngleAxis dataKey="subject" stroke="#8b9dc3" fontSize={12} />
-                <PolarRadiusAxis angle={30} domain={[0, 100]} stroke="#8b9dc3" />
-                <Radar
-                  name="Your Portfolio"
-                  dataKey="A"
-                  stroke="#10b981"
-                  fill="#10b981"
-                  fillOpacity={0.2}
-                  strokeWidth={2}
-                />
-                <Radar
-                  name="Industry Benchmark"
-                  dataKey="B"
-                  stroke="#8b5cf6"
-                  fill="#8b5cf6"
-                  fillOpacity={0.1}
-                  strokeWidth={2}
-                />
-                <Legend 
-                  wrapperStyle={{ color: '#8b9dc3', fontSize: '12px' }}
-                />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: 'rgba(10, 17, 40, 0.95)',
-                    border: '1px solid rgba(16, 185, 129, 0.2)',
-                    borderRadius: '12px',
-                    color: '#f0f4ff'
-                  }}
-                />
-              </RadarChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-      </div>
-    </section>
-  )
-}
-
-// ============================================
-// SUPPLIER INTELLIGENCE SECTION
-// ============================================
-
-function SupplierSection() {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [filterTier, setFilterTier] = useState<string>('all')
-  const [filterRisk, setFilterRisk] = useState<string>('all')
-  const [selectedSupplier, setSelectedSupplier] = useState<Supplier | null>(null)
-  
-  const filteredSuppliers = suppliersData.filter(supplier => {
-    const matchesSearch = supplier.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         supplier.region.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesTier = filterTier === 'all' || supplier.tier.toString() === filterTier
-    const matchesRisk = filterRisk === 'all' || supplier.riskLevel === filterRisk
-    return matchesSearch && matchesTier && matchesRisk
-  })
-  
-  const getRiskColor = (level: string) => {
-    switch (level) {
-      case 'LOW': return 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30'
-      case 'MEDIUM': return 'bg-amber-500/15 text-amber-400 border-amber-500/30'
-      case 'HIGH': return 'bg-rose-500/15 text-rose-400 border-rose-500/30'
-      default: return ''
-    }
-  }
-  
-  const getTrendIcon = (trend: string) => {
-    switch (trend) {
-      case 'up': return <TrendingUp className="w-4 h-4 text-emerald-400" />
-      case 'down': return <TrendingDown className="w-4 h-4 text-rose-400" />
-      default: return <Minus className="w-4 h-4 text-muted-foreground" />
-    }
-  }
-  
-  return (
-    <section id="suppliers" className="py-20 relative">
-      <div className="absolute inset-0 grid-bg opacity-50" />
-      
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-12">
-          <Badge variant="secondary" className="mb-4 bg-violet-500/10 text-violet-400 border-violet-500/20">
-            <Building2 className="w-3.5 h-3.5 mr-2" />
-            Supplier Intelligence
-          </Badge>
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">Know Every Node in Your Network</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Deep supplier profiles with ML-driven risk assessments. Click any supplier to see detailed SHAP analysis.
-          </p>
-        </div>
-        
-        {/* Filters */}
-        <div className="flex flex-wrap gap-4 mb-6">
-          <div className="relative flex-1 min-w-[200px]">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <Input
-              placeholder="Search suppliers or regions..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-card/50 border-border/50"
-            />
-          </div>
-          <Select value={filterTier} onValueChange={setFilterTier}>
-            <SelectTrigger className="w-32 bg-card/50 border-border/50">
-              <SelectValue placeholder="Tier" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Tiers</SelectItem>
-              <SelectItem value="1">Tier 1</SelectItem>
-              <SelectItem value="2">Tier 2</SelectItem>
-            </SelectContent>
-          </Select>
-          <Select value={filterRisk} onValueChange={setFilterRisk}>
-            <SelectTrigger className="w-36 bg-card/50 border-border/50">
-              <SelectValue placeholder="Risk Level" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Levels</SelectItem>
-              <SelectItem value="LOW">Low Risk</SelectItem>
-              <SelectItem value="MEDIUM">Medium Risk</SelectItem>
-              <SelectItem value="HIGH">High Risk</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        
-        {/* Supplier Table */}
-        <Card className="glass border-border/50 mb-6">
-          <CardContent className="p-0">
-            <Table>
-              <TableHeader>
-                <TableRow className="border-border/30 hover:bg-transparent">
-                  <TableHead>Supplier</TableHead>
-                  <TableHead>Region</TableHead>
-                  <TableHead>Tier</TableHead>
-                  <TableHead>Risk Score</TableHead>
-                  <TableHead>Risk Level</TableHead>
-                  <TableHead>OTD %</TableHead>
-                  <TableHead>Trend</TableHead>
-                  <TableHead></TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredSuppliers.map((supplier) => (
-                  <TableRow 
-                    key={supplier.id} 
-                    className="border-border/20 cursor-pointer hover:bg-white/[0.02]"
-                    onClick={() => setSelectedSupplier(supplier)}
-                  >
-                    <TableCell className="font-medium">{supplier.name}</TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <MapPin className="w-3.5 h-3.5 text-muted-foreground" />
-                        {supplier.region}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant="outline" className="border-border/50">
-                        T{supplier.tier}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <Progress 
-                          value={supplier.riskScore * 100} 
-                          className="w-16 h-2"
-                        />
-                        <span className="text-sm font-mono">{supplier.riskScore.toFixed(2)}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant="outline" className={getRiskColor(supplier.riskLevel)}>
-                        {supplier.riskLevel}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="font-mono">{supplier.onTimeDelivery}%</TableCell>
-                    <TableCell>{getTrendIcon(supplier.trend)}</TableCell>
-                    <TableCell>
-                      <Button variant="ghost" size="sm">
-                        <Eye className="w-4 h-4" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </CardContent>
-        </Card>
-        
-        {/* Supplier Detail Modal */}
-        {selectedSupplier && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedSupplier(null)}>
-            <Card className="glass border-border/50 max-w-2xl w-full max-h-[80vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <CardTitle className="text-xl">{selectedSupplier.name}</CardTitle>
-                    <CardDescription className="mt-1">
-                      {selectedSupplier.category} · Tier {selectedSupplier.tier} · {selectedSupplier.region}
-                    </CardDescription>
-                  </div>
-                  <Badge variant="outline" className={getRiskColor(selectedSupplier.riskLevel)}>
-                    {selectedSupplier.riskLevel} RISK
-                  </Badge>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {/* Metrics Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {[
-                    { label: 'Risk Score', value: selectedSupplier.riskScore.toFixed(2), icon: Shield },
-                    { label: 'On-Time Delivery', value: `${selectedSupplier.onTimeDelivery}%`, icon: Truck },
-                    { label: 'Financial Health', value: `${selectedSupplier.financialHealth}%`, icon: TrendingUp },
-                    { label: 'Compliance', value: `${selectedSupplier.complianceScore}%`, icon: CheckCircle2 },
-                  ].map((metric, i) => (
-                    <div key={i} className="p-3 rounded-lg bg-white/[0.02] border border-border/30">
-                      <metric.icon className="w-4 h-4 text-muted-foreground mb-2" />
-                      <div className="text-lg font-semibold">{metric.value}</div>
-                      <div className="text-xs text-muted-foreground">{metric.label}</div>
-                    </div>
-                  ))}
-                </div>
-                
-                {/* SHAP Explanation */}
-                <div>
-                  <h4 className="font-medium mb-3 flex items-center gap-2">
-                    <Brain className="w-4 h-4 text-primary" />
-                    SHAP Feature Attribution
-                  </h4>
-                  <div className="space-y-3">
-                    {[
-                      { feature: 'Lead Time Variance', impact: '+0.18', direction: 'increases' },
-                      { feature: 'Financial Ratio Change', impact: '+0.12', direction: 'increases' },
-                      { feature: 'Geographic Concentration', impact: '+0.08', direction: 'increases' },
-                      { feature: 'Historical Performance', impact: '-0.15', direction: 'decreases' },
-                      { feature: 'Compliance History', impact: '-0.09', direction: 'decreases' },
-                    ].map((shap, i) => (
-                      <div key={i} className="flex items-center gap-3">
-                        <span className="text-sm text-muted-foreground w-44 truncate">{shap.feature}</span>
-                        <div className="flex-1 h-2 bg-white/5 rounded-full overflow-hidden">
-                          <div 
-                            className={`h-full rounded-full ${shap.direction === 'increases' ? 'bg-rose-500' : 'bg-emerald-500'}`}
-                            style={{ width: `${Math.abs(parseFloat(shap.impact)) * 100}%` }}
-                          />
-                        </div>
-                        <span className={`text-sm font-mono w-12 text-right ${shap.direction === 'increases' ? 'text-rose-400' : 'text-emerald-400'}`}>
-                          {shap.impact}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                
-                <Button 
-                  className="w-full" 
-                  variant="outline"
-                  onClick={() => setSelectedSupplier(null)}
-                >
-                  Close Detail View
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-        )}
-      </div>
-    </section>
-  )
-}
-
-// ============================================
-// DEMAND FORECASTING SECTION
-// ============================================
-
-function ForecastingSection() {
-  const [selectedSku, setSelectedSku] = useState('all')
-  const [confidenceLevel, setConfidenceLevel] = useState<'80' | '95'>('95')
-  
-  return (
-    <section id="forecasting" className="py-20 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-12">
-          <Badge variant="secondary" className="mb-4 bg-amber-500/10 text-amber-400 border-amber-500/20">
-            <TrendingUp className="w-3.5 h-3.5 mr-2" />
-            Demand Forecasting
-          </Badge>
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">Foresee Demand. Quantify Uncertainty.</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            90-day Prophet-style projections with confidence bands. Plan inventory with precision.
-          </p>
-        </div>
-        
-        {/* Controls */}
-        <div className="flex flex-wrap gap-4 mb-8 justify-between">
-          <Select value={selectedSku} onValueChange={setSelectedSku}>
-            <SelectTrigger className="w-48 bg-card/50 border-border/50">
-              <SelectValue placeholder="Product Line" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Products</SelectItem>
-              <SelectItem value="electronics">Electronics</SelectItem>
-              <SelectItem value="mechanical">Mechanical Parts</SelectItem>
-              <SelectItem value="raw-materials">Raw Materials</SelectItem>
-            </SelectContent>
-          </Select>
-          
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground">Confidence:</span>
-            <Tabs value={confidenceLevel} onValueChange={(v) => setConfidenceLevel(v as '80' | '95')}>
-              <TabsList className="bg-card/50">
-                <TabsTrigger value="80" className="text-xs">80%</TabsTrigger>
-                <TabsTrigger value="95" className="text-xs">95%</TabsTrigger>
-              </TabsList>
-            </Tabs>
-          </div>
-        </div>
-        
-        {/* Forecast Chart */}
-        <Card className="glass border-border/50 mb-8">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <LineChart className="w-5 h-5 text-amber-400" />
-              12-Week Demand Forecast
-            </CardTitle>
-            <CardDescription>
-              Actuals (solid) vs Forecast (line) with {confidenceLevel}% confidence bands
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={400}>
-              <ComposedChart data={demandForecastData}>
-                <defs>
-                  <linearGradient id="forecastGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#06b6d4" stopOpacity={0.05}/>
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                <XAxis dataKey="week" stroke="#8b9dc3" fontSize={12} />
-                <YAxis stroke="#8b9dc3" fontSize={12} />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: 'rgba(10, 17, 40, 0.95)',
-                    border: '1px solid rgba(16, 185, 129, 0.2)',
-                    borderRadius: '12px',
-                    color: '#f0f4ff'
-                  }}
-                />
-                <Legend 
-                  wrapperStyle={{ color: '#8b9dc3', fontSize: '12px' }}
-                />
-                <Area
-                  type="monotone"
-                  dataKey="upper"
-                  stroke="transparent"
-                  fill="url(#forecastGradient)"
-                />
-                <Area
-                  type="monotone"
-                  dataKey="lower"
-                  stroke="#06b6d4"
-                  fill="rgba(5, 8, 15, 1)"
-                />
-                <Line
-                  type="monotone"
-                  dataKey="actual"
-                  stroke="#10b981"
-                  strokeWidth={2}
-                  dot={{ r: 4, fill: '#10b981' }}
-                  name="Actual"
-                />
-                <Line
-                  type="monotone"
-                  dataKey="forecast"
-                  stroke="#06b6d4"
-                  strokeWidth={2}
-                  strokeDasharray="5 5"
-                  dot={false}
-                  name="Forecast"
-                />
-              </ComposedChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-        
-        {/* Forecast Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="glass border-border/50">
-            <CardContent className="p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 rounded-lg bg-emerald-500/10">
-                  <Package className="w-5 h-5 text-emerald-400" />
-                </div>
-                <span className="font-medium">Peak Week</span>
-              </div>
-              <div className="text-3xl font-bold gradient-text">Week 12</div>
-              <p className="text-sm text-muted-foreground mt-1">Expected volume: 1,700 units</p>
-            </CardContent>
-          </Card>
-          
-          <Card className="glass border-border/50">
-            <CardContent className="p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 rounded-lg bg-cyan-500/10">
-                  <Activity className="w-5 h-5 text-cyan-400" />
-                </div>
-                <span className="font-medium">Avg Weekly Growth</span>
-              </div>
-              <div className="text-3xl font-bold gradient-text">+3.2%</div>
-              <p className="text-sm text-muted-foreground mt-1">vs. previous quarter</p>
-            </CardContent>
-          </Card>
-          
-          <Card className="glass border-border/50">
-            <CardContent className="p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 rounded-lg bg-violet-500/10">
-                  <Brain className="w-5 h-5 text-violet-400" />
-                </div>
-                <span className="font-medium">Model Accuracy</span>
-              </div>
-              <div className="text-3xl font-bold gradient-text">94.8%</div>
-              <p className="text-sm text-muted-foreground mt-1">MAPE over last 90 days</p>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-// ============================================
-// ALERT HUB SECTION
-// ============================================
-
-function AlertsSection() {
-  const [alerts, setAlerts] = useState<Alert[]>(alertsData)
-  const [filterSeverity, setFilterSeverity] = useState<string>('all')
-  const { toast } = useToast()
-  
-  const filteredAlerts = alerts.filter(alert => 
-    filterSeverity === 'all' || alert.severity === filterSeverity
-  )
-  
-  const acknowledgeAlert = (id: string) => {
-    setAlerts(prev => prev.map(a => 
-      a.id === id ? { ...a, acknowledged: true } : a
-    ))
-    toast({
-      title: "Alert Acknowledged",
-      description: "The alert has been marked as acknowledged.",
-    })
-  }
-  
-  const getSeverityStyles = (severity: string) => {
-    switch (severity) {
-      case 'critical': return {
-        badge: 'bg-rose-500/15 text-rose-400 border-rose-500/30',
-        dot: 'bg-rose-500',
-        icon: <AlertTriangle className="w-4 h-4" />
-      }
-      case 'high': return {
-        badge: 'bg-orange-500/15 text-orange-400 border-orange-500/30',
-        dot: 'bg-orange-500',
-        icon: <AlertTriangle className="w-4 h-4" />
-      }
-      case 'medium': return {
-        badge: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
-        dot: 'bg-amber-500',
-        icon: <Bell className="w-4 h-4" />
-      }
-      default: return {
-        badge: 'bg-blue-500/15 text-blue-400 border-blue-500/30',
-        dot: 'bg-blue-500',
-        icon: <Bell className="w-4 h-4" />
-      }
-    }
-  }
-  
-  const unacknowledgedCount = alerts.filter(a => !a.acknowledged).length
-  
-  return (
-    <section id="alerts" className="py-20 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-12">
-          <Badge variant="secondary" className="mb-4 bg-rose-500/10 text-rose-400 border-rose-500/20">
-            <Bell className="w-3.5 h-3.5 mr-2" />
-            Real-Time Alert Hub
-            {unacknowledgedCount > 0 && (
-              <span className="ml-2 px-1.5 py-0.5 text-xs bg-rose-500 text-white rounded-full">
-                {unacknowledgedCount}
-              </span>
-            )}
-          </Badge>
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">Never Be Caught Off Guard</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            WebSocket-powered streaming delivers alerts in &lt;5 seconds. Triage instantly with one-click actions.
-          </p>
-        </div>
-        
-        {/* Alert Controls */}
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-          <div className="flex items-center gap-2">
-            <span className="flex items-center gap-2 text-sm text-muted-foreground">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 pulse-dot" />
-              Live Streaming Active
-            </span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Select value={filterSeverity} onValueChange={setFilterSeverity}>
-              <SelectTrigger className="w-36 bg-card/50 border-border/50">
-                <SelectValue placeholder="Severity" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Severities</SelectItem>
-                <SelectItem value="critical">Critical</SelectItem>
-                <SelectItem value="high">High</SelectItem>
-                <SelectItem value="medium">Medium</SelectItem>
-                <SelectItem value="low">Low</SelectItem>
-              </SelectContent>
-            </Select>
-            <Button variant="outline" size="sm" className="gap-2">
-              <RefreshCw className="w-4 h-4" />
-              Refresh
-            </Button>
-          </div>
-        </div>
-        
-        {/* Alerts List */}
-        <div className="space-y-3">
-          {filteredAlerts.map((alert) => {
-            const styles = getSeverityStyles(alert.severity)
-            const timeAgo = formatTimeAgo(alert.timestamp)
-            
-            return (
-              <Card 
-                key={alert.id} 
-                className={`glass border-border/50 transition-all hover:border-border ${
-                  !alert.acknowledged ? 'ring-1 ring-rose-500/20' : 'opacity-75'
-                }`}
-              >
-                <CardContent className="p-4">
-                  <div className="flex items-start gap-4">
-                    <div className={`mt-1 w-3 h-3 rounded-full ${styles.dot} ${!alert.acknowledged ? 'pulse-dot' : ''}`} />
-                    
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1 flex-wrap">
-                        <Badge variant="outline" className={`text-xs ${styles.badge}`}>
-                          {alert.severity.toUpperCase()}
-                        </Badge>
-                        <span className="font-medium">{alert.supplier}</span>
-                        <span className="text-xs text-muted-foreground">· {alert.type}</span>
-                      </div>
-                      <p className="text-sm text-muted-foreground mb-2">{alert.message}</p>
-                      <span className="text-xs text-muted-foreground">{timeAgo}</span>
-                    </div>
-                    
-                    {!alert.acknowledged && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => acknowledgeAlert(alert.id)}
-                        className="shrink-0"
-                      >
-                        <CheckCircle2 className="w-4 h-4 mr-1" />
-                        Acknowledge
-                      </Button>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            )
-          })}
-        </div>
-        
-        {filteredAlerts.length === 0 && (
-          <Card className="glass border-border/50">
-            <CardContent className="p-12 text-center">
-              <CheckCircle2 className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
-              <h3 className="text-lg font-medium mb-2">No Alerts Match Your Filters</h3>
-              <p className="text-sm text-muted-foreground">Try adjusting your severity filter to see more alerts.</p>
-            </CardContent>
-          </Card>
-        )}
-      </div>
-    </section>
-  )
-}
-
-// Helper function for time formatting
-function formatTimeAgo(date: Date): string {
-  const seconds = Math.floor((Date.now() - date.getTime()) / 1000)
-  
-  if (seconds < 60) return `${seconds}s ago`
-  if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`
-  if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`
-  return `${Math.floor(seconds / 86400)}d ago`
-}
-
-// ============================================
-// COMPLIANCE TRACKER SECTION
-// ============================================
-
-function ComplianceSection() {
-  return (
-    <section id="compliance" className="py-20 relative">
-      <div className="absolute inset-0 grid-bg opacity-30" />
-      
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-12">
-          <Badge variant="secondary" className="mb-4 bg-emerald-500/10 text-emerald-400 border-emerald-500/20">
-            <Lock className="w-3.5 h-3.5 mr-2" />
-            Compliance Command Center
-          </Badge>
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">Six Frameworks. One Dashboard.</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            UFLPA, EUDR, CSDDD, SOX, GDPR, REACH — tracked in parallel with automated gap analyses.
-          </p>
-        </div>
-        
-        {/* Compliance Table */}
-        <Card className="glass border-border/50 mb-8">
-          <CardContent className="p-0">
-            <Table>
-              <TableHeader>
-                <TableRow className="border-border/30 hover:bg-transparent">
-                  <TableHead>Framework</TableHead>
-                  <TableHead>Compliance Score</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Last Audit</TableHead>
-                  <TableHead>Progress</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {complianceData.map((item, i) => (
-                  <TableRow key={i} className="border-border/20">
-                    <TableCell className="font-medium">{item.framework}</TableCell>
-                    <TableCell>
-                      <span className={`font-mono font-semibold ${
-                        item.score >= 95 ? 'text-emerald-400' : 
-                        item.score >= 85 ? 'text-amber-400' : 'text-rose-400'
-                      }`}>
-                        {item.score}%
-                      </span>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant="outline" className={
-                        item.status === 'compliant' 
-                          ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30'
-                          : 'bg-amber-500/15 text-amber-400 border-amber-500/30'
-                      }>
-                        {item.status === 'compliant' ? 'Compliant' : 'Review Needed'}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-muted-foreground font-mono text-sm">
-                      {item.lastAudit}
-                    </TableCell>
-                    <TableCell className="w-32">
-                      <Progress value={item.score} className="h-2" />
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </CardContent>
-        </Card>
-        
-        {/* Compliance Summary */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="glass border-border/50">
-            <CardContent className="p-6 text-center">
-              <div className="text-4xl font-bold gradient-text mb-2">94.2%</div>
-              <div className="text-sm text-muted-foreground">Average Compliance Score</div>
-            </CardContent>
-          </Card>
-          <Card className="glass border-border/50">
-            <CardContent className="p-6 text-center">
-              <div className="text-4xl font-bold text-emerald-400 mb-2">4/6</div>
-              <div className="text-sm text-muted-foreground">Fully Compliant</div>
-            </CardContent>
-          </Card>
-          <Card className="glass border-border/50">
-            <CardContent className="p-6 text-center">
-              <div className="text-4xl font-bold text-amber-400 mb-2">2</div>
-              <div className="text-sm text-muted-foreground">Need Attention</div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-// ============================================
-// AI ADVISOR CHATBOT SECTION
-// ============================================
-
-function AdvisorSection() {
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      id: '1',
-      role: 'assistant',
-      content: 'Hello! I\'m your AI Supply Chain Risk Advisor. I can help you analyze supplier risks, forecast demand, check compliance status, and identify potential disruptions. What would you like to know?',
-      timestamp: new Date()
-    }
-  ])
-  const [input, setInput] = useState('')
-  const [isTyping, setIsTyping] = useState(false)
-  const messagesEndRef = useRef<HTMLDivElement>(null)
-  
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }
-  
-  useEffect(() => {
-    scrollToBottom()
-  }, [messages])
-  
-  const sendMessage = async (content?: string) => {
-    const messageText = content || input.trim()
-    if (!messageText) return
-    
-    const userMessage: ChatMessage = {
-      id: Date.now().toString(),
-      role: 'user',
-      content: messageText,
-      timestamp: new Date()
-    }
-    
-    setMessages(prev => [...prev, userMessage])
-    setInput('')
-    setIsTyping(true)
-    
-    // Simulate AI response
-    setTimeout(() => {
-      const aiResponse: ChatMessage = {
-        id: (Date.now() + 1).toString(),
-        role: 'assistant',
-        content: generateAIResponse(messageText),
-        timestamp: new Date()
-      }
-      setMessages(prev => [...prev, aiResponse])
-      setIsTyping(false)
-    }, 1500)
-  }
-  
-  const generateAIResponse = (query: string): string => {
-    const q = query.toLowerCase()
-    
-    if (q.includes('tier-2') || q.includes('tier 2')) {
-      return `Based on current data, **PrecisionParts Vietnam** shows the highest risk increase among Tier-2 suppliers this month (+0.12 points). Key drivers:\n\n• Lead time variance increased 45%\n• Financial health score declined 8 points\n• New environmental regulation exposure\n\nRecommendation: Schedule a supplier review meeting and activate backup sourcing options.`
-    }
-    
-    if (q.includes('demand') || q.includes('forecast')) {
-      return `Here's the **Q4 2025 demand outlook**:\n\n📈 **Overall Trend**: +3.2% WoW growth expected\n📦 **Peak Volume**: Week 12 at ~1,700 units\n🎯 **Confidence**: 94.8% model accuracy (MAPE)\n\n**Top 3 SKUs by growth:**\n1. Electronic Components (+8.2%)\n2. Precision Parts (+5.1%)\n3. Raw Materials (+2.8%)\n\nWould you like me to drill into any specific product line?`
-    }
-    
-    if (q.includes('compliance') || q.includes('gap')) {
-      return `**Current Compliance Status:**\n\n✅ **Fully Compliant (4/6)**:\n• UFLPA: 94%\n• CSDDD: 91%\n• SOX: 98%\n• GDPR: 96%\n\n⚠️ **Needs Review (2/6)**:\n• **EUDR**: 87% - Deforestation documentation pending\n• **REACH**: 89% - Chemical reporting update required\n\n**Recommended Actions:**\n1. Prioritize EUDR documentation collection (deadline: 14 days)\n2. Schedule REACH compliance review with legal team`
-    }
-    
-    if (q.includes('asia') || q.includes('apac') || q.includes('single-source')) {
-      return `**Asia-Pacific Single-Source Analysis:**\n\n🔴 **Critical Dependencies Identified:**\n\n1. **Semiconductors** - TechComponents Ltd (Taiwan)\n   • 78% of semiconductor sourcing\n   • Risk Score: 0.12 (LOW but concentrated)\n\n2. **Displays** - KoreaDisplay Co (South Korea)\n   • 65% of display components\n   • Risk Score: 0.19 (LOW)\n\n3. **Electronics Assembly** - Shanghai Electronics\n   • 52% of assembly capacity\n   • Risk Score: 0.67 (⚠️ HIGH)\n\n**Recommendation**: Diversify Shanghai Electronics dependency immediately. I've identified 3 qualified alternatives in Vietnam and Mexico.`
-    }
-    
-    return `I understand you're asking about "${query}". Let me analyze that for you.\n\nBased on our supply chain intelligence platform, I can provide insights on:\n\n• 📊 **Risk Analysis** - Supplier scores, trends, SHAP explanations\n• 📈 **Demand Forecasting** - 90-day projections with confidence bands\n• 🔒 **Compliance Status** - All 6 regulatory frameworks\n• 🌍 **Geopolitical Risks** - Trade policy, sanctions, regional stability\n• 🏭 **Operational Metrics** - OTD, lead times, quality scores\n\nCould you be more specific about what aspect you'd like to explore?`
-  }
-  
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault()
-      sendMessage()
-    }
-  }
-  
-  return (
-    <section id="advisor" className="py-20 relative">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-12">
-          <Badge variant="secondary" className="mb-4 bg-violet-500/10 text-violet-400 border-violet-500/20">
-            <Bot className="w-3.5 h-3.5 mr-2" />
-            AI Risk Advisor
-          </Badge>
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">An Advisor That Never Sleeps</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Ask questions in plain language. Get answers grounded in live supply chain data.
-          </p>
-        </div>
-        
-        {/* Chat Interface */}
-        <Card className="glass border-border/50 overflow-hidden">
-          {/* Messages */}
-          <div className="h-[400px] overflow-y-auto p-6 space-y-4">
-            {messages.map((message) => (
-              <div
-                key={message.id}
-                className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-              >
-                <div
-                  className={`max-w-[80%] rounded-2xl px-4 py-3 ${
-                    message.role === 'user'
-                      ? 'bg-primary/20 text-foreground border border-primary/30'
-                      : 'bg-white/[0.03] border border-border/50'
-                  }`}
-                >
-                  {message.role === 'assistant' && (
-                    <div className="flex items-center gap-2 mb-2">
-                      <Bot className="w-4 h-4 text-violet-400" />
-                      <span className="text-xs text-muted-foreground">AI Advisor</span>
-                    </div>
-                  )}
-                  <div className="text-sm whitespace-pre-wrap">{message.content}</div>
-                </div>
-              </div>
-            ))}
-            
-            {isTyping && (
-              <div className="flex justify-start">
-                <div className="bg-white/[0.03] border border-border/50 rounded-2xl px-4 py-3">
-                  <div className="flex items-center gap-2">
-                    <Bot className="w-4 h-4 text-violet-400" />
-                    <div className="flex gap-1">
-                      <span className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                      <span className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                      <span className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
-          
-          {/* Suggested Questions */}
-          {messages.length <= 1 && (
-            <div className="px-6 pb-4">
-              <p className="text-xs text-muted-foreground mb-3">Try asking:</p>
-              <div className="flex flex-wrap gap-2">
-                {suggestedQuestions.map((question, i) => (
-                  <Button
-                    key={i}
-                    variant="outline"
-                    size="sm"
-                    className="text-xs h-auto py-1.5 px-3 border-border/50 hover:border-primary/30 hover:bg-primary/5"
-                    onClick={() => sendMessage(question)}
-                  >
-                    {question}
-                  </Button>
-                ))}
-              </div>
-            </div>
-          )}
-          
-          {/* Input */}
-          <div className="border-t border-border/30 p-4">
-            <div className="flex gap-2">
-              <Textarea
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={handleKeyPress}
-                placeholder="Ask about supplier risks, demand forecasts, compliance..."
-                className="flex-1 min-h-[44px] max-h-32 resize-none bg-card/50 border-border/50"
-                rows={1}
-              />
-              <Button
-                onClick={() => sendMessage()}
-                disabled={!input.trim() || isTyping}
-                className="bg-gradient-to-r from-violet-500 to-cyan-500 hover:from-violet-600 hover:to-cyan-600 text-white px-4"
-              >
-                <SendIcon className="w-4 h-4" />
-              </Button>
-            </div>
-          </div>
-        </Card>
-      </div>
-    </section>
-  )
-}
-
-// Send Icon Component
-function SendIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <line x1="22" y1="2" x2="11" y2="13"></line>
-      <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-    </svg>
-  )
-}
-
-// ============================================
-// ROADMAP SECTION
-// ============================================
-
-function RoadmapSection() {
-  return (
-    <section id="roadmap" className="py-20 relative">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-12">
-          <Badge variant="secondary" className="mb-4 bg-cyan-500/10 text-cyan-400 border-cyan-500/20">
-            <Clock className="w-3.5 h-3.5 mr-2" />
-            Development Roadmap
-          </Badge>
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">From Prototype to Production</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Four phases of development transforming vision into an autonomous supply chain intelligence platform.
-          </p>
-        </div>
-        
-        {/* Timeline */}
-        <div className="relative">
-          {/* Timeline line */}
-          <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-emerald-500 via-cyan-500 to-violet-500 transform md:-translate-x-1/2" />
-          
-          <div className="space-y-12">
-            {roadmapData.map((milestone, index) => (
-              <div
-                key={index}
-                className={`relative flex flex-col md:flex-row items-start gap-8 ${
-                  index % 2 === 0 ? 'md:flex-row-reverse' : ''
-                }`}
-              >
-                {/* Timeline dot */}
-                <div className={`absolute left-8 md:left-1/2 w-4 h-4 rounded-full border-4 border-background transform -translate-x-1/2 z-10 ${
-                  milestone.status === 'completed' ? 'bg-emerald-500' :
-                  milestone.status === 'in-progress' ? 'bg-amber-500 pulse-dot' :
-                  'bg-muted-foreground'
-                }`} />
-                
-                {/* Content */}
-                <div className={`ml-16 md:ml-0 md:w-1/2 ${index % 2 === 0 ? 'md:text-right' : ''}`}>
-                  <Card className={`glass border-border/50 inline-block ${
-                    milestone.status === 'in-progress' ? 'animated-border' : ''
-                  }`}>
-                    <CardContent className="p-6">
-                      <div className="flex items-center gap-2 mb-2 flex-wrap" style={{ justifyContent: index % 2 === 0 ? 'flex-end' : 'flex-start' }}>
-                        <Badge variant="outline" className={
-                          milestone.status === 'completed' ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30' :
-                          milestone.status === 'in-progress' ? 'bg-amber-500/15 text-amber-400 border-amber-500/30' :
-                          'bg-muted-foreground/15 text-muted-foreground border-muted-foreground/30'
-                        }>
-                          {milestone.phase}
-                        </Badge>
-                        <Badge variant="secondary" className="text-xs">
-                          {milestone.date}
-                        </Badge>
-                      </div>
-                      <h3 className="text-xl font-bold mb-2">{milestone.title}</h3>
-                      <p className="text-sm text-muted-foreground mb-4">{milestone.description}</p>
-                      <ul className={`text-sm space-y-1 ${index % 2 === 0 ? 'md:text-right' : ''}`}>
-                        {milestone.items.map((item, i) => (
-                          <li key={i} className="flex items-center gap-2" style={{ justifyContent: index % 2 === 0 ? 'flex-end' : 'flex-start' }}>
-                            {milestone.status === 'completed' ? (
-                              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                            ) : milestone.status === 'in-progress' ? (
-                              <div className="w-4 h-4 rounded-full border-2 border-amber-500 border-t-transparent animate-spin shrink-0" />
-                            ) : (
-                              <div className="w-4 h-4 rounded-full border-2 border-muted-foreground shrink-0" />
-                            )}
-                            <span className={milestone.status === 'completed' ? 'line-through text-muted-foreground' : ''}>
-                              {item}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  </Card>
-                </div>
-                
-                {/* Spacer for opposite side */}
-                <div className="hidden md:block md:w-1/2" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-// ============================================
-// CONTACT FORM SECTION
-// ============================================
-
-function ContactSection() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    organization: '',
-    interest: '',
-    message: ''
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const { toast } = useToast()
-  
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    
-    toast({
-      title: "Demo Request Received! 🎉",
-      description: "We'll contact you within 24 hours to schedule your personalized demo.",
-    })
-    
-    setFormData({ name: '', email: '', organization: '', interest: '', message: '' })
-    setIsSubmitting(false)
-  }
-  
-  return (
-    <section id="contact" className="py-20 relative">
-      <div className="absolute top-20 right-10 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[120px]" />
-      <div className="absolute bottom-20 left-10 w-[400px] h-[400px] bg-violet-500/5 rounded-full blur-[120px]" />
-      
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-12">
-          <Badge variant="secondary" className="mb-4 bg-primary/10 text-primary border-primary/20">
-            <MessageSquare className="w-3.5 h-3.5 mr-2" />
-            Get Started
-          </Badge>
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">Let's Build the Future Together</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Request a personalized demo and see how explainable AI transforms supply chain risk management.
-          </p>
-        </div>
-        
-        <div className="grid lg:grid-cols-5 gap-8">
-          {/* Form */}
-          <div className="lg:col-span-3">
-            <Card className="glass border-border/50">
-              <CardContent className="p-8">
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="name">Full Name</Label>
-                      <Input
-                        id="name"
-                        placeholder="John Smith"
-                        value={formData.name}
-                        onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                        required
-                        className="bg-card/50 border-border/50"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="email">Email</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        placeholder="john@company.com"
-                        value={formData.email}
-                        onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                        required
-                        className="bg-card/50 border-border/50"
-                      />
-                    </div>
-                  </div>
-                  
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="organization">Organization</Label>
-                      <Input
-                        id="organization"
-                        placeholder="Acme Corp"
-                        value={formData.organization}
-                        onChange={(e) => setFormData(prev => ({ ...prev, organization: e.target.value }))}
-                        className="bg-card/50 border-border/50"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="interest">Interest</Label>
-                      <Select value={formData.interest} onValueChange={(value) => setFormData(prev => ({ ...prev, interest: value }))}>
-                        <SelectTrigger className="bg-card/50 border-border/50">
-                          <SelectValue placeholder="Select your interest" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="enterprise">Enterprise License</SelectItem>
-                          <SelectItem value="investor">Investor Briefing</SelectItem>
-                          <SelectItem value="partnership">Partnership</SelectItem>
-                          <SelectItem value="technical">Technical Deep-Dive</SelectItem>
-                          <SelectItem value="other">Other</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="message">Message</Label>
-                    <Textarea
-                      id="message"
-                      placeholder="Tell us about your supply chain challenges..."
-                      rows={5}
-                      value={formData.message}
-                      onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
-                      className="bg-card/50 border-border/50 resize-none"
-                    />
-                  </div>
-                  
-                  <Button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white h-12"
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2" />
-                        Submitting...
-                      </>
-                    ) : (
-                      <>
-                        Schedule Demo
-                        <ArrowRight className="ml-2 w-4 h-4" />
-                      </>
-                    )}
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
-          </div>
-          
-          {/* Info Sidebar */}
-          <div className="lg:col-span-2 space-y-6">
-            <Card className="glass border-border/50">
-              <CardContent className="p-6">
-                <h3 className="font-semibold mb-4 flex items-center gap-2">
-                  <Eye className="w-5 h-5 text-primary" />
-                  What You'll See
-                </h3>
-                <ul className="space-y-3">
-                  {[
-                    'Live Command Center with real-time KPIs',
-                    'SHAP-based explainable risk scoring',
-                    'WebSocket alert streaming',
-                    'AI-powered risk advisor chatbot',
-                    '90-day demand forecasting',
-                    'Multi-regulatory compliance tracking',
-                    'Model operations dashboard'
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Separator className="my-4" />
-                <p className="text-xs text-muted-foreground">
-                  Duration: 30 minutes · Platform: Web-based · No installation required
-                </p>
-              </CardContent>
-            </Card>
-            
-            <Card className="glass border-border/50">
-              <CardContent className="p-6">
-                <h3 className="font-semibold mb-4">Direct Access</h3>
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-emerald-500/10">
-                      <MessageSquare className="w-4 h-4 text-emerald-400" />
-                    </div>
-                    <div>
-                      <div className="text-sm font-medium">Email</div>
-                      <div className="text-xs text-muted-foreground">partnerships@aisupplychain.ai</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-cyan-500/10">
-                      <Users className="w-4 h-4 text-cyan-400" />
-                    </div>
-                    <div>
-                      <div className="text-sm font-medium">LinkedIn</div>
-                      <div className="text-xs text-muted-foreground">Connect for updates</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-violet-500/10">
-                      <Github className="w-4 h-4 text-violet-400" />
-                    </div>
-                    <div>
-                      <div className="text-sm font-medium">GitHub</div>
-                      <div className="text-xs text-muted-foreground">View technical blog</div>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-// GitHub Icon
-function Github({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-    </svg>
-  )
-}
-
-// ============================================
-// FOOTER COMPONENT
-// ============================================
-
-function Footer() {
-  return (
-    <footer className="border-t border-border/30 py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center font-bold text-xs text-background">
-              SC
-            </div>
-            <span className="font-medium">AI Supply Chain Risk Predictor</span>
-          </div>
-          
-          <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground">
-            <a href="#home" className="hover:text-foreground transition-colors">Home</a>
-            <a href="#dashboard" className="hover:text-foreground transition-colors">Dashboard</a>
-            <a href="#suppliers" className="hover:text-foreground transition-colors">Suppliers</a>
-            <a href="#forecasting" className="hover:text-foreground transition-colors">Forecasting</a>
-            <a href="#contact" className="hover:text-foreground transition-colors">Contact</a>
-          </div>
-          
-          <div className="text-sm text-muted-foreground text-center md:text-right">
-            © 2025 AI Supply Chain Risk Predictor. All rights reserved.
-          </div>
-        </div>
-        
-        <Separator className="my-6" />
-        
-        <div className="text-center text-xs text-muted-foreground">
-          Built with Next.js 16, TypeScript, Tailwind CSS 4, shadcn/ui, Recharts
-        </div>
-      </div>
-    </footer>
-  )
-}
-
-// ============================================
-// MAIN PAGE COMPONENT
-// ============================================
-
-export default function Home() {
-  const [activeSection, setActiveSection] = useState('home')
-  
-  // Intersection Observer for scroll spy
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id)
-          }
-        })
-      },
-      { threshold: 0.3 }
-    )
-    
-    const sections = document.querySelectorAll('section[id]')
-    sections.forEach(section => observer.observe(section))
-    
-    return () => observer.disconnect()
-  }, [])
-  
-  return (
-    <main className="min-h-screen relative">
-      {/* Particle Background */}
+    <div className="min-h-screen bg-background relative">
       <ParticleCanvas />
       
-      {/* Grid Background */}
-      <div className="fixed inset-0 grid-bg opacity-30 pointer-events-none z-0" />
-      
-      {/* Navigation */}
-      <Navigation activeSection={activeSection} setActiveSection={setActiveSection} />
+      {/* Header */}
+      <header className="sticky top-0 z-40 glass border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center font-bold text-sm text-background">SC</div>
+              <div>
+                <h1 className="font-bold text-lg">Command Center</h1>
+                <p className="text-xs text-muted-foreground hidden sm:block">AI Supply Chain Intelligence Platform</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button variant="ghost" size="icon" className="relative"><Bell className="w-5 h-5"/><span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-destructive rounded-full text-[10px] flex items-center justify-center text-white">3</span></Button>
+              <Button variant="ghost" size="icon"><Settings className="w-5 h-5"/></Button>
+              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center"><UserCheck className="w-4 h-4 text-primary"/></div>
+            </div>
+          </div>
+        </div>
+      </header>
       
       {/* Main Content */}
-      <div className="relative z-10">
-        <HeroSection />
-        <DashboardSection />
-        <SupplierSection />
-        <ForecastingSection />
-        <AlertsSection />
-        <ComplianceSection />
-        <AdvisorSection />
-        <RoadmapSection />
-        <ContactSection />
-        <Footer />
-      </div>
-    </main>
+      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Hero Stats */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          {[
+            {label: 'Suppliers Monitored', value: '10,247', icon: Building2, change: '+2.4%'},
+            {label: 'Active Alerts', value: '6', icon: AlertTriangle, change: '-12%'},
+            {label: 'Avg Compliance', value: '92.5%', icon: ShieldCheck, change: '+1.2%'},
+            {label: 'Prediction Accuracy', value: '99.2%', icon: Brain, change: '+0.3%'}
+          ].map((stat, i) => (
+            <Card key={i} className="p-4 glow-emerald">
+              <div className="flex items-center justify-between mb-2">
+                <stat.icon className="w-5 h-5 text-primary"/>
+                <Badge variant="outline" className="text-xs text-emerald-500">{stat.change}</Badge>
+              </div>
+              <p className="text-2xl font-bold">{stat.value}</p>
+              <p className="text-xs text-muted-foreground">{stat.label}</p>
+            </Card>
+          ))}
+        </div>
+        
+        {/* Tab Navigation */}
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+          <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:inline-grid">
+            <TabsTrigger value="supply-directory" className="gap-1.5"><Building2 className="w-4 h-4"/>Supply Directory</TabsTrigger>
+            <TabsTrigger value="risk-intelligence" className="gap-1.5"><AlertTriangle className="w-4 h-4"/>Risk Intel</TabsTrigger>
+            <TabsTrigger value="demand-forecasting" className="gap-1.5"><LineChart className="w-4 h-4"/>Forecasting</TabsTrigger>
+            <TabsTrigger value="compliance" className="gap-1.5"><Scale className="w-4 h-4"/>Compliance</TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="supply-directory"><SupplyDirectoryPortal /></TabsContent>
+          <TabsContent value="risk-intelligence"><RiskIntelligencePortal /></TabsContent>
+          <TabsContent value="demand-forecasting"><DemandForecastingPortal /></TabsContent>
+          <TabsContent value="compliance"><CompliancePortal /></TabsContent>
+        </Tabs>
+        
+        {/* Footer */}
+        <footer className="mt-16 pt-8 border-t text-center text-sm text-muted-foreground">
+          <p>AI Supply Chain Risk Predictor • Command Center v2.0</p>
+          <p className="mt-1">Real-time intelligence • Predictive analytics • Regulatory compliance</p>
+        </footer>
+      </main>
+    </div>
   )
 }
