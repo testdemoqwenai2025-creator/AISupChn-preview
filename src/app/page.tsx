@@ -14,7 +14,6 @@ import {
   Building, MapPinned, CreditCard, DollarSign, Percent, Hash,
   Link2, Unlock, LockKeyhole, BadgeCheck, Certificate, Award,
   Thermometer, Droplets, Leaf, Recycle, Wind, Sun, Battery,
-  WifiOff, Server, Cloud, CloudRain, Snowflake, Flame,
   Heart, Stethoscope, Pill, Syringe, TestTubes, Microscope,
   Car, Plane, Ship, Train, Bike, Rocket,
   Coffee, Wheat, Apple, Fish, Beef, Milk, Egg,
@@ -25,1002 +24,1021 @@ import {
   Camera, Mic, Video, FileUp, Image,
   Key, EyeOff, UserPlus, UserMinus,
   ThumbsUp, ThumbsDown, Flag, Bookmark,
-  RefreshCccw, RotateCcw, History, Clock4,
+  RotateCcw, History, Clock4,
   LayoutGrid, List, Kanban, Table2,
   ScanLine, Radar, Satellite, Telescope,
-  GitBranch, Merge, Fork, PullRequest,
   Terminal, Code, Brackets, FileCode,
   Layers, Box, PackageOpen, ShoppingCart,
-  Receipt, Invoice, Calculator, Abacus
+  Receipt, Invoice, Calculator, Abacus,
+  FolderTree, Network, GitFork, Workflow,
+  FileSearch, FileDiff, FileSignature,
+  BadgeDollarSign, Banknote, Coins, PiggyBank,
+  TrendingDown as Declining, ArrowUpRight, ArrowDownRight,
+  CircleDot, Circle, Check, XCircle,
+  Menu, PanelLeftClose, PanelLeftOpen,
+  LayoutDashboard, DatabaseZap, ShieldAlert, CalendarCheck,
+  FileBarChart, MessageCircle, AtSign, Globe2,
+  TreePine, Leaf as EcoLeaf, Recycle as RecycleIcon,
+  UserCog, Wrench as SettingsIcon, ScrollText,
+  ClipboardList, ClipboardType, ClipboardX,
+  LockClosed, UnlockClosed, Fingerprint as Biometric,
+  Eye as ViewIcon, EyeOff as HideIcon,
+  ChevronFirst, ChevronLast,
+  SkipBack, SkipForward, FastForward, Rewind,
+  ZoomIn, ZoomOut, Maximize, Minimize,
+  GripVertical, Move, Pin, Unpin,
+  Archive as ArchiveIcon, Inbox, Send as ExportIcon,
+  Import, FileInput, FileOutput,
+  AlertOctagon, Bug, Virus, ShieldOff,
+  Ban, StopCircle, XOctagon,
+  Timer, TimerReset, Hourglass,
+  Sunrise, Sunset, Moon, CloudSun,
+  Snowflake as Cold, Flame as Hot,
+  BatteryFull, BatteryMedium, BatteryLow,
+  Signal, SignalHigh, SignalLow, SignalZero,
+  Wifi as Connected, WifiOff as Disconnected,
+  Bluetooth, Usb, HardDrive, SdCard,
+  Monitor, Smartphone, Tablet, Watch,
+  Headphones, Speaker, Volume2, VolumeX,
+  MicOff, VideoOff, CameraOff,
+  MousePointer, Touchpad, Keyboard,
+  PenTool, Highlighter, Eraser,
+  Palette, Brush, Bucket,
+  Scissors, Ruler, Compass,
+  Type, AlignLeft, AlignCenter, AlignRight,
+  Bold, Italic, Underline, Strikethrough,
+  ListOrdered, ListChecks, Indent, Outdent,
+  Quote, Code2, Heading1, Heading2,
+  Minus as RemoveIcon, Plus as AddIcon,
+  Separator, Slash, Backspace,
+  Equal, Hash as NumberIcon,
+  Calculator as MathIcon,
+  Binary, Hexagon, Pentagon, Octagon,
+  Circle as ShapeCircle, Square, Triangle,
+  Sparkles, Wand2, MagicWand,
+  PartyPopper, Confetti, Gift,
+  Medal, Trophy, Crown, Gem as Diamond,
+  Heart as Like, HeartOff as Unlike,
+  ThumbUp, ThumbDown,
+  Smile, Frown, Meh, Laugh,
+  Angry, Sad, Surprised,
+  Sun as LightMode, Moon as DarkMode,
+  Monitor as SystemMode, Tablet as TabletMode,
+  Smartphone as MobileMode,
+  Languages, Globe as WorldIcon,
+  Map as MapIcon, Navigation,
+  Compass as Direction,
+  Footprints, Route,
+  Signpost, TrafficCone,
+  Building as Office, Home, Store,
+  Warehouse, School, Hospital,
+  Church, Landmark,
+  Mountain, Trees, Flower, Flower2,
+  Waves, CloudRain, Umbrella,
+  Tent, Campfire,
+  Dumbbell, Bike as Bicycle, Skateboarding,
+  SkiLift, Parachute,
+  Music, Disc, Radio as RadioIcon,
+  Tv, Gamepad2,
+  Coffee as Drink, UtensilsCrossed,
+  Pizza, Burger, Croissant,
+  IceCream, Candy, Lollipop,
+  Baby, Children, Users as Group,
+  User as PersonIcon, UserCircle,
+  IdCard, Passkey,
+  HandMetal, Hand,
+  WaveHand, Salute,
+  Pointer as ClickIcon,
+  Move3d, FlipHorizontal2, FlipVertical2,
+  RotateCw, RotateCcw,
+  Expand, Shrink,
+  Fullscreen, ExitFullscreen,
+  PictureInPicture2,
+  SplitSquareHorizontal, SplitSquareVertical,
+  Rows, Columns,
+  Grid3x3, Grid2x2, Grid4x4,
+  AppWindow, AppWindowSidebar,
+  Browser, Chrome, Safari,
+  FileJson, FileSpreadsheet, FileImage,
+  FileVideo, FileAudio, FileArchive,
+  Zip, Rar, Tar,
+  DownloadCloud, UploadCloud,
+  Share, Share2 as SocialShare,
+  QrCode, Barcode,
+  ScanBarcode, ScanFace,
+  Camera as CameraIcon,
+  Webcam, Aperture,
+  ImagePlus, ImageMinus,
+  Crop, Filters,
+  Adjustments, SlidersHorizontal,
+  ToggleLeft, ToggleRight,
+  SwitchCamera, CameraRotate,
+  Mic as RecordIcon,
+  ScreenRecord,
+  Pause as PauseIcon,
+  Square as StopIcon,
+  CirclePlay as PlayIcon,
+  SkipBack as PrevIcon,
+  SkipForward as NextIcon,
+  Repeat, Repeat1, Shuffle,
+  Volume1 as VolumeLow,
+  Subtitles, Captions,
+  Cast, Chromecast,
+  Airplay, BluetoothStreaming,
+  Headphones as HeadsetIcon,
+  Speaker as SpeakerIcon,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Progress } from '@/components/ui/progress'
-import { Separator } from '@/components/ui/separator'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Label } from '@/components/ui/label'
+import { Switch } from '@/components/ui/switch'
+import { Slider } from '@/components/ui/slider'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { Toaster } from '@/components/ui/toaster'
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from '@/components/ui/sheet'
-import { useToast } from '@/hooks/use-toast'
-import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  LineChart as RechartsLineChart,
-  Line,
-  BarChart as RechartsBarChart,
-  Bar,
-  PieChart as RechartsPieChart,
-  Pie,
-  Cell,
-  RadarChart,
-  Radar,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  Legend,
-  ComposedChart,
-  Scatter
+  AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip,
+  ResponsiveContainer, LineChart, Line, BarChart, Bar, PieChart, Pie, Cell,
+  RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
+  Legend, ScatterChart, Scatter, ComposedChart, Treemap
 } from 'recharts'
 
-// ============================================
-// TYPES (Simplified for file size)
-// ============================================
+// ============== TYPES & INTERFACES ==============
 
 interface Supplier {
-  id: string; name: string; region: string; tier: number;
-  riskScore: number; riskLevel: 'LOW' | 'MEDIUM' | 'HIGH';
-  category: string; onTimeDelivery: number; financialHealth: number;
-  complianceScore: number; trend: 'up' | 'down' | 'stable';
-  legalName: string; registrationNumber: string; taxId: string;
-  foundedDate: string; companyType: string; address: string;
-  city: string; country: string; postalCode: string;
-  contactName: string; contactEmail: string; contactPhone: string;
-  annualRevenue: number; employeeCount: number; creditRating: string;
-  status: 'active' | 'inactive' | 'under-review' | 'suspended';
+  id: string
+  companyName: string
+  registrationNumber: string
+  legalEntityName: string
+  dunsNumber: string
+  taxId: string
+  address: string
+  city: string
+  stateProvince: string
+  postalCode: string
+  country: string
+  region: string
+  tier: string
+  category: string
+  subcategory: string
+  products: string[]
+  certifications: string[]
+  esgScore: number
+  uflpaStatus: string
+  eudrStatus: string
+  csdddStatus: string
+  soxCompliant: boolean
+  gdprCompliant: boolean
+  reachCompliant: boolean
+  financialRating: string
+  revenue: number
+  employeeCount: number
+  foundedYear: number
+  deliveryPerformance: number
+  qualityMetrics: number
+  costCompetitiveness: number
+  innovationScore: number
+  riskLevel: 'low' | 'medium' | 'high' | 'critical'
+  riskScore: number
+  primaryContactName: string
+  primaryContactEmail: string
+  primaryContactPhone: string
+  secondaryContactName: string
+  secondaryContactEmail: string
+  website: string
+  lastAuditDate: string
+  nextAuditDate: string
+  contractExpiry: string
+  paymentTerms: string
+  currency: string
+  leadTimeDays: number
+  moq: number
+  capacityUtilization: number
+  businessContinuityPlan: boolean
+  insuranceCoverage: string
+  sustainabilityCertifications: string[]
+  carbonFootprint: number
+  waterUsage: number
+  wasteReduction: number
+  diversityInclusion: number
+  dataPrivacyCertified: boolean
+  cybersecurityRating: string
+  lastUpdated: string
+  notes: string
+  tags: string[]
+  status: 'active' | 'inactive' | 'under-review' | 'suspended'
 }
 
 interface RiskAlert {
-  id: string; severity: 'critical' | 'high' | 'medium' | 'low';
-  supplier: string; category: string; title: string;
-  message: string; timestamp: Date; acknowledged: boolean;
-  status: string; probability: number; confidence: number;
-  impact: string; mitigationActions: Array<{action: string; owner: string; dueDate: string; status: string}>;
-}
-
-interface DemandForecast {
-  id: string; product: string; sku: string; period: string;
-  actual: number | null; forecast: number; lowerBound: number; upperBound: number;
-  confidence: number; trend: string; anomaly?: string;
-}
-
-interface ComplianceItem {
-  framework: string; acronym: string; score: number;
-  status: 'compliant' | 'partial' | 'non-compliant'; lastAudit: string;
-  nextAudit: string; requirements: Array<{title: string; status: string; severity: string}>;
-  upcomingDeadlines: Array<{date: string; requirement: string; priority: string}>;
+  id: string
+  type: 'geopolitical' | 'financial' | 'operational' | 'compliance' | 'environmental' | 'cybersecurity'
+  severity: 'info' | 'warning' | 'critical'
+  title: string
+  description: string
+  supplier: string
+  region: string
+  timestamp: string
+  status: 'active' | 'investigating' | 'resolved' | 'dismissed'
+  impact: string
+  probability: number
+  mitigation: string
+  shapValues?: { feature: string; value: number; color: string }[]
 }
 
 interface ChatMessage {
-  id: string; role: 'user' | 'assistant'; content: string; timestamp: Date;
+  id: string
+  role: 'user' | 'assistant'
+  content: string
+  timestamp: Date
+  portal: string
 }
 
-// ============================================
-// MOCK DATA
-// ============================================
+interface ComplianceItem {
+  framework: string
+  status: 'compliant' | 'partial' | 'non-compliant' | 'pending-review' | 'exempt'
+  score: number
+  lastAssessed: string
+  nextReview: string
+  requirements: { name: string; status: boolean; description: string; evidence?: string }[]
+  documents: { name: string; type: string; uploaded: string; verified: boolean }[]
+  findings: { severity: string; description: string; remediation: string; deadline: string }[]
+  owner: string
+  notes: string
+}
+
+// ============== MOCK DATA ==============
 
 const suppliersData: Supplier[] = [
-  { id: 'SUP-001', name: 'TechComponents Ltd', region: 'Taiwan', tier: 1, riskScore: 12, riskLevel: 'LOW', category: 'Semiconductors', onTimeDelivery: 98.5, financialHealth: 92, complianceScore: 95, trend: 'stable', legalName: 'TechComponents International Ltd', registrationNumber: 'TW-2020-08847', taxId: 'TW-987654321', foundedDate: '2015-03-15', companyType: 'Public Ltd', address: '123 Science Park Road', city: 'Hsinchu', country: 'Taiwan', postalCode: '30093', contactName: 'David Chen', contactEmail: 'david.chen@techcomp.com', contactPhone: '+886-3-567-8901', annualRevenue: 850000000, employeeCount: 4500, creditRating: 'A+', status: 'active' },
-  { id: 'SUP-002', name: 'GlobalLogistics Corp', region: 'Singapore', tier: 1, riskScore: 28, riskLevel: 'MEDIUM', category: 'Logistics', onTimeDelivery: 94.2, financialHealth: 88, complianceScore: 91, trend: 'up', legalName: 'Global Logistics Pte Ltd', registrationNumber: 'SG-202109456H', taxId: 'SG-987654321X', foundedDate: '2008-07-22', companyType: 'Private Ltd', address: '500 HarbourFront Ave', city: 'Singapore', country: 'Singapore', postalCode: '098543', contactName: 'Rachel Tan', contactEmail: 'rachel.tan@globallog.com', contactPhone: '+65-6234-5678', annualRevenue: 320000000, employeeCount: 2800, creditRating: 'A', status: 'active' },
-  { id: 'SUP-003', name: 'PrecisionParts Vietnam', region: 'Vietnam', tier: 2, riskScore: 45, riskLevel: 'MEDIUM', category: 'Manufacturing', onTimeDelivery: 89.7, financialHealth: 75, complianceScore: 82, trend: 'down', legalName: 'Precision Parts VN JSC', registrationNumber: 'VN-0100345678', taxId: 'VN-010034567-001', foundedDate: '2018-09-10', companyType: 'Joint Stock', address: 'Lot B3 VSIP II', city: 'Binh Duong', country: 'Vietnam', postalCode: '700000', contactName: 'Nguyen Van Minh', contactEmail: 'minh.nguyen@precision.vn', contactPhone: '+84-274-222-8888', annualRevenue: 45000000, employeeCount: 850, creditRating: 'BBB+', status: 'active' },
-  { id: 'SUP-004', name: 'Shanghai Electronics', region: 'China', tier: 1, riskScore: 67, riskLevel: 'HIGH', category: 'Electronics', onTimeDelivery: 82.3, financialHealth: 68, complianceScore: 71, trend: 'down', legalName: 'Shanghai Electronics Co Ltd', registrationNumber: 'SH-310115002345678', taxId: '91310115MA1K2L3M4N', foundedDate: '2010-05-20', companyType: 'LLC', address: '88 Zhangjiang High Tech Park', city: 'Shanghai', country: 'China', postalCode: '201203', contactName: 'Li Wei', contactEmail: 'li.wei@shanghaielec.cn', contactPhone: '+86-21-5876-5432', annualRevenue: 180000000, employeeCount: 5200, creditRating: 'BBB', status: 'under-review' },
-  { id: 'SUP-005', name: 'EuroMaterials GmbH', region: 'Germany', tier: 1, riskScore: 8, riskLevel: 'LOW', category: 'Raw Materials', onTimeDelivery: 99.1, financialHealth: 96, complianceScore: 98, trend: 'stable', legalName: 'EuroMaterials GmbH', registrationNumber: 'DE-HRB-123456', taxId: 'DE-123456789', foundedDate: '1995-04-12', companyType: 'GmbH', address: 'Industriestraße 42', city: 'Stuttgart', country: 'Germany', postalCode: '70499', contactName: 'Dr. Hans Mueller', contactEmail: 'hans.mueller@euromat.de', contactPhone: '+49-711-987-6543', annualRevenue: 420000000, employeeCount: 3200, creditRating: 'AAA', status: 'active' }
+  {
+    id: 'SUP-001',
+    companyName: 'TechComponents Global Ltd.',
+    registrationNumber: 'TCG-2024-88421',
+    legalEntityName: 'TechComponents Global Limited',
+    dunsNumber: '36-123-4567',
+    taxId: 'GB123456789012',
+    address: '100 Innovation Drive',
+    city: 'Cambridge',
+    stateProvince: 'Cambridgeshire',
+    postalCode: 'CB1 2AZ',
+    country: 'United Kingdom',
+    region: 'Europe',
+    tier: 'Tier 1',
+    category: 'Electronics Manufacturing',
+    subcategory: 'Semiconductor Components',
+    products: ['Microcontrollers', 'Memory Chips', 'Sensors', 'Power Management ICs'],
+    certifications: ['ISO 9001', 'ISO 14001', 'ISO 27001', 'AS9100D', 'IATF 16949'],
+    esgScore: 87,
+    uflpaStatus: 'Compliant',
+    eudrStatus: 'N/A - Non-Forestry',
+    csdddStatus: 'Compliant',
+    soxCompliant: true,
+    gdprCompliant: true,
+    reachCompliant: true,
+    financialRating: 'AA',
+    revenue: 2450000000,
+    employeeCount: 12500,
+    foundedYear: 1987,
+    deliveryPerformance: 96.8,
+    qualityMetrics: 99.2,
+    costCompetitiveness: 82,
+    innovationScore: 91,
+    riskLevel: 'low',
+    riskScore: 12,
+    primaryContactName: 'Sarah Mitchell',
+    primaryContactEmail: 's.mitchell@techcomponents.com',
+    primaryContactPhone: '+44 1223 5550101',
+    secondaryContactName: 'James Chen',
+    secondaryContactEmail: 'j.chen@techcomponents.com',
+    website: 'https://www.techcomponents.com',
+    lastAuditDate: '2024-11-15',
+    nextAuditDate: '2025-05-15',
+    contractExpiry: '2026-12-31',
+    paymentTerms: 'Net 60',
+    currency: 'GBP',
+    leadTimeDays: 14,
+    moq: 5000,
+    capacityUtilization: 78,
+    businessContinuityPlan: true,
+    insuranceCoverage: '$50M Comprehensive Liability',
+    sustainabilityCertifications: ['EcoVadis Platinum', 'Science Based Targets'],
+    carbonFootprint: 12400,
+    waterUsage: 89000,
+    wasteReduction: 34,
+    diversityInclusion: 78,
+    dataPrivacyCertified: true,
+    cybersecurityRating: 'A+',
+    lastUpdated: '2025-01-20',
+    notes: 'Strategic partner since 2019. Excellent track record. Expanding capacity in 2025.',
+    tags: ['strategic', 'electronics', 'semiconductors', 'ESG-leader'],
+    status: 'active'
+  },
+  {
+    id: 'SUP-002',
+    companyName: 'Pacific Precision Industries',
+    registrationNumber: 'PPI-TW-99234',
+    legalEntityName: 'Pacific Precision Industries Co., Ltd.',
+    dunsNumber: '88-456-7890',
+    taxId: 'TW987654321098',
+    address: 'No. 88, Sec. 1, Hsin Tai Wu Road',
+    city: 'Hsinchu',
+    stateProvince: 'Hsinchu County',
+    postalCode: '300',
+    country: 'Taiwan',
+    region: 'Asia Pacific',
+    tier: 'Tier 1',
+    category: 'Precision Manufacturing',
+    subcategory: 'Optical Components',
+    products: ['Lens Assemblies', 'Prisms', 'Filters', 'Optical Sensors'],
+    certifications: ['ISO 9001', 'ISO 14001', 'ISO 45001'],
+    esgScore: 76,
+    uflpaStatus: 'Under Review',
+    eudrStatus: 'N/A - Non-Forestry',
+    csdddStatus: 'Pending Assessment',
+    soxCompliant: false,
+    gdprCompliant: false,
+    reachCompliant: false,
+    financialRating: 'A+',
+    revenue: 1800000000,
+    employeeCount: 8900,
+    foundedYear: 1995,
+    deliveryPerformance: 94.2,
+    qualityMetrics: 97.8,
+    costCompetitiveness: 88,
+    innovationScore: 85,
+    riskLevel: 'medium',
+    riskScore: 35,
+    primaryContactName: 'Wei-Lin Huang',
+    primaryContactEmail: 'wl.huang@pacificprecision.tw',
+    primaryContactPhone: '+886 3 567 8901',
+    secondaryContactName: 'Mei Lin Tsai',
+    secondaryContactEmail: 'ml.tsai@pacificprecision.tw',
+    website: 'https://www.pacificprecision.com.tw',
+    lastAuditDate: '2024-08-22',
+    nextAuditDate: '2025-02-22',
+    contractExpiry: '2025-09-30',
+    paymentTerms: 'Net 45',
+    currency: 'TWD',
+    leadTimeDays: 21,
+    moq: 10000,
+    capacityUtilization: 85,
+    businessContinuityPlan: true,
+    insuranceCoverage: '$30M Product Liability',
+    sustainabilityCertifications: ['EcoVadis Gold'],
+    carbonFootprint: 18900,
+    waterUsage: 145000,
+    wasteReduction: 28,
+    diversityInclusion: 65,
+    dataPrivacyCertified: false,
+    cybersecurityRating: 'B+',
+    lastUpdated: '2025-01-18',
+    notes: 'UFLPA review in progress due to Xinjiang-sourced raw materials claim. Monitoring closely.',
+    tags: ['optics', 'taiwan', 'precision', 'UFLPA-watch'],
+    status: 'under-review'
+  },
+  {
+    id: 'SUP-003',
+    companyName: 'EuroChem Solutions GmbH',
+    registrationNumber: 'HRB-DE-45678',
+    legalEntityName: 'EuroChem Solutions Gesellschaft mit beschränkter Haftung',
+    dunsNumber: '52-789-0123',
+    taxId: 'DE234567890123',
+    address: 'Industriestraße 42',
+    city: 'Ludwigshafen',
+    stateProvince: 'Rhineland-Palatinate',
+    postalCode: '67063',
+    country: 'Germany',
+    region: 'Europe',
+    tier: 'Tier 2',
+    category: 'Chemicals',
+    subcategory: 'Specialty Chemicals',
+    products: ['Polymer Additives', 'Coating Agents', 'Adhesives', 'Sealants'],
+    certifications: ['ISO 9001', 'ISO 14001', 'REACH Registered', 'ISO 45001'],
+    esgScore: 82,
+    uflpaStatus: 'Compliant',
+    eudrStatus: 'Compliant',
+    csdddStatus: 'Compliant',
+    soxCompliant: true,
+    gdprCompliant: true,
+    reachCompliant: true,
+    financialRating: 'A',
+    revenue: 980000000,
+    employeeCount: 4200,
+    foundedYear: 1962,
+    deliveryPerformance: 92.5,
+    qualityMetrics: 98.5,
+    costCompetitiveness: 75,
+    innovationScore: 79,
+    riskLevel: 'low',
+    riskScore: 18,
+    primaryContactName: 'Dr. Klaus Weber',
+    primaryContactEmail: 'k.weber@eurochem.de',
+    primaryContactPhone: '+49 621 5550345',
+    secondaryContactName: 'Anna Schmidt',
+    secondaryContactEmail: 'a.schmidt@eurochem.de',
+    website: 'https://www.eurochem-solutions.de',
+    lastAuditDate: '2024-10-05',
+    nextAuditDate: '2025-04-05',
+    contractExpiry: '2027-06-30',
+    paymentTerms: 'Net 30',
+    currency: 'EUR',
+    leadTimeDays: 10,
+    moq: 2000,
+    capacityUtilization: 72,
+    businessContinuityPlan: true,
+    insuranceCoverage: '$75M Environmental + Liability',
+    sustainabilityCertifications: ['EcoVadis Platinum', 'EU Ecolabel', 'Blue Angel'],
+    carbonFootprint: 28000,
+    waterUsage: 210000,
+    wasteReduction: 45,
+    diversityInclusion: 82,
+    dataPrivacyCertified: true,
+    cybersecurityRating: 'A',
+    lastUpdated: '2025-01-22',
+    notes: 'Strong ESG performer. Leading REACH compliance. Expanding bio-based product line.',
+    tags: ['chemicals', 'germany', 'ESG-leader', 'REACH-expert'],
+    status: 'active'
+  },
+  {
+    id: 'SUP-004',
+    companyName: 'Shanghai Advanced Materials Co.',
+    registrationNumber: 'SHAM-CN-11223',
+    legalEntityName: 'Shanghai Advanced Materials Co., Ltd.',
+    dunsNumber: '91-234-5678',
+    taxId: 'CN91234567890123',
+    address: '888 Zhangjiang High-Tech Park Road',
+    city: 'Shanghai',
+    stateProvince: 'Shanghai Municipality',
+    postalCode: '201203',
+    country: 'China',
+    region: 'Asia Pacific',
+    tier: 'Tier 1',
+    category: 'Advanced Materials',
+    subcategory: 'Composite Materials',
+    products: ['Carbon Fiber Prepregs', 'Ceramic Matrix Composites', 'Metal Matrix Composites'],
+    certifications: ['ISO 9001', 'ISO 14001', 'AS9100D'],
+    esgScore: 68,
+    uflpaStatus: 'High Risk',
+    eudrStatus: 'N/A - Non-Forestry',
+    csdddStatus: 'Non-Compliant',
+    soxCompliant: false,
+    gdprCompliant: false,
+    reachCompliant: false,
+    financialRating: 'BBB+',
+    revenue: 3200000000,
+    employeeCount: 18500,
+    foundedYear: 2003,
+    deliveryPerformance: 89.5,
+    qualityMetrics: 95.2,
+    costCompetitiveness: 94,
+    innovationScore: 88,
+    riskLevel: 'high',
+    riskScore: 62,
+    primaryContactName: 'Li Wei Zhang',
+    primaryContactEmail: 'lw.zhang@shamaterials.cn',
+    primaryContactPhone: '+86 21 5550 7890',
+    secondaryContactName: 'Ying Liu',
+    secondaryContactEmail: 'ying.liu@shamaterials.cn',
+    website: 'http://www.shamaterials.cn',
+    lastAuditDate: '2024-06-18',
+    nextAuditDate: '2025-01-18',
+    contractExpiry: '2025-12-31',
+    paymentTerms: 'Net 90',
+    currency: 'CNY',
+    leadTimeDays: 35,
+    moq: 25000,
+    capacityUtilization: 92,
+    businessContinuityPlan: false,
+    insuranceCoverage: '$20M Basic Liability',
+    sustainabilityCertifications: [],
+    carbonFootprint: 45000,
+    waterUsage: 380000,
+    wasteReduction: 15,
+    diversityInclusion: 45,
+    dataPrivacyCertified: false,
+    cybersecurityRating: 'C',
+    lastUpdated: '2025-01-15',
+    notes: 'CRITICAL: UFLPA high-risk due to suspected Xinjiang labor. CSDDD non-compliant. Alternative sourcing required by Q2 2025.',
+    tags: ['materials', 'china', 'HIGH-RISK', 'UFLPA-critical', 'CSDDD-issue'],
+    status: 'under-review'
+  },
+  {
+    id: 'SUP-005',
+    companyName: 'Americas Logistics Partners LLC',
+    registrationNumber: 'ALP-US-55667',
+    legalEntityName: 'Americas Logistics Partners, LLC',
+    dunsNumber: '12-345-6789',
+    taxId: 'US987654321098',
+    address: '1500 Logistics Way, Suite 400',
+    city: 'Chicago',
+    stateProvince: 'Illinois',
+    postalCode: '60601',
+    country: 'United States',
+    region: 'North America',
+    tier: 'Tier 2',
+    category: 'Logistics & Distribution',
+    subcategory: 'Freight Forwarding',
+    products: ['Ocean Freight', 'Air Freight', 'Warehousing', 'Last-Mile Delivery'],
+    certifications: ['ISO 9001', 'ISO 14001', 'C-TPAT', 'AEO Certified'],
+    esgScore: 74,
+    uflpaStatus: 'Compliant',
+    eudrStatus: 'N/A - Non-Forestry',
+    csdddStatus: 'Partial Compliance',
+    soxCompliant: true,
+    gdprCompliant: true,
+    reachCompliant: false,
+    financialRating: 'A-',
+    revenue: 1500000000,
+    employeeCount: 7800,
+    foundedYear: 2001,
+    deliveryPerformance: 93.8,
+    qualityMetrics: 96.5,
+    costCompetitiveness: 80,
+    innovationScore: 72,
+    riskLevel: 'low',
+    riskScore: 22,
+    primaryContactName: 'Michael Rodriguez',
+    primaryContactEmail: 'm.rodriguez@americaslogistics.com',
+    primaryContactPhone: '+1 312 555 0199',
+    secondaryContactName: 'Jennifer Adams',
+    secondaryContactEmail: 'j.adams@americaslogistics.com',
+    website: 'https://www.americaslogistics.com',
+    lastAuditDate: '2024-09-10',
+    nextAuditDate: '2025-03-10',
+    contractExpiry: '2026-06-30',
+    paymentTerms: 'Net 45',
+    currency: 'USD',
+    leadTimeDays: 3,
+    moq: 1,
+    capacityUtilization: 68,
+    businessContinuityPlan: true,
+    insuranceCoverage: '$100M Cargo + Liability',
+    sustainabilityCertifications: ['Smartway Partner', 'EcoVadis Silver'],
+    carbonFootprint: 52000,
+    waterUsage: 12000,
+    wasteReduction: 22,
+    diversityInclusion: 85,
+    dataPrivacyCertified: true,
+    cybersecurityRating: 'A-',
+    lastUpdated: '2025-01-21',
+    notes: 'Reliable logistics partner. Fleet electrification program underway. Good geographic coverage.',
+    tags: ['logistics', 'usa', 'freight', 'sustainability'],
+    status: 'active'
+  },
+  {
+    id: 'SUP-006',
+    companyName: 'Nordic Renewable Energy AB',
+    registrationNumber: 'NRE-SE-77889',
+    legalEntityName: 'Nordic Renewable Energy Aktiebolag',
+    dunsNumber: '65-678-9012',
+    taxId: 'SE556789012345',
+    address: 'Storgatan 15',
+    city: 'Stockholm',
+    stateProvince: 'Stockholm County',
+    postalCode: '111 43',
+    country: 'Sweden',
+    region: 'Europe',
+    tier: 'Tier 2',
+    category: 'Renewable Energy',
+    subcategory: 'Wind Turbine Components',
+    products: ['Rotor Blades', 'Gearboxes', 'Generators', 'Control Systems'],
+    certifications: ['ISO 9001', 'ISO 14001', 'ISO 45001', 'ISO 50001'],
+    esgScore: 94,
+    uflpaStatus: 'Compliant',
+    eudrStatus: 'Compliant',
+    csdddStatus: 'Compliant',
+    soxCompliant: true,
+    gdprCompliant: true,
+    reachCompliant: true,
+    financialRating: 'AA-',
+    revenue: 420000000,
+    employeeCount: 2300,
+    foundedYear: 2008,
+    deliveryPerformance: 91.2,
+    qualityMetrics: 97.5,
+    costCompetitiveness: 70,
+    innovationScore: 95,
+    riskLevel: 'low',
+    riskScore: 8,
+    primaryContactName: 'Erik Lindqvist',
+    primaryContactEmail: 'e.lindqvist@nordicrenewable.se',
+    primaryContactPhone: '+46 8 555 1234',
+    secondaryContactName: 'Sofia Andersson',
+    secondaryContactEmail: 's.andersson@nordicrenewable.se',
+    website: 'https://www.nordicrenewable.se',
+    lastAuditDate: '2024-12-01',
+    nextAuditDate: '2025-06-01',
+    contractExpiry: '2028-12-31',
+    paymentTerms: 'Net 60',
+    currency: 'SEK',
+    leadTimeDays: 28,
+    moq: 50,
+    capacityUtilization: 88,
+    businessContinuityPlan: true,
+    insuranceCoverage: '$40M Product + Environmental',
+    sustainabilityCertifications: ['EcoVadis Platinum', 'B Corp Certified', 'Climate Neutral'],
+    carbonFootprint: 8500,
+    waterUsage: 25000,
+    wasteReduction: 58,
+    diversityInclusion: 91,
+    dataPrivacyCertified: true,
+    cybersecurityRating: 'A+',
+    lastUpdated: '2025-01-24',
+    notes: 'Industry-leading ESG performance. Carbon neutral operations. Premium pricing justified by quality.',
+    tags: ['renewable', 'sweden', 'ESG-champion', 'wind-energy', 'B-Corp'],
+    status: 'active'
+  },
+  {
+    id: 'SUP-007',
+    companyName: 'IndiaTech Manufacturing Pvt. Ltd.',
+    registrationNumber: 'ITM-IN-33445',
+    legalEntityName: 'IndiaTech Manufacturing Private Limited',
+    dunsNumber: '74-890-1234',
+    taxId: 'IN345678901234',
+    address: 'PEEC Phase II, Plot No. 45',
+    city: 'Pune',
+    stateProvince: 'Maharashtra',
+    postalCode: '411057',
+    country: 'India',
+    region: 'Asia Pacific',
+    tier: 'Tier 2',
+    category: 'Electronics Assembly',
+    subcategory: 'PCBA Manufacturing',
+    products: ['PCB Assembly', 'Box Build', 'Cable Harnesses', 'Testing Services'],
+    certifications: ['ISO 9001', 'ISO 14001', 'IPC-A-610 Class 3'],
+    esgScore: 71,
+    uflpaStatus: 'Compliant',
+    eudrStatus: 'N/A - Non-Forestry',
+    csdddStatus: 'Pending Assessment',
+    soxCompliant: false,
+    gdprCompliant: false,
+    reachCompliant: false,
+    financialRating: 'BBB',
+    revenue: 650000000,
+    employeeCount: 5500,
+    foundedYear: 2010,
+    deliveryPerformance: 88.5,
+    qualityMetrics: 94.8,
+    costCompetitiveness: 91,
+    innovationScore: 76,
+    riskLevel: 'medium',
+    riskScore: 38,
+    primaryContactName: 'Rajesh Kumar',
+    primaryContactEmail: 'r.kumar@indiatech.in',
+    primaryContactPhone: '+91 20 555 6789',
+    secondaryContactName: 'Priya Sharma',
+    secondaryContactEmail: 'p.sharma@indiatech.in',
+    website: 'https://www.indiatech.co.in',
+    lastAuditDate: '2024-07-20',
+    nextAuditDate: '2025-01-20',
+    contractExpiry: '2025-08-31',
+    paymentTerms: 'Net 60',
+    currency: 'INR',
+    leadTimeDays: 18,
+    moq: 5000,
+    capacityUtilization: 82,
+    businessContinuityPlan: true,
+    insuranceCoverage: '$25M Product Liability',
+    sustainabilityCertifications: ['EcoVadis Bronze'],
+    carbonFootprint: 22000,
+    waterUsage: 175000,
+    wasteReduction: 20,
+    diversityInclusion: 72,
+    dataPrivacyCertified: false,
+    cybersecurityRating: 'B',
+    lastUpdated: '2025-01-17',
+    notes: 'Cost-effective assembly partner. Quality improving steadily. CSDDD assessment scheduled for Q1 2025.',
+    tags: ['assembly', 'india', 'cost-effective', 'electronics'],
+    status: 'active'
+  },
+  {
+    id: 'SUP-008',
+    companyName: 'BrazilAgro Commodities SA',
+    registrationNumber: 'BAG-BR-66778',
+    legalEntityName: 'BrazilAgro Commodidades Sociedade Anônima',
+    dunsNumber: '38-901-2345',
+    taxId: 'BR45678901234567',
+    address: 'Avenida Paulista, 1106',
+    city: 'São Paulo',
+    stateProvince: 'São Paulo State',
+    postalCode: '01310-100',
+    country: 'Brazil',
+    region: 'Latin America',
+    tier: 'Tier 2',
+    category: 'Agriculture & Forestry',
+    subcategory: 'Soy & Palm Oil',
+    products: ['Soybeans', 'Palm Oil', 'Coffee Beans', 'Sugar'],
+    certifications: ['ISO 9001', 'RSPO', 'RTRS', 'Rainforest Alliance'],
+    esgScore: 64,
+    uflpaStatus: 'Compliant',
+    eudrStatus: 'Under Review',
+    csdddStatus: 'Non-Compliant',
+    soxCompliant: false,
+    gdprCompliant: false,
+    reachCompliant: false,
+    financialRating: 'BB+',
+    revenue: 2800000000,
+    employeeCount: 12500,
+    foundedYear: 1955,
+    deliveryPerformance: 85.2,
+    qualityMetrics: 92.5,
+    costCompetitiveness: 86,
+    innovationScore: 58,
+    riskLevel: 'high',
+    riskScore: 55,
+    primaryContactName: 'Carlos Silva',
+    primaryContactEmail: 'c.silva@brazilagro.br',
+    primaryContactPhone: '+55 11 5555 0123',
+    secondaryContactName: 'Maria Oliveira',
+    secondaryContactEmail: 'm.oliveira@brazilagro.br',
+    website: 'https://www.brazilagro.com.br',
+    lastAuditDate: '2024-05-12',
+    nextAuditDate: '2024-11-12',
+    contractExpiry: '2025-06-30',
+    paymentTerms: 'Net 90',
+    currency: 'BRL',
+    leadTimeDays: 45,
+    moq: 100000,
+    capacityUtilization: 95,
+    businessContinuityPlan: false,
+    insuranceCoverage: '$35M Agricultural + Liability',
+    sustainabilityCertifications: ['RSPO Certified', 'RTRS Member'],
+    carbonFootprint: 78000,
+    waterUsage: 1200000,
+    wasteReduction: 12,
+    diversityInclusion: 68,
+    dataPrivacyCertified: false,
+    cybersecurityRating: 'C-',
+    lastUpdated: '2025-01-14',
+    notes: 'EUDR under review due to Amazon deforestation concerns. Deforestation-free sourcing verification pending. HIGH ATTENTION REQUIRED.',
+    tags: ['agriculture', 'brazil', 'EUDR-watch', 'deforestation-risk', 'commodities'],
+    status: 'under-review'
+  },
+  {
+    id: 'SUP-009',
+    companyName: 'JapanAuto Parts KK',
+    registrationNumber: 'JAP-JP-88990',
+    legalEntityName: 'JapanAuto Parts Kabushiki Kaisha',
+    dunsNumber: '47-012-3456',
+    taxId: 'JP5678901234567',
+    address: '1-2-3 Toyota-cho',
+    city: 'Toyota',
+    stateProvince: 'Aichi Prefecture',
+    postalCode: '471-0806',
+    country: 'Japan',
+    region: 'Asia Pacific',
+    tier: 'Tier 1',
+    category: 'Automotive Components',
+    subcategory: 'Powertrain Systems',
+    products: ['Transmission Systems', 'Engine Components', 'Hybrid Systems', 'EV Powertrains'],
+    certifications: ['ISO 9001', 'IATF 16949', 'ISO 14001', 'ISO 27001'],
+    esgScore: 86,
+    uflpaStatus: 'Compliant',
+    eudrStatus: 'N/A - Non-Forestry',
+    csdddStatus: 'Compliant',
+    soxCompliant: true,
+    gdprCompliant: true,
+    reachCompliant: true,
+    financialRating: 'AAA',
+    revenue: 5800000000,
+    employeeCount: 28000,
+    foundedYear: 1948,
+    deliveryPerformance: 98.2,
+    qualityMetrics: 99.5,
+    costCompetitiveness: 78,
+    innovationScore: 93,
+    riskLevel: 'low',
+    riskScore: 5,
+    primaryContactName: 'Takeshi Yamamoto',
+    primaryContactEmail: 't.yamamoto@japanautoparts.jp',
+    primaryContactPhone: '+81 565 55 1234',
+    secondaryContactName: 'Yuki Tanaka',
+    secondaryContactEmail: 'y.tanaka@japanautoparts.jp',
+    website: 'https://www.japanautoparts.co.jp',
+    lastAuditDate: '2024-11-28',
+    nextAuditDate: '2025-05-28',
+    contractExpiry: '2029-12-31',
+    paymentTerms: 'Net 30',
+    currency: 'JPY',
+    leadTimeDays: 8,
+    moq: 1000,
+    capacityUtilization: 76,
+    businessContinuityPlan: true,
+    insuranceCoverage: '$200M Comprehensive',
+    sustainabilityCertifications: ['EcoVadis Platinum', 'Carbon Neutral 2030 Pledge'],
+    carbonFootprint: 35000,
+    waterUsage: 95000,
+    wasteRedolution: 48,
+    diversityInclusion: 75,
+    dataPrivacyCertified: true,
+    cybersecurityRating: 'A+',
+    lastUpdated: '2025-01-23',
+    notes: 'World-class automotive supplier. Zero defect target achieved 3 consecutive years. EV transition leader.',
+    tags: ['automotive', 'japan', 'tier-1', 'world-class', 'EV-ready'],
+    status: 'active'
+  },
+  {
+    id: 'SUP-010',
+    companyName: 'VietnamTextile Group JSC',
+    registrationNumber: 'VTG-VN-00112',
+    legalEntityName: 'VietnamTextile Group Joint Stock Company',
+    dunsNumber: '83-123-4567',
+    taxId: 'VN0123456789',
+    address: 'Lot A3, VSIP II Industrial Park',
+    city: 'Binh Duong',
+    stateProvince: 'Binh Duong Province',
+    postalCode: '800000',
+    country: 'Vietnam',
+    region: 'Asia Pacific',
+    tier: 'Tier 3',
+    category: 'Textiles & Apparel',
+    subcategory: 'Garment Manufacturing',
+    products: ['Workwear Uniforms', 'Casual Apparel', 'Technical Textiles', 'Protective Clothing'],
+    certifications: ['ISO 9001', 'ISO 14001', 'WRAP Certified', 'OEKO-TEX Standard 100'],
+    esgScore: 59,
+    uflpaStatus: 'Under Review',
+    eudrStatus: 'N/A - Non-Forestry',
+    csdddStatus: 'Non-Compliant',
+    soxCompliant: false,
+    gdprCompliant: false,
+    reachCompliant: false,
+    financialRating: 'BB-',
+    revenue: 380000000,
+    employeeCount: 15000,
+    foundedYear: 2005,
+    deliveryPerformance: 84.5,
+    qualityMetrics: 91.2,
+    costCompetitiveness: 95,
+    innovationScore: 52,
+    riskLevel: 'high',
+    riskScore: 58,
+    primaryContactName: 'Nguyen Van Minh',
+    primaryContactEmail: 'nv.minh@vietnamtextile.vn',
+    primaryContactPhone: '+84 274 555 6789',
+    secondaryContactName: 'Tran Thi Hoa',
+    secondaryContactEmail: 'tt.hoa@vietnamtextile.vn',
+    website: 'https://www.vietnamtextile.vn',
+    lastAuditDate: '2024-04-15',
+    nextAuditDate: '2024-10-15',
+    contractExpiry: '2025-03-31',
+    paymentTerms: 'Net 60',
+    currency: 'VND',
+    leadTimeDays: 42,
+    moq: 50000,
+    capacityUtilization: 94,
+    businessContinuityPlan: false,
+    insuranceCoverage: '$15M Basic Liability',
+    sustainabilityCertifications: ['WRAP Certified'],
+    carbonFootprint: 32000,
+    waterUsage: 450000,
+    wasteReduction: 18,
+    diversityInclusion: 62,
+    dataPrivacyCertified: false,
+    cybersecurityRating: 'D',
+    lastUpdated: '2025-01-12',
+    notes: 'Labor practices under scrutiny. UFLPA review ongoing due to supply chain transparency issues. Consider diversification.',
+    tags: ['textiles', 'vietnam', 'labor-concerns', 'cost-leader', 'tier-3'],
+    status: 'under-review'
+  }
 ]
 
 const alertsData: RiskAlert[] = [
-  { id: 'ALT-001', severity: 'critical', supplier: 'Shanghai Electronics', category: 'Compliance', title: 'UFLPA Review Required', message: 'Incomplete traceability documentation for Xinjiang-sourced materials', timestamp: new Date(Date.now() - 1000 * 60 * 5), acknowledged: false, status: 'open', probability: 85, confidence: 92, impact: '$2.5M inventory at risk, production stoppage possible', mitigationActions: [{action: 'Request full traceability docs', owner: 'Amy Chen', dueDate: '2025-03-20', status: 'pending'}, {action: 'Engage UFLPA auditor', owner: 'Legal', dueDate: '2025-03-25', status: 'pending'}] },
-  { id: 'ALT-002', severity: 'high', supplier: 'PrecisionParts Vietnam', category: 'Operational', title: 'Capacity Constraints', message: 'Lead time increased 45% due to capacity issues at 91% utilization', timestamp: new Date(Date.now() - 1000 * 60 * 23), acknowledged: false, status: 'investigating', probability: 75, confidence: 88, impact: '$180K revenue impact if unresolved in 4 weeks', mitigationActions: [{action: 'Emergency supplier meeting', owner: 'Amy Chen', dueDate: '2025-03-17', status: 'in-progress'}] },
-  { id: 'ALT-003', severity: 'high', supplier: 'GlobalLogistics Corp', category: 'Geopolitical', title: 'New EU Trade Regulations', message: 'New customs requirements affecting Singapore-EU routes effective April 1', timestamp: new Date(Date.now() - 1000 * 60 * 45), acknowledged: true, status: 'mitigating', probability: 95, confidence: 98, impact: '2-3 day delay on EU shipments, €15-25 additional cost/shipment', mitigationActions: [{action: 'Update shipping templates', owner: 'GlobalLogistics', dueDate: '2025-03-20', status: 'completed'}] },
-  { id: 'ALT-004', severity: 'medium', supplier: 'BrazilMetals SA', category: 'Environmental', title: 'EUDR Documentation Pending', message: 'EUDR compliance deadline in 14 days - documentation missing', timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2), acknowledged: false, status: 'open', probability: 60, confidence: 85, impact: 'Potential shipment rejection at EU customs ($450K value)', mitigationActions: [] },
-  { id: 'ALT-005', severity: 'medium', supplier: 'IndiaTech Solutions', category: 'Cybersecurity', title: 'Outdated Encryption Protocols', message: 'TLS 1.0/1.1 detected in legacy systems - security audit finding', timestamp: new Date(Date.now() - 1000 * 60 * 60 * 3), acknowledged: true, status: 'investigating', probability: 35, confidence: 90, impact: 'Data breach risk, PCI-DSS compliance issue', mitigationActions: [] },
-  { id: 'ALT-006', severity: 'low', supplier: 'MexicoAssembly Inc', category: 'Quality', title: 'Minor Quality Deviation', message: 'Dimensional tolerance deviation in batch #4521 (±0.02mm)', timestamp: new Date(Date.now() - 1000 * 60 * 60 * 5), acknowledged: true, status: 'resolved', probability: 15, confidence: 95, impact: 'Minor rework $2,200, no production impact', mitigationActions: [] }
-]
-
-const forecastData: DemandForecast[] = [
-  { id: 'DF-001', product: 'TC-7000 Series MCU', sku: 'TC-MCU-7000', period: 'W12', actual: 12500, forecast: 12100, lowerBound: 11200, upperBound: 13000, confidence: 89, trend: 'increasing' },
-  { id: 'DF-002', product: 'TC-8000 Memory Module', sku: 'TC-MEM-8000', period: 'W12', actual: 3800, forecast: 3950, lowerBound: 3600, upperBound: 4300, confidence: 87, trend: 'stable' },
-  { id: 'DF-003', product: 'Aluminum Housing PP-100', sku: 'PP-AH-100', period: 'W12', actual: 18500, forecast: 18200, lowerBound: 17000, upperBound: 19400, confidence: 92, trend: 'increasing' },
-  { id: 'DF-004', product: 'EuroPoly EM-100', sku: 'EP-POLY-100', period: 'March', actual: 420, forecast: 435, lowerBound: 400, upperBound: 470, confidence: 94, trend: 'stable' },
-  { id: 'DF-005', product: 'PCBA Assembly SE-500', sku: 'SE-PCBA-500', period: 'W12', actual: null, forecast: 8500, lowerBound: 7200, upperBound: 9800, confidence: 78, trend: 'volatile', anomaly: 'High uncertainty due to China trade situation' }
-]
-
-const complianceData: ComplianceItem[] = [
-  { framework: 'Uyghur Forced Labor Prevention Act', acronym: 'UFLPA', score: 94, status: 'compliant', lastAudit: '2025-02-15', nextAudit: '2025-08-15', requirements: [
-    {title: 'Supply Chain Traceability', status: 'compliant', severity: 'mandatory'},
-    {title: 'Forced Labor Attestation', status: 'compliant', severity: 'mandatory'},
-    {title: 'Xinjiang Region Exclusion', status: 'partial', severity: 'mandatory'},
-    {title: 'CBP Entry Documentation', status: 'compliant', severity: 'required'}
-  ], upcomingDeadlines: [
-    {date: '2025-04-15', requirement: 'Tier 2 traceability completion', priority: 'high'},
-    {date: '2025-06-30', requirement: 'Annual recertification', priority: 'medium'}
-  ]},
-  { framework: 'EU Deforestation Regulation', acronym: 'EUDR', score: 87, status: 'partial', lastAudit: '2025-01-20', nextAudit: '2026-01-20', requirements: [
-    {title: 'Geolocation Data Collection', status: 'compliant', severity: 'mandatory'},
-    {title: 'Due Diligence Statement', status: 'compliant', severity: 'mandatory'},
-    {title: 'Deforestation-Free Certification', status: 'compliant', severity: 'mandatory'},
-    {title: 'Risk Assessment', status: 'partial', severity: 'required'}
-  ], upcomingDeadlines: [
-    {date: '2025-04-30', requirement: 'Complex product assessment', priority: 'high'},
-    {date: '2025-12-29', requirement: 'Operator compliance deadline', priority: 'high'}
-  ]},
-  { framework: 'CSDDD', acronym: 'CSDDD', score: 91, status: 'compliant', lastAudit: '2025-01-28', nextAudit: '2026-01-28', requirements: [
-    {title: 'Human Rights Due Diligence', status: 'compliant', severity: 'mandatory'},
-    {title: 'Environmental Due Diligence', status: 'compliant', severity: 'mandatory'},
-    {title: 'Climate Transition Plan', status: 'partial', severity: 'required'},
-    {title: 'Stakeholder Engagement', status: 'compliant', severity: 'required'}
-  ], upcomingDeadlines: [
-    {date: '2025-06-30', requirement: 'Climate plan adoption', priority: 'high'}
-  ]},
-  { framework: 'SOX', acronym: 'SOX', score: 98, status: 'compliant', lastAudit: '2025-03-01', nextAudit: '2025-06-01', requirements: [
-    {title: 'CEO/CFO Certification', status: 'compliant', severity: 'mandatory'},
-    {title: 'Internal Control (404)', status: 'compliant', severity: 'mandatory'},
-    {title: 'Real-Time Disclosure', status: 'compliant', severity: 'required'},
-    {title: 'Whistleblower Protection', status: 'compliant', severity: 'required'}
-  ], upcomingDeadlines: []},
-  { framework: 'GDPR', acronym: 'GDPR', score: 96, status: 'compliant', lastAudit: '2025-02-10', nextAudit: '2025-05-10', requirements: [
-    {title: 'Lawful Basis Documentation', status: 'compliant', severity: 'mandatory'},
-    {title: 'Data Subject Rights', status: 'compliant', severity: 'mandatory'},
-    {title: 'DPIA Process', status: 'compliant', severity: 'required'},
-    {title: 'Breach Notification (72hr)', status: 'compliant', severity: 'mandatory'},
-    {title: 'International Transfers', status: 'compliant', severity: 'required'}
-  ], upcomingDeadlines: []},
-  { framework: 'REACH', acronym: 'REACH', score: 89, status: 'partial', lastAudit: '2025-03-05', nextAudit: '2026-03-05', requirements: [
-    {title: 'Substance Registration', status: 'compliant', severity: 'mandatory'},
-    {title: 'SVHC Communication', status: 'compliant', severity: 'required'},
-    {title: 'Authorization Process', status: 'compliant', severity: 'mandatory'},
-    {title: 'Restriction Compliance', status: 'partial', severity: 'mandatory'}
-  ], upcomingDeadlines: [
-    {date: '2025-05-28', requirement: 'Restriction gap closure', priority: 'high'}
-  ]}
-]
-
-const riskTrendData = Array.from({length: 12}, (_, i) => ({
-  date: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][i],
-  score: 30 + Math.random() * 20,
-  threshold: 60
-}))
-
-const regionRiskData = [
-  {region: 'Asia-Pacific', value: 42, critical: 18, high: 45, medium: 52},
-  {region: 'Europe', value: 18, critical: 5, high: 18, medium: 32},
-  {region: 'North America', value: 12, critical: 2, high: 10, medium: 22},
-  {region: 'Latin America', value: 18, critical: 4, high: 12, medium: 18}
-]
-
-// ============================================
-// REUSABLE COMPONENTS
-// ============================================
-
-function ExpandableText({ content, maxLength = 150 }: { content: string; maxLength?: number }) {
-  const [expanded, setExpanded] = useState(false)
-  if (content.length <= maxLength) return <span className="text-sm">{content}</span>
-  return (
-    <span className="text-sm">
-      {!expanded ? `${content.substring(0, maxLength)}...` : content}
-      <button onClick={() => setExpanded(!expanded)} className="ml-1 text-primary hover:underline text-xs font-medium">
-        {expanded ? 'Show less' : 'Show more'}
-      </button>
-    </span>
-  )
-}
-
-function AccordionSection({ title, children, defaultOpen = false, icon, badge }: {title: string; children: React.ReactNode; defaultOpen?: boolean; icon?: React.ReactNode; badge?: string}) {
-  const [open, setOpen] = useState(defaultOpen)
-  return (
-    <div className="border rounded-lg overflow-hidden">
-      <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between p-4 hover:bg-accent/50 transition-colors text-left">
-        <div className="flex items-center gap-2">
-          {icon}<span className="font-medium text-sm">{title}</span>
-          {badge && <Badge variant="outline" className="text-xs">{badge}</Badge>}
-        </div>
-        <ChevronDown className={`w-4 h-4 transition-transform ${open ? 'rotate-180' : ''}`} />
-      </button>
-      {open && <div className="p-4 border-t bg-muted/20">{children}</div>}
-    </div>
-  )
-}
-
-function FieldLabel({ label, required, tooltip }: {label: string; required?: boolean; tooltip?: string}) {
-  return (
-    <div className="flex items-center gap-1.5 mb-1.5">
-      <Label className="text-sm font-medium">{label}{required && <span className="text-destructive ml-0.5">*</span>}</Label>
-      {tooltip && <HelpCircle className="w-3.5 h-3.5 text-muted-foreground cursor-help" title={tooltip} />}
-    </div>
-  )
-}
-
-function ChatWidget({ context, title }: {context: string; title: string}) {
-  const [open, setOpen] = useState(false)
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {id: '1', role: 'assistant', content: `Hello! I'm your ${title} AI assistant. How can I help?`, timestamp: new Date()}
-  ])
-  const [input, setInput] = useState('')
-  
-  const sendMsg = () => {
-    if (!input.trim()) return
-    setMessages(prev => [...prev, {id: String(Date.now()), role: 'user', content: input, timestamp: new Date()}])
-    setTimeout(() => {
-      setMessages(prev => [...prev, {id: String(Date.now()+1), role: 'assistant', content: `Regarding "${input}": I can help analyze data, generate reports, or provide recommendations. What would you like to explore?`, timestamp: new Date()}])
-    }, 600)
-    setInput('')
+  {
+    id: 'ALT-001',
+    type: 'compliance',
+    severity: 'critical',
+    title: 'UFLPA Entity List Match Detected',
+    description: 'Shanghai Advanced Materials has been flagged for potential connection to entities on the UFLPA Entity List. Immediate investigation required.',
+    supplier: 'Shanghai Advanced Materials Co.',
+    region: 'Asia Pacific',
+    timestamp: '2025-01-24T14:32:00Z',
+    status: 'active',
+    impact: 'Supply disruption, customs detention, reputational damage',
+    probability: 85,
+    mitigation: 'Engage third-party audit firm for supply chain traceability verification within 14 days',
+    shapValues: [
+      { feature: 'Geographic Risk Score', value: 0.35, color: '#ef4444' },
+      { feature: 'Entity Connection Strength', value: 0.28, color: '#f97316' },
+      { feature: 'Raw Material Origin', value: 0.22, color: '#eab308' },
+      { feature: 'Transparency Score', value: 0.12, color: '#22c55e' },
+      { feature: 'Historical Compliance', value: 0.03, color: '#3b82f6' }
+    ]
+  },
+  {
+    id: 'ALT-002',
+    type: 'environmental',
+    severity: 'warning',
+    title: 'EUDR Deforestation Risk Identified',
+    description: 'BrazilAgro Commodities\' soy sourcing area shows satellite-detected deforestation activity within restricted zones.',
+    supplier: 'BrazilAgro Commodities SA',
+    region: 'Latin America',
+    timestamp: '2025-01-24T11:15:00Z',
+    status: 'active',
+    impact: 'Market access restriction in EU, customer rejection, fines up to 4% EU turnover',
+    probability: 72,
+    mitigation: 'Request geolocation data for all sourcing areas. Engage satellite monitoring service.',
+    shapValues: [
+      { feature: 'Satellite Detection Confidence', value: 0.42, color: '#ef4444' },
+      { feature: 'Sourcing Proximity to Protected Area', value: 0.25, color: '#f97316' },
+      { feature: 'Supplier Traceability Score', value: 0.18, color: '#eab308' },
+      { feature: 'Certification Coverage', value: 0.10, color: '#22c55e' },
+      { feature: 'Historical Incidents', value: 0.05, color: '#3b82f6' }
+    ]
+  },
+  {
+    id: 'ALT-003',
+    type: 'financial',
+    severity: 'warning',
+    title: 'Credit Rating Downgrade Warning',
+    description: 'VietnamTextile Group credit outlook revised to negative by Moody\'s due to declining margins and high leverage.',
+    supplier: 'VietnamTextile Group JSC',
+    region: 'Asia Pacific',
+    timestamp: '2025-01-23T16:45:00Z',
+    status: 'investigating',
+    impact: 'Payment default risk, potential supply disruption, increased costs of alternative sourcing',
+    probability: 45,
+    mitigation: 'Reduce exposure by 30%. Require letter of credit for future orders. Identify backup suppliers.',
+    shapValues: [
+      { feature: 'Debt-to-EBITDA Ratio', value: 0.32, color: '#ef4444' },
+      { feature: 'Operating Margin Trend', value: 0.26, color: '#f97316' },
+      { feature: 'Cash Flow Coverage', value: 0.20, color: '#eab308' },
+      { feature: 'Customer Concentration', value: 0.14, color: '#22c55e' },
+      { feature: 'Industry Outlook', value: 0.08, color: '#3b82f6' }
+    ]
+  },
+  {
+    id: 'ALT-004',
+    type: 'cybersecurity',
+    severity: 'critical',
+    title: 'Critical Vulnerability Detected in Supplier Portal',
+    description: 'Shanghai Advanced Materials supplier portal exposed critical SQL injection vulnerability allowing potential data breach.',
+    supplier: 'Shanghai Advanced Materials Co.',
+    region: 'Asia Pacific',
+    timestamp: '2025-01-24T09:20:00Z',
+    status: 'active',
+    impact: 'Data exfiltration risk, IP theft, regulatory notification requirements under GDPR',
+    probability: 78,
+    mitigation: 'Immediate portal access suspension. Mandate security assessment before reconnection.',
+    shapValues: [
+      { feature: 'CVSS Severity Score', value: 0.45, color: '#ef4444' },
+      { feature: 'Exposed Data Sensitivity', value: 0.25, color: '#f97316' },
+      { feature: 'Patch Availability', value: 0.15, color: '#eab308' },
+      { feature: 'Access Control Maturity', value: 0.10, color: '#22c55e' },
+      { feature: 'Incident Response Capability', value: 0.05, color: '#3b82f6' }
+    ]
+  },
+  {
+    id: 'ALT-005',
+    type: 'operational',
+    severity: 'info',
+    title: 'Capacity Utilization Threshold Exceeded',
+    description: 'BrazilAgro Commodities operating at 95% capacity. Risk of order fulfillment delays during peak season.',
+    supplier: 'BrazilAgro Commodities SA',
+    region: 'Latin America',
+    timestamp: '2025-01-24T07:00:00Z',
+    status: 'active',
+    impact: 'Potential 2-3 week delivery delays, expedited shipping costs',
+    probability: 65,
+    mitigation: 'Pre-position safety stock. Activate secondary supplier agreements.',
+    shapValues: [
+      { feature: 'Current Utilization %', value: 0.40, color: '#ef4444' },
+      { feature: 'Seasonal Demand Spike', value: 0.28, color: '#f97316' },
+      { feature: 'Lead Time Buffer', value: 0.18, color: '#eab308' },
+      { feature: 'Alternative Capacity Available', value: 0.10, color: '#22c55e' },
+      { feature: 'Historical Performance', value: 0.04, color: '#3b82f6' }
+    ]
+  },
+  {
+    id: 'ALT-006',
+    type: 'geopolitical',
+    severity: 'warning',
+    title: 'Taiwan Strait Tensions Escalation',
+    description: 'Increased military activity in Taiwan Strait may affect Pacific Precision Industries shipments.',
+    supplier: 'Pacific Precision Industries',
+    region: 'Asia Pacific',
+    timestamp: '2025-01-23T22:30:00Z',
+    status: 'investigating',
+    impact: 'Shipping route disruptions, insurance premium increases, potential port closures',
+    probability: 35,
+    mitigation: 'Evaluate air freight alternatives. Increase safety stock for critical components.',
+    shapValues: [
+      { feature: 'Geographic Proximity', value: 0.38, color: '#ef4444' },
+      { feature: 'Shipping Route Dependency', value: 0.27, color: '#f97316' },
+      { feature: 'Alternative Route Availability', value: 0.20, color: '#eab308' },
+      { feature: 'Inventory Buffer Days', value: 0.10, color: '#22c55e' },
+      { feature: 'Political Stability Index', value: 0.05, color: '#3b82f6' }
+    ]
   }
-  
-  return (
-    <>
-      <Button onClick={() => setOpen(!open)} className="fixed bottom-6 right-6 z-50 rounded-full w-14 h-14 p-0 shadow-lg bg-primary text-primary-foreground">
-        {open ? <X className="w-6 h-6" /> : <MessageSquare className="w-6 h-6" />}
-      </Button>
-      {open && (
-        <div className="fixed bottom-24 right-6 z-50 w-96 glass rounded-xl shadow-2xl overflow-hidden flex flex-col" style={{height: '480px'}}>
-          <div className="p-4 border-b bg-gradient-to-r from-emerald-500/10 to-cyan-500/10">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2"><Bot className="w-5 h-5 text-primary" /><div><h4 className="font-semibold text-sm">{title}</h4><p className="text-xs text-muted-foreground">AI Assistant</p></div></div>
-              <Button variant="ghost" size="sm" onClick={() => setOpen(false)} className="h-8 w-8 p-0"><X className="w-4 h-4" /></Button>
-            </div>
-          </div>
-          <div className="flex-1 overflow-y-auto p-4 space-y-3">
-            {messages.map(m => (
-              <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[80%] rounded-lg px-3 py-2 text-sm ${m.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted'}`}>{m.content}</div>
-              </div>
-            ))}
-          </div>
-          <div className="p-3 border-t">
-            <div className="flex gap-2"><Input value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && sendMsg()} placeholder="Ask me anything..." /><Button onClick={sendMsg} size="icon" disabled={!input.trim()}><Send className="w-4 h-4" /></Button></div>
-          </div>
-        </div>
-      )}
-    </>
-  )
-}
+]
 
-function QuickContact({ section }: {section: string}) {
-  const [show, setShow] = useState(false)
-  const emails: Record<string, string> = {'supply-directory': 'supplier.mgmt@company.com', 'risk-intelligence': 'risk.team@company.com', 'demand-forecasting': 'demand.plan@company.com', 'compliance': 'compliance@company.com'}
-  return (
-    <>
-      <Dialog open={show} onOpenChange={setShow}>
-        <DialogTrigger asChild><Button variant="outline" size="sm" className="gap-1.5"><Mail className="w-3.5 h-3.5" />Email</Button></DialogTrigger>
-        <DialogContent><DialogHeader><DialogTitle>Contact Team</DialogTitle></DialogHeader>
-          <div className="space-y-4 py-4">
-            <FieldLabel label="To" required /><Input defaultValue={emails[section] || 'support@company.com'} readOnly className="bg-muted" />
-            <FieldLabel label="Subject" required /><Input />
-            <FieldLabel label="Message" required /><Textarea rows={4} placeholder="Your message..." />
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShow(false)}>Cancel</Button>
-            <Button onClick={() => setShow(false)}><Send className="w-4 h-4 mr-2" />Send</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-      <Button variant="outline" size="sm" className="gap-1.5"><Phone className="w-3.5 h-3.5" />Call</Button>
-    </>
-  )
-}
-
-function StatusBadge({ status}: {status: string}) {
-  const colors: Record<string, string> = {active: 'default', inactive: 'secondary', 'under-review': 'outline', suspended: 'destructive', compliant: 'default', 'non-compliant': 'destructive', partial: 'outline', open: 'destructive', investigating: 'outline', mitigating: 'default', resolved: 'secondary'}
-  return <Badge variant={(colors[status] as any) || 'secondary'} className="capitalize">{status.replace(/-/g, ' ')}</Badge>
-}
-
-function SeverityBadge({severity}: {severity: string}) {
-  const colors: Record<string, string> = {critical: 'bg-red-500 text-white', high: 'bg-orange-500 text-white', medium: 'bg-yellow-500 text-black', low: 'bg-blue-500 text-white'}
-  return <Badge className={`${colors[severity]} capitalize`}>{severity}</Badge>
-}
-
-function RiskGauge({score, level}: {score: number; level: string}) {
-  const colors: Record<string, string> = {LOW: 'text-emerald-500', MEDIUM: 'text-yellow-500', HIGH: 'text-orange-500'}
-  return (
-    <div className="flex items-center gap-2">
-      <span className={`text-xs font-bold ${colors[level] || 'text-gray-500'}`}>{level}</span>
-      <Progress value={score} className="w-16 h-1.5" />
-      <span className="text-xs text-muted-foreground">{score}%</span>
-    </div>
-  )
-}
-
-// ============================================
-// PORTAL COMPONENTS
-// ============================================
-
-function SupplyDirectoryPortal() {
-  const [search, setSearch] = useState('')
-  const [regionFilter, setRegionFilter] = useState('all')
-  const [tierFilter, setTierFilter] = useState('all')
-  const [riskFilter, setRiskFilter] = useState('all')
-  const [selected, setSelected] = useState<Supplier | null>(null)
-  const [showAddForm, setShowAddForm] = useState(false)
-  const { toast } = useToast()
-  
-  const filtered = suppliersData.filter(s => {
-    const matchSearch = !search || s.name.toLowerCase().includes(search.toLowerCase()) || s.id.toLowerCase().includes(search.toLowerCase())
-    const matchRegion = regionFilter === 'all' || s.region === regionFilter
-    const matchTier = tierFilter === 'all' || s.tier.toString() === tierFilter
-    const matchRisk = riskFilter === 'all' || s.riskLevel === riskFilter
-    return matchSearch && matchRegion && matchTier && matchRisk
-  })
-  
-  return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div><h2 className="text-2xl font-bold flex items-center gap-2"><Building2 className="w-7 h-7 text-primary" />Supply Directory</h2>
-        <p className="text-muted-foreground mt-1">Complete supplier profiles with risk metrics & compliance</p></div>
-        <div className="flex items-center gap-2"><QuickContact section="supply-directory" /><Button onClick={() => setShowAddForm(true)} className="gap-1"><Plus className="w-4 h-4" />Add Supplier</Button></div>
-      </div>
-      
-      {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
-        {[{l: 'Total', v: suppliersData.length, i: Building2, c: 'text-blue-500'}, {l: 'Active', v: suppliersData.filter(s=>s.status==='active').length, i: CheckCircle2, c: 'text-emerald-500'}, {l: 'Under Review', v: suppliersData.filter(s=>s.status==='under-review').length, i: AlertTriangle, c: 'text-yellow-500'}, {l: 'High Risk', v: suppliersData.filter(s=>s.riskLevel==='HIGH').length, i: Shield, c: 'text-red-500'}, {l: 'Avg Risk', v: Math.round(suppliersData.reduce((a,s)=>a+s.riskScore,0)/suppliersData.length)+'%', i: Activity, c: 'text-orange-500'}, {l: 'Tier 1', v: suppliersData.filter(s=>s.tier===1).length, i: Star, c: 'text-violet-500'}].map((s,i) => (<Card key={i} className="p-3"><div className="flex items-center gap-2 mb-1"><s.i className={`w-4 h-4 ${s.c}`} /><span className="text-xs text-muted-foreground">{s.l}</span></div><p className="text-xl font-bold">{s.v}</p></Card>))}</div>
-      
-      {/* Filters */}
-      <Card className="p-4">
-        <div className="flex flex-col md:flex-row gap-3">
-          <div className="flex-1 relative"><Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" /><Input placeholder="Search suppliers..." value={search} onChange={e=>setSearch(e.target.value)} className="pl-10" /></div>
-          <Select value={regionFilter} onValueChange={setRegionFilter}><SelectTrigger className="w-40"><SelectValue placeholder="Region"/></SelectTrigger><SelectContent>{['all','Asia-Pacific','Europe','North America','Latin America'].map(r=><SelectItem key={r} value={r}>{r==='all'?'All Regions':r}</SelectItem>)}</SelectContent></Select>
-          <Select value={tierFilter} onValueChange={setTierFilter}><SelectTrigger className="w-32"><SelectValue placeholder="Tier"/></SelectTrigger><SelectContent>{['all','1','2','3','4'].map(t=><SelectItem key={t} value={t}>{t==='all'?'All Tiers':`Tier ${t}`}</SelectItem>)}</SelectContent></Select>
-          <Select value={riskFilter} onValueChange={setRiskFilter}><SelectTrigger className="w-36"><SelectValue placeholder="Risk"/></SelectTrigger><SelectContent>{['all','LOW','MEDIUM','HIGH'].map(r=><SelectItem key={r} value={r}>{r==='all'?'All Levels':r}</SelectItem>)}</SelectContent></Select>
-        </div>
-      </Card>
-      
-      {/* Table */}
-      <Card className="overflow-hidden">
-        <Table>
-          <TableHeader><TableRow><TableHead>Supplier</TableHead><TableHead>ID</TableHead><TableHead>Region</TableHead><TableHead>Tier</TableHead><TableHead>Category</TableHead><TableHead>Risk</TableHead><TableHead>Status</TableHead><TableHead>Actions</TableHead></TableRow></TableHeader>
-          <TableBody>{filtered.map(s => (<TableRow key={s.id} className="cursor-pointer hover:bg-accent/50" onClick={()=>setSelected(s)}>
-            <TableCell><div><p className="font-medium">{s.name}</p><p className="text-xs text-muted-foreground">{s.category}</p></div></TableCell>
-            <TableCell><code className="text-xs bg-muted px-1.5 py-0.5 rounded">{s.id}</code></TableCell>
-            <TableCell><div className="flex items-center gap-1"><Globe className="w-3.5 h-3.5 text-muted-foreground"/>{s.region}</div></TableCell>
-            <TableCell><Badge variant={s.tier===1?'default':'secondary'}>Tier {s.tier}</Badge></TableCell>
-            <TableCell className="text-sm">{s.category}</TableCell>
-            <TableCell><RiskGauge score={s.riskScore} level={s.riskLevel}/></TableCell>
-            <TableCell><StatusBadge status={s.status}/></TableCell>
-            <TableCell><div className="flex gap-1" onClick={e=>e.stopPropagation()}>
-              <Button variant="ghost" size="icon" className="h-8 w-8"><Eye className="w-4 h-4"/></Button>
-              <Button variant="ghost" size="icon" className="h-8 w-8"><Mail className="w-4 h-4"/></Button>
-            </div></TableCell>
-          </TableRow>))}</TableBody>
-        </Table>
-      </Card>
-      
-      {/* Detail Sheet */}
-      <Sheet open={!!selected} onOpenChange={() => setSelected(null)}>
-        <SheetContent className="w-full sm:max-w-2xl overflow-y-auto">
-          {selected && (<>
-            <SheetHeader><SheetTitle className="flex items-center gap-2"><Building2 className="w-5 h-5"/>{selected.name}</SheetTitle>
-            <SheetDescription>{selected.legalName} • ID: {selected.id}</SheetDescription></SheetHeader>
-            
-            <div className="mt-6 space-y-4">
-              <AccordionSection title="Overview & Risk Metrics" defaultOpen icon={<BarChart3 className="w-4 h-4"/>} badge={`${selected.riskLevel} RISK`}>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <p className="text-sm font-medium text-muted-foreground">Key Metrics</p>
-                    <div className="space-y-1.5 text-sm"><div className="flex justify-between"><span>Risk Score</span><RiskGauge score={selected.riskScore} level={selected.riskLevel}/></div>
-                    <div className="flex justify-between"><span>On-Time Delivery</span><span className="font-medium">{selected.onTimeDelivery}%</span></div>
-                    <div className="flex justify-between"><span>Financial Health</span><span className="font-medium">{selected.financialHealth}/100</span></div>
-                    <div className="flex justify-between"><span>Compliance Score</span><span className="font-medium">{selected.complianceScore}/100</span></div>
-                    <div className="flex justify-between"><span>Trend</span><Badge variant={selected.trend==='up'?'default':selected.trend==='down'?'destructive':'secondary'} className="text-xs">{selected.trend}</Badge></div></div>
-                  </div>
-                  <div className="space-y-2">
-                    <p className="text-sm font-medium text-muted-foreground">Company Details</p>
-                    <div className="space-y-1.5 text-sm"><div className="flex justify-between"><span>Type</span><span>{selected.companyType}</span></div>
-                    <div className="flex justify-between"><span>Founded</span><span>{selected.foundedDate}</span></div>
-                    <div className="flex justify-between"><span>Employees</span><span>{selected.employeeCount.toLocaleString()}</span></div>
-                    <div className="flex justify-between"><span>Revenue</span><span>${(selected.annualRevenue/1e6).toFixed(0)}M</span></div>
-                    <div className="flex justify-between"><span>Credit Rating</span><span className="font-medium">{selected.creditRating}</span></div></div>
-                  </div>
-                </div>
-                
-                <div className="mt-4 p-3 bg-primary/5 rounded-lg border border-primary/20">
-                  <p className="text-sm font-medium flex items-center gap-2 mb-2"><Brain className="w-4 h-4 text-primary"/>AI Risk Factors</p>
-                  <div className="space-y-1 text-xs">
-                    <div className="flex justify-between"><span>Geopolitical Exposure ({selected.region})</span><Badge variant="outline" className="text-xs">{selected.region==='China'?'High':'Low'}</Badge></div>
-                    <div className="flex justify-between"><span>Financial Stability</span><Badge variant={selected.financialHealth>80?'default':'destructive'} className="text-xs">{selected.financialHealth>80?'Strong':'Weak'}</Badge></div>
-                    <div className="flex justify-between"><span>Concentration Risk</span><Badge variant="outline" className="text-xs">Medium</Badge></div>
-                  </div>
-                </div>
-              </AccordionSection>
-              
-              <AccordionSection title="Contact Information" icon={<Users className="w-4 h-4"/>}>
-                <div className="space-y-3">
-                  <div className="p-3 bg-muted/50 rounded-lg">
-                    <p className="font-medium text-sm">{selected.contactName}</p>
-                    <div className="mt-2 space-y-1 text-sm text-muted-foreground">
-                      <p><Mail className="w-3 h-3 inline mr-1"/><a href={`mailto:${selected.contactEmail}`} className="text-primary hover:underline">{selected.contactEmail}</a></p>
-                      <p><Phone className="w-3 h-3 inline mr-1"/>{selected.contactPhone}</p>
-                      <p><MapPin className="w-3 h-3 inline mr-1"/>{selected.address}, {selected.city}, {selected.country} {selected.postalCode}</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <QuickContact section="supply-directory"/>
-                    <Button variant="outline" size="sm" className="gap-1"><ExternalLink className="w-3.5 h-3.5"/>Website</Button>
-                  </div>
-                </div>
-              </AccordionSection>
-              
-              <AccordionSection title="Compliance & Certifications" icon={<ShieldCheck className="w-4 h-4"/>} badge={`${selected.complianceScore}%`}>
-                <div className="space-y-3">
-                  <div className="grid grid-cols-2 gap-3">
-                    {['ISO 9001:2015','ISO 14001:2015','IATF 16949','SOC 2 Type II','ISO 27001'].map(cert => (
-                      <div key={cert} className="flex items-center gap-2 p-2 border rounded"><CheckCircle2 className="w-4 h-4 text-emerald-500"/><span className="text-sm">{cert}</span></div>
-                    ))}
-                  </div>
-                  <div className="p-3 bg-muted/50 rounded">
-                    <p className="text-sm font-medium mb-2">Regulatory Frameworks</p>
-                    <div className="flex flex-wrap gap-1">
-                      {['UFLPA ✅','EUDR ✅','CSDDD ✅','GDPR ✅','REACH ⚠️','SOX ✅'].map(f => (
-                        <Badge key={f} variant={f.includes('⚠️')?'outline':'default'} className="text-xs">{f}</Badge>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </AccordionSection>
-              
-              <AccordionSection title="Relationship & Financial" icon={<DollarSign className="w-4 h-4"/>}>
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div className="p-3 bg-muted/50 rounded"><p className="text-muted-foreground">Annual Revenue</p><p className="text-lg font-bold">${(selected.annualRevenue/1e6).toFixed(0)}M USD</p></div>
-                  <div className="p-3 bg-muted/50 rounded"><p className="text-muted-foreground">Employee Count</p><p className="text-lg font-bold">{selected.employeeCount.toLocaleString()}</p></div>
-                  <div className="p-3 bg-muted/50 rounded"><p className="text-muted-foreground">Credit Rating</p><p className="text-lg font-bold">{selected.creditRating}</p></div>
-                  <div className="p-3 bg-muted/50 rounded"><p className="text-muted-foreground">Registration #</p><p className="text-sm font-mono">{selected.registrationNumber}</p></div>
-                </div>
-              </AccordionSection>
-              
-              <AccordionSection title="Notes & Audit Trail" icon={<FileText className="w-4 h-4"/>}>
-                <div className="space-y-2">
-                  <div className="p-3 border-l-2 border-primary bg-muted/30">
-                    <p className="text-sm"><ExpandableText content={`Q3 capacity expansion planned - 20% increase expected. Key contact available M-F 9am-6pm SGT. Strategic supplier for semiconductor components.`} maxLength={100}/></p>
-                    <p className="text-xs text-muted-foreground mt-1">Updated: March 10, 2025 by Procurement Team</p>
-                  </div>
-                </div>
-              </AccordionSection>
-            </div>
-          </>)}
-        </SheetContent>
-      </Sheet>
-      
-      {/* Add Supplier Dialog */}
-      <Dialog open={showAddForm} onOpenChange={setShowAddForm}>
-        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader><DialogTitle>Add New Supplier</DialogTitle><DialogDescription>Complete all required fields (*) marked in red</DialogDescription></DialogHeader>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
-            <div className="space-y-3">
-              <h4 className="font-semibold text-sm text-primary">Basic Information</h4>
-              <div><FieldLabel label="Company Name" required tooltip="Legal business name"/><Input placeholder="Acme Corp"/></div>
-              <div><FieldLabel label="Legal Name" required/><Input placeholder="Acme Corporation LLC"/></div>
-              <div><FieldLabel label="Registration Number" required/><Input placeholder="Gov registration ID"/></div>
-              <div><FieldLabel label="Tax ID/VAT" required/><Input placeholder="Tax identification"/></div>
-              <div><FieldLabel label="D-U-N-S Number"/><Input placeholder="Optional - D&B number"/></div>
-              <div><FieldLabel label="Company Type" required/>
-                <Select><SelectTrigger><SelectValue placeholder="Select type"/></SelectTrigger><SelectContent>
-                  {['LLC','Corporation','PLC','GmbH','Joint Stock','Partnership','Sole Proprietorship'].map(t=><SelectItem key={t} value={t}>{t}</SelectItem>)}
-                </SelectContent></Select></div>
-            </div>
-            <div className="space-y-3">
-              <h4 className="font-semibold text-sm text-primary">Address & Contact</h4>
-              <div><FieldLabel label="Street Address" required/><Input placeholder="123 Main St"/></div>
-              <div className="grid grid-cols-2 gap-2"><div><FieldLabel label="City" required/><Input/></div><div><FieldLabel label="Postal Code" required/><Input/></div></div>
-              <div><FieldLabel label="Country" required/>
-                <Select><SelectTrigger><SelectValue/></SelectTrigger><SelectContent>
-                  {['United States','China','Germany','Japan','South Korea','Taiwan','Singapore','Vietnam','India','Mexico','Brazil','UK','Poland','Other'].map(c=><SelectItem key={c} value={c}>{c}</SelectItem>)}
-                </SelectContent></Select></div>
-              <div><FieldLabel label="Primary Contact Name" required/><Input placeholder="Full name"/></div>
-              <div><FieldLabel label="Contact Email" required type="email"/><Input placeholder="email@company.com"/></div>
-              <div><FieldLabel label="Contact Phone" required type="tel"/><Input placeholder="+1-234-567-8900"/></div>
-            </div>
-            <div className="space-y-3 md:col-span-2">
-              <h4 className="font-semibold text-sm text-primary">Classification & Financial</h4>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                <div><FieldLabel label="Supplier Tier" required tooltip="Based on spend volume"/>
-                  <Select><SelectTrigger><SelectValue/></SelectTrigger><SelectContent>
-                    {['Tier 1 - Strategic','Tier 2 - Approved','Tier 3 - Qualified','Tier 4 - Provisional'].map((t,i)=><SelectItem key={i} value={String(i+1)}>{t}</SelectItem>)}
-                  </SelectContent></Select></div>
-                <div><FieldLabel label="Category" required/>
-                  <Select><SelectTrigger><SelectValue/></SelectTrigger><SelectContent>
-                    {['Semiconductors','Electronics','Manufacturing','Raw Materials','Logistics','Software','Packaging','Other'].map(c=><SelectItem key={c} value={c}>{c}</SelectItem>)}
-                  </SelectContent></Select></div>
-                <div><FieldLabel label="Annual Revenue (USD)"/><Input type="number" placeholder="0"/></div>
-                <div><FieldLabel label="Employee Count"/><Input type="number" placeholder="0"/></div>
-              </div>
-              <div><FieldLabel label="Payment Terms"/>
-                <Select><SelectTrigger><SelectValue/></SelectTrigger><SelectContent>
-                  {['Net 15','Net 30','Net 45','Net 60','Net 90','COD','Other'].map(t=><SelectItem key={t} value={t}>{t}</SelectItem>)}
-                </SelectContent></Select></div>
-              <div><FieldLabel label="Additional Notes"/><Textarea placeholder="Any relevant information about this supplier..." rows={3}/></div>
-            </div>
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShowAddForm(false)}>Cancel</Button>
-            <Button onClick={() => {setShowAddForm(false); toast({title: 'Supplier added', description: 'New supplier profile created successfully'})}}><Save className="w-4 h-4 mr-2"/>Save Supplier</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-      
-      <ChatWidget context="supply-directory" title="Supply Directory" />
-    </div>
-  )
-}
-
-function RiskIntelligencePortal() {
-  const [filterSeverity, setFilterSeverity] = useState('all')
-  const [filterStatus, setFilterStatus] = useState('all')
-  const [selectedAlert, setSelectedAlert] = useState<RiskAlert | null>(null)
-  
-  const filtered = alertsData.filter(a => {
-    const matchSev = filterSeverity === 'all' || a.severity === filterSeverity
-    const matchSt = filterStatus === 'all' || a.status === filterStatus
-    return matchSev && matchSt
-  })
-  
-  return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div><h2 className="text-2xl font-bold flex items-center gap-2"><AlertTriangle className="w-7 h-7 text-orange-500" />Risk Intelligence</h2>
-        <p className="text-muted-foreground mt-1">Real-time risk monitoring, alerting & mitigation tracking</p></div>
-        <QuickContact section="risk-intelligence" />
-      </div>
-      
-      {/* Alert Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-        {[{l: 'Critical', v: alertsData.filter(a=>a.severity==='critical').length, c: 'bg-red-500/10 text-red-500 border-red-500/20'},
-          {l: 'High', v: alertsData.filter(a=>a.severity==='high').length, c: 'bg-orange-500/10 text-orange-500 border-orange-500/20'},
-          {l: 'Medium', v: alertsData.filter(a=>a.severity==='medium').length, c: 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20'},
-          {l: 'Low', v: alertsData.filter(a=>a.severity==='low').length, c: 'bg-blue-500/10 text-blue-500 border-blue-500/20'},
-          {l: 'Open', v: alertsData.filter(a=>!a.acknowledged).length, c: 'bg-purple-500/10 text-purple-500 border-purple-500/20'}
-        ].map((s,i) => (<Card key={i} className={`p-3 border ${s.c}`}><p className="text-xs opacity-70">{s.l}</p><p className="text-2xl font-bold">{s.v}</p></Card>))}</div>
-      
-      {/* Charts Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <Card className="p-4"><h3 className="font-semibold mb-4 flex items-center gap-2"><TrendingUp className="w-4 h-4"/>Risk Trend (12 Months)</h3>
-          <ResponsiveContainer width="100%" height={200}><RechartsLineChart data={riskTrendData}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#eee"/><XAxis dataKey="date" fontSize={11}/><YAxis domain={[0,100]} fontSize={11}/>
-            <Tooltip/><Legend/>
-            <Line type="monotone" dataKey="score" stroke="#10b981" strokeWidth={2} name="Risk Score %"/>
-            <Line type="monotone" dataKey="threshold" stroke="#ef4444" strokeDasharray="5 5" name="Threshold"/>
-          </RechartsLineChart></ResponsiveContainer>
-        </Card>
-        <Card className="p-4"><h3 className="font-semibold mb-4 flex items-center gap-2"><Globe className="w-4 h-4"/>Risk by Region</h3>
-          <ResponsiveContainer width="100%" height={200}><RechartsBarChart data={regionRiskData}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#eee"/><XAxis dataKey="region" fontSize={11}/><YAxis fontSize={11}/>
-            <Tooltip/><Legend/>
-            <Bar dataKey="critical" stackId="a" fill="#ef4444" name="Critical"/>
-            <Bar dataKey="high" stackId="a" fill="#f97316" name="High"/>
-            <Bar dataKey="medium" stackId="a" fill="#eab308" name="Medium"/>
-          </RechartsBarChart></ResponsiveContainer>
-        </Card>
-      </div>
-      
-      {/* Filters */}
-      <Card className="p-4">
-        <div className="flex flex-col sm:flex-row gap-3">
-          <Select value={filterSeverity} onValueChange={setFilterSeverity}><SelectTrigger className="w-40"><SelectValue placeholder="Severity"/></SelectTrigger><SelectContent>{['all','critical','high','medium','low'].map(s=><SelectItem key={s} value={s}>{s.charAt(0).toUpperCase()+s.slice(1)}</SelectItem>)}</SelectContent></Select>
-          <Select value={filterStatus} onValueChange={setFilterStatus}><SelectTrigger className="w-40"><SelectValue placeholder="Status"/></SelectTrigger><SelectContent>{['all','open','investigating','mitigating','resolved'].map(s=><SelectItem key={s} value={s}>{s.charAt(0).toUpperCase()+s.slice(1)}</SelectItem>)}</SelectContent></Select>
-          <div className="flex-1"></div>
-          <Button variant="outline" className="gap-1"><RefreshCw className="w-4 h-4"/>Refresh</Button>
-        </div>
-      </Card>
-      
-      {/* Alerts List */}
-      <div className="space-y-3">
-        {filtered.map(alert => (
-          <Card key={alert.id} className={`p-4 cursor-pointer transition-all hover:border-primary/50 ${!alert.acknowledged ? 'border-l-4 border-l-red-500' : ''}`} onClick={() => setSelectedAlert(alert)}>
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex-1">
-                <div className="flex items-center gap-2 mb-1">
-                  <SeverityBadge severity={alert.severity}/>
-                  <StatusBadge status={alert.status}/>
-                  {!alert.acknowledged && <Badge variant="destructive" className="text-xs">NEW</Badge>}
-                </div>
-                <h4 className="font-semibold">{alert.title}</h4>
-                <p className="text-sm text-muted-foreground mt-1"><ExpandableText content={alert.message} maxLength={120}/></p>
-                <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
-                  <span className="flex items-center gap-1"><Building2 className="w-3 h-3"/>{alert.supplier}</span>
-                  <span className="flex items-center gap-1"><Clock className="w-3 h-3"/>{alert.timestamp.toLocaleString()}</span>
-                  <span>Confidence: {alert.confidence}%</span>
-                  <span>Probability: {alert.probability}%</span>
-                </div>
-              </div>
-              <Button variant="ghost" size="sm" onClick={e => {e.stopPropagation(); setSelectedAlert(alert)}}>Details</Button>
-            </div>
-          </Card>
-        ))}
-      </div>
-      
-      {/* Alert Detail Modal */}
-      <Dialog open={!!selectedAlert} onOpenChange={() => setSelectedAlert(null)}>
-        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-          {selectedAlert && (<>
-            <DialogHeader>
-              <DialogTitle className="flex items-center gap-2"><SeverityBadge severity={selectedAlert.severity}/> {selectedAlert.title}</DialogTitle>
-              <DialogDescription>{selectedAlert.supplier} • {selectedAlert.category} • {selectedAlert.timestamp.toLocaleString()}</DialogDescription>
-            </DialogHeader>
-            <div className="space-y-4 py-4">
-              <AccordionSection title="Impact Assessment" defaultOpen icon={<AlertCircle className="w-4 h-4"/>}>
-                <div className="p-4 bg-red-50 dark:bg-red-950/20 rounded-lg border border-red-200 dark:border-red-900">
-                  <p className="font-medium text-red-800 dark:text-red-300 mb-2">Business Impact</p>
-                  <ExpandableText content={selectedAlert.impact} maxLength={200}/>
-                </div>
-                <div className="grid grid-cols-2 gap-4 mt-4">
-                  <div className="p-3 bg-muted/50 rounded"><p className="text-sm text-muted-foreground">Probability</p><p className="text-xl font-bold">{selectedAlert.probability}%</p></div>
-                  <div className="p-3 bg-muted/50 rounded"><p className="text-sm text-muted-foreground">Confidence</p><p className="text-xl font-bold">{selectedAlert.confidence}%</p></div>
-                </div>
-              </AccordionSection>
-              
-              <AccordionSection title="Mitigation Actions" icon={<ShieldCheck className="w-4 h-4"/>} badge={`${selectedAlert.mitigationActions.length} actions`}>
-                <div className="space-y-3">
-                  {selectedAlert.mitigationActions.map((ma, idx) => (
-                    <div key={idx} className="flex items-start gap-3 p-3 border rounded-lg">
-                      <StatusBadge status={ma.status}/>
-                      <div className="flex-1"><p className="font-medium text-sm">{ma.action}</p>
-                        <p className="text-xs text-muted-foreground mt-1">Owner: {ma.owner} • Due: {ma.dueDate}</p></div>
-                    </div>
-                  ))}
-                  {selectedAlert.mitigationActions.length === 0 && <p className="text-sm text-muted-foreground">No mitigation actions defined yet.</p>}
-                  <Button variant="outline" size="sm" className="gap-1"><Plus className="w-4 h-4"/>Add Action</Button>
-                </div>
-              </AccordionSection>
-              
-              <AccordionSection title="Communication Log" icon={<MessageSquare className="w-4 h-4"/>}>
-                <div className="space-y-2 text-sm">
-                  <div className="p-2 bg-muted/50 rounded"><p className="font-medium">System Generated</p><p className="text-xs text-muted-foreground">Alert created based on AI detection: Regulatory intelligence feed + document analysis</p></div>
-                </div>
-              </AccordionSection>
-            </div>
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setSelectedAlert(null)}>Close</Button>
-              <Button><Send className="w-4 h-4 mr-2"/>Escalate</Button>
-            </DialogFooter>
-          </>)}
-        </DialogContent>
-      </Dialog>
-      
-      <ChatWidget context="risk-intelligence" title="Risk Intelligence" />
-    </div>
-  )
-}
-
-function DemandForecastingPortal() {
-  const [periodFilter, setPeriodFilter] = useState('all')
-  const [showScenario, setShowScenario] = useState(false)
-  
-  return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div><h2 className="text-2xl font-bold flex items-center gap-2"><LineChart className="w-7 h-7 text-cyan-500" />Demand Forecasting</h2>
-        <p className="text-muted-foreground mt-1">AI-powered demand prediction with confidence intervals</p></div>
-        <div className="flex items-center gap-2"><QuickContact section="demand-forecasting"/><Button variant="outline" className="gap-1" onClick={() => setShowScenario(true)}><Brain className="w-4 h-4"/>Scenarios</Button></div>
-      </div>
-      
-      {/* Forecast Summary Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        {[{l: 'Products Tracked', v: forecastData.length, i: Package, c: 'text-blue-500'},
-          {l: 'Avg Confidence', v: Math.round(forecastData.reduce((a,f)=>a+f.confidence,0)/forecastData.length)+'%', i: Target, c: 'text-emerald-500'},
-          {l: 'Increasing Trend', v: forecastData.filter(f=>f.trend==='increasing').length, i: TrendingUp, c: 'text-green-500'},
-          {l: 'Needs Attention', v: forecastData.filter(f=>f.confidence<80||f.trend==='volatile').length, i: AlertTriangle, c: 'text-orange-500'}
-        ].map((s,i) => (<Card key={i} className="p-3"><div className="flex items-center gap-2 mb-1"><s.i className={`w-4 h-4 ${s.c}`}/><span className="text-xs text-muted-foreground">{s.l}</span></div><p className="text-xl font-bold">{s.v}</p></Card>))}</div>
-      
-      {/* Main Chart */}
-      <Card className="p-4">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="font-semibold flex items-center gap-2"><BarChart3 className="w-4 h-4"/>Demand Forecast vs Actual</h3>
-          <Select value={periodFilter} onValueChange={setPeriodFilter}><SelectTrigger className="w-32"><SelectValue/></SelectTrigger><SelectContent>{['all','weekly','monthly'].map(p=><SelectItem key={p} value={p}>{p.charAt(0).toUpperCase()+p.slice(1)}</SelectItem>)}</SelectContent></Select>
-        </div>
-        <ResponsiveContainer width="100%" height={300}><ComposedChart data={forecastData}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#eee"/><XAxis dataKey="product" fontSize={11} angle={-30} textAnchor="end" height={70}/><YAxis fontSize={11}/>
-          <Tooltip formatter={(value: any, name: string) => [value, name.charAt(0).toUpperCase() + name.slice(1)]}/>
-          <Legend/>
-          <Bar dataKey="actual" fill="#10b981" name="Actual" radius={[4,4,0,0]}/>
-          <Bar dataKey="forecast" fill="#3b82f6" name="Forecast" radius={[4,4,0,0]}/>
-          <Line type="monotone" dataKey="upperBound" stroke="#f97316" strokeDasharray="5 5" dot={false} name="Upper Bound"/>
-          <Line type="monotone" dataKey="lowerBound" stroke="#f97316" strokeDasharray="5 5" dot={false} name="Lower Bound"/>
-        </ComposedChart></ResponsiveContainer>
-      </Card>
-      
-      {/* Forecast Table */}
-      <Card className="overflow-hidden">
-        <Table>
-          <TableHeader><TableRow><TableHead>Product</TableHead><TableHead>SKU</TableHead><TableHead>Period</TableHead><TableHead>Actual</TableHead><TableHead>Forecast</TableHead><TableHead>Range</TableHead><TableHead>Confidence</TableHead><TableHead>Trend</TableHead><TableHead>Anomaly</TableHead></TableRow></TableHeader>
-          <TableBody>{forecastData.map(f => (
-            <TableRow key={f.id}>
-              <TableCell className="font-medium">{f.product}</TableCell>
-              <TableCell><code className="text-xs bg-muted px-1 py-0.5 rounded">{f.sku}</code></TableCell>
-              <TableCell>{f.period}</TableCell>
-              <TableCell>{f.actual?.toLocaleString() || '-'}</TableCell>
-              <TableCell>{f.forecast.toLocaleString()}</TableCell>
-              <TableCell className="text-xs">{f.lowerBound.toLocaleString()} - {f.upperBound.toLocaleString()}</TableCell>
-              <TableCell><Progress value={f.confidence} className="w-12 h-1.5"/><span className="ml-1 text-xs">{f.confidence}%</span></TableCell>
-              <TableCell><Badge variant={f.trend==='increasing'?'default':f.trend==='volatile'?'destructive':'secondary'} className="text-xs">{f.trend}</Badge></TableCell>
-              <TableCell>{f.anomaly ? <Badge variant="outline" className="text-xs text-orange-500">⚠️</Badge> : <CheckCircle2 className="w-4 h-4 text-emerald-500"/>}</TableCell>
-            </TableRow>
-          ))}</TableBody>
-        </Table>
-      </Card>
-      
-      {/* Scenario Planning Dialog */}
-      <Dialog open={showScenario} onOpenChange={setShowScenario}>
-        <DialogContent><DialogHeader><DialogTitle>Scenario Planning</DialogTitle><DialogDescription>Create what-if scenarios for demand forecasting</DialogDescription></DialogHeader>
-          <div className="space-y-4 py-4">
-            <div><FieldLabel label="Scenario Name" required/><Input placeholder="Q4 Surge Scenario"/></div>
-            <div className="grid grid-cols-2 gap-3">
-              <div><FieldLabel label="Base Product"/><Select><SelectTrigger><SelectValue/></SelectTrigger><SelectContent>{forecastData.map(f=><SelectItem key={f.id} value={f.id}>{f.product}</SelectItem>)}</SelectContent></Select></div>
-              <div><FieldLabel label="Scenario Type"/><Select><SelectTrigger><SelectValue/></SelectTrigger><SelectContent>{['Optimistic','Pessimistic','Disruption','Market Shift','Seasonal Peak'].map(s=><SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent></Select></div>
-            </div>
-            <div><FieldLabel label="Assumptions"/><Textarea placeholder="Describe scenario assumptions..." rows={3}/></div>
-            <div className="grid grid-cols-2 gap-3">
-              <div><FieldLabel label="Demand Adjustment (%)"/><Input type="number" placeholder="+/- percentage"/></div>
-              <div><FieldLabel label="Time Horizon"/><Select><SelectTrigger><SelectValue/></SelectTrigger><SelectContent>{['30 days','60 days','90 days','6 months','1 year'].map(h=><SelectItem key={h} value={h}>{h}</SelectItem>)}</SelectContent></Select></div>
-            </div>
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShowScenario(false)}>Cancel</Button>
-            <Button onClick={() => setShowScenario(false)}><Brain className="w-4 h-4 mr-2"/>Run Scenario</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-      
-      <ChatWidget context="demand-forecasting" title="Demand Forecasting" />
-    </div>
-  )
-}
-
-function CompliancePortal() {
-  const [selectedFramework, setSelectedFramework] = useState<ComplianceItem | null>(null)
-  
-  return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div><h2 className="text-2xl font-bold flex items-center gap-2"><Scale className="w-7 h-7 text-violet-500" />Compliance Center</h2>
-        <p className="text-muted-foreground mt-1">Multi-framework regulatory compliance monitoring</p></div>
-        <QuickContact section="compliance" />
-      </div>
-      
-      {/* Framework Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {complianceData.map(cf => (
-          <Card key={cf.acronym} className={`p-4 cursor-pointer transition-all hover:border-primary/50 ${cf.status==='non-compliant'?'border-red-200 bg-red-50/50':''}`} onClick={() => setSelectedFramework(cf)}>
-            <div className="flex items-start justify-between mb-3">
-              <div><h3 className="font-bold">{cf.framework}</h3><p className="text-xs text-muted-foreground">{cf.acronym}</p></div>
-              <StatusBadge status={cf.status}/>
-            </div>
-            <div className="mb-3"><div className="flex items-center justify-between text-sm mb-1"><span>Overall Score</span><span className="font-bold">{cf.score}%</span></div><Progress value={cf.score} className="h-2"/></div>
-            <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
-              <div>Last Audit: {cf.lastAudit}</div>
-              <div>Next: {cf.nextAudit}</div>
-            </div>
-            {cf.upcomingDeadlines.length > 0 && (
-              <div className="mt-3 p-2 bg-yellow-50 dark:bg-yellow-950/20 rounded border border-yellow-200">
-                <p className="text-xs font-medium text-yellow-800 dark:text-yellow-300 flex items-center gap-1"><AlertCircle className="w-3 h-3"/>Upcoming Deadline</p>
-                <p className="text-xs mt-1">{cf.upcomingDeadlines[0].requirement} ({cf.upcomingDeadlines[0].date})</p>
-              </div>
-            )}
-          </Card>
-        ))}
-      </div>
-      
-      {/* Framework Detail */}
-      <Sheet open={!!selectedFramework} onOpenChange={() => setSelectedFramework(null)}>
-        <SheetContent className="w-full sm:max-w-2xl overflow-y-auto">
-          {selectedFramework && (<>
-            <SheetHeader><SheetTitle className="flex items-center gap-2"><Scale className="w-5 h-5"/>{selectedFramework.framework}</SheetTitle>
-            <SheetDescription>{selectedFramework.acronym} • Overall Score: {selectedFramework.score}%</SheetDescription></SheetHeader>
-            
-            <div className="mt-6 space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="p-3 bg-muted/50 rounded"><p className="text-sm text-muted-foreground">Last Audit</p><p className="font-medium">{selectedFramework.lastAudit}</p></div>
-                <div className="p-3 bg-muted/50 rounded"><p className="text-sm text-muted-foreground">Next Audit</p><p className="font-medium">{selectedFramework.nextAudit}</p></div>
-              </div>
-              
-              <AccordionSection title="Requirements Status" defaultOpen icon={<ClipboardCheck className="w-4 h-4"/>} badge={`${selectedFramework.requirements.length} items`}>
-                <div className="space-y-2">
-                  {selectedFramework.requirements.map((req, idx) => (
-                    <div key={idx} className="flex items-center justify-between p-3 border rounded-lg">
-                      <div className="flex-1"><p className="font-medium text-sm">{req.title}</p>
-                        <p className="text-xs text-muted-foreground">{req.severity}</p></div>
-                      <StatusBadge status={req.status}/>
-                    </div>
-                  ))}
-                </div>
-              </AccordionSection>
-              
-              <AccordionSection title="Upcoming Deadlines" icon={<Clock className="w-4 h-4"/>} badge={`${selectedFramework.upcomingDeadlines.length} pending`}>
-                <div className="space-y-2">
-                  {selectedFramework.upcomingDeadlines.map((d, idx) => (
-                    <div key={idx} className="flex items-center justify-between p-3 bg-yellow-50 dark:bg-yellow-950/20 rounded border border-yellow-200">
-                      <div><p className="font-medium text-sm">{d.requirement}</p><p className="text-xs text-muted-foreground">{d.action}</p></div>
-                      <Badge variant={d.priority==='high'?'destructive':'outline'}>{d.date}</Badge>
-                    </div>
-                  ))}
-                  {selectedFramework.upcomingDeadlines.length === 0 && <p className="text-sm text-muted-foreground">No upcoming deadlines.</p>}
-                </div>
-              </AccordionSection>
-              
-              <AccordionSection title="Audit History" icon={<History className="w-4 h-4"/>}>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between p-2 bg-muted/50 rounded"><span>Date: {selectedFramework.lastAudit}</span><Badge>Score: {selectedFramework.score}%</Badge></div>
-                </div>
-              </AccordionSection>
-            </div>
-          </>)}
-        </SheetContent>
-      </Sheet>
-      
-      {/* Compliance Summary Chart */}
-      <Card className="p-4">
-        <h3 className="font-semibold mb-4 flex items-center gap-2"><PieChart className="w-4 h-4"/>Compliance Overview</h3>
-        <ResponsiveContainer width="100%" height={250}><RechartsPieChart>
-          <Pie data={complianceData.map(c=>({name:c.acronym, value:c.score}))} cx="50%" cy="50%" outerRadius={80} fill="#8884d8" dataKey="value" label={({name, percent}) => `${name} ${(percent*100).toFixed(0)}%`}>
-            {complianceData.map((_, idx) => <Cell key={idx} fill={['#10b981','#3b82f6','#8b5cf6','#f59e0b','#ec4899','#06b6d4'][idx]}/>)}
-          </Pie>
-          <Tooltip/><Legend/>
-        </RechartsPieChart></ResponsiveContainer>
-      </Card>
-      
-      <ChatWidget context="compliance" title="Compliance Center" />
-    </div>
-  )
-}
-
-// ============================================
-// MAIN COMMAND CENTER COMPONENT
-// ============================================
-
-// Particle Background Component
-function ParticleCanvas() {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  
-  useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
-    
-    let animId: number
-    const particles: Array<{x: number; y: number; size: number; vx: number; vy: number; opacity: number; pulse: number}> = []
-    
-    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight }
-    resize()
-    window.addEventListener('resize', resize)
-    
-    for (let i = 0; i < Math.min(Math.floor(window.innerWidth * 0.05), 60); i++) {
-      particles.push({
-        x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-        size: Math.random() * 1.5 + 0.5, vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3, opacity: Math.random() * 0.4 + 0.1,
-        pulse: Math.random() * Math.PI * 2
-      })
-    }
-    
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-      particles.forEach(p => {
-        p.x += p.vx; p.y += p.vy; p.pulse += 0.02
-        if (p.x < 0 || p.x > canvas.width || p.y < 0 || p.y > canvas.height) { p.x = Math.random() * canvas.width; p.y = Math.random() * canvas.height }
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(16, 185, 129, ${p.opacity + Math.sin(p.pulse) * 0.12})`; ctx.fill()
-      })
-      animId = requestAnimationFrame(animate)
-    }
-    animate()
-    return () => { window.removeEventListener('resize', resize); cancelAnimationFrame(animId) }
-  }, [])
-  
-  return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-0" style={{opacity: 0.5}} />
-}
-
-export default function CommandCenter() {
-  const [activeTab, setActiveTab] = useState('supply-directory')
-  
-  return (
-    <div className="min-h-screen bg-background relative">
-      <ParticleCanvas />
-      
-      {/* Header */}
-      <header className="sticky top-0 z-40 glass border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center font-bold text-sm text-background">SC</div>
-              <div>
-                <h1 className="font-bold text-lg">Command Center</h1>
-                <p className="text-xs text-muted-foreground hidden sm:block">AI Supply Chain Intelligence Platform</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <Button variant="ghost" size="icon" className="relative"><Bell className="w-5 h-5"/><span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-destructive rounded-full text-[10px] flex items-center justify-center text-white">3</span></Button>
-              <Button variant="ghost" size="icon"><Settings className="w-5 h-5"/></Button>
-              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center"><UserCheck className="w-4 h-4 text-primary"/></div>
-            </div>
-          </div>
-        </div>
-      </header>
-      
-      {/* Main Content */}
-      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          {[
-            {label: 'Suppliers Monitored', value: '10,247', icon: Building2, change: '+2.4%'},
-            {label: 'Active Alerts', value: '6', icon: AlertTriangle, change: '-12%'},
-            {label: 'Avg Compliance', value: '92.5%', icon: ShieldCheck, change: '+1.2%'},
-            {label: 'Prediction Accuracy', value: '99.2%', icon: Brain, change: '+0.3%'}
-          ].map((stat, i) => (
-            <Card key={i} className="p-4 glow-emerald">
-              <div className="flex items-center justify-between mb-2">
-                <stat.icon className="w-5 h-5 text-primary"/>
-                <Badge variant="outline" className="text-xs text-emerald-500">{stat.change}</Badge>
-              </div>
-              <p className="text-2xl font-bold">{stat.value}</p>
-              <p className="text-xs text-muted-foreground">{stat.label}</p>
-            </Card>
-          ))}
-        </div>
-        
-        {/* Tab Navigation */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:inline-grid">
-            <TabsTrigger value="supply-directory" className="gap-1.5"><Building2 className="w-4 h-4"/>Supply Directory</TabsTrigger>
-            <TabsTrigger value="risk-intelligence" className="gap-1.5"><AlertTriangle className="w-4 h-4"/>Risk Intel</TabsTrigger>
-            <TabsTrigger value="demand-forecasting" className="gap-1.5"><LineChart className="w-4 h-4"/>Forecasting</TabsTrigger>
-            <TabsTrigger value="compliance" className="gap-1.5"><Scale className="w-4 h-4"/>Compliance</TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="supply-directory"><SupplyDirectoryPortal /></TabsContent>
-          <TabsContent value="risk-intelligence"><RiskIntelligencePortal /></TabsContent>
-          <TabsContent value="demand-forecasting"><DemandForecastingPortal /></TabsContent>
-          <TabsContent value="compliance"><CompliancePortal /></TabsContent>
-        </Tabs>
-        
-        {/* Footer */}
-        <footer className="mt-16 pt-8 border-t text-center text-sm text-muted-foreground">
-          <p>AI Supply Chain Risk Predictor • Command Center v2.0</p>
-          <p className="mt-1">Real-time intelligence • Predictive analytics • Regulatory compliance</p>
-        </footer>
-      </main>
-    </div>
-  )
-}
+const riskTrendData = [
+  { month: 'Aug', overallRisk: 42, geopolitical: 35, financial: 48, operational: 38, compliance: 52, environmental: 28 },
+  { month: 'Sep', overallRisk: 45, geopolitical: 40, financial: 45, operational: 42, compliance: 55, environmental: 30 },
+  { month: 'Oct', overallRisk: 48, geopolitical: 45, financial: 42, operational: 45, compliance: 58, environmental: 32 },
+  { month: 'Nov', overallRisk: 52, geopolitical: 52, financial: 48, operation
