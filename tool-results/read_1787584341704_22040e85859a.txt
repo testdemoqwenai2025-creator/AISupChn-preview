@@ -1,0 +1,2002 @@
+     1→'use client'
+     2→
+     3→import React, { useState, useEffect, useRef, useCallback } from 'react'
+     4→import { 
+     5→  Shield, Activity, Brain, LineChart, AlertTriangle, CheckCircle2, 
+     6→  Search, Filter, TrendingUp, TrendingDown, Minus, Eye, MessageSquare,
+     7→  BarChart3, PieChart, Zap, Globe, Lock, Bot, Users, Target,
+     8→  ArrowRight, Play, Pause, RefreshCw, Download, Settings, Bell,
+     9→  ChevronRight, ChevronDown, Star, Clock, MapPin, Building2,
+    10→  Package, Truck, Factory, Database, Cpu, Wifi, Radio
+    11→} from 'lucide-react'
+    12→import { Button } from '@/components/ui/button'
+    13→import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+    14→import { Input } from '@/components/ui/input'
+    15→import { Label } from '@/components/ui/label'
+    16→import { Textarea } from '@/components/ui/textarea'
+    17→import { Badge } from '@/components/ui/badge'
+    18→import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+    19→import { Progress } from '@/components/ui/progress'
+    20→import { Separator } from '@/components/ui/separator'
+    21→import {
+    22→  Select,
+    23→  SelectContent,
+    24→  SelectItem,
+    25→  SelectTrigger,
+    26→  SelectValue,
+    27→} from '@/components/ui/select'
+    28→import {
+    29→  Table,
+    30→  TableBody,
+    31→  TableCell,
+    32→  TableHead,
+    33→  TableHeader,
+    34→  TableRow,
+    35→} from '@/components/ui/table'
+    36→import { useToast } from '@/hooks/use-toast'
+    37→
+    38→// Recharts imports for interactive charts
+    39→import {
+    40→  AreaChart,
+    41→  Area,
+    42→  XAxis,
+    43→  YAxis,
+    44→  CartesianGrid,
+    45→  Tooltip,
+    46→  ResponsiveContainer,
+    47→  LineChart as RechartsLineChart,
+    48→  Line,
+    49→  BarChart as RechartsBarChart,
+    50→  Bar,
+    51→  PieChart as RechartsPieChart,
+    52→  Pie,
+    53→  Cell,
+    54→  RadarChart,
+    55→  Radar,
+    56→  PolarGrid,
+    57→  PolarAngleAxis,
+    58→  PolarRadiusAxis,
+    59→  Legend,
+    60→  ComposedChart,
+    61→  Scatter
+    62→} from 'recharts'
+    63→
+    64→// ============================================
+    65→// TYPES & INTERFACES
+    66→// ============================================
+    67→
+    68→interface Supplier {
+    69→  id: string
+    70→  name: string
+    71→  region: string
+    72→  tier: number
+    73→  riskScore: number
+    74→  riskLevel: 'LOW' | 'MEDIUM' | 'HIGH'
+    75→  category: string
+    76→  onTimeDelivery: number
+    77→  financialHealth: number
+    78→  complianceScore: number
+    79→  trend: 'up' | 'down' | 'stable'
+    80→}
+    81→
+    82→interface Alert {
+    83→  id: string
+    84→  severity: 'critical' | 'high' | 'medium' | 'low'
+    85→  supplier: string
+    86→  type: string
+    87→  message: string
+    88→  timestamp: Date
+    89→  acknowledged: boolean
+    90→}
+    91→
+    92→interface ChatMessage {
+    93→  id: string
+    94→  role: 'user' | 'assistant'
+    95→  content: string
+    96→  timestamp: Date
+    97→}
+    98→
+    99→interface RoadmapMilestone {
+   100→  phase: string
+   101→  title: string
+   102→  description: string
+   103→  status: 'completed' | 'in-progress' | 'upcoming'
+   104→  date: string
+   105→  items: string[]
+   106→}
+   107→
+   108→// ============================================
+   109→// MOCK DATA
+   110→// ============================================
+   111→
+   112→const suppliersData: Supplier[] = [
+   113→  { id: '1', name: 'TechComponents Ltd', region: 'Taiwan', tier: 1, riskScore: 0.12, riskLevel: 'LOW', category: 'Semiconductors', onTimeDelivery: 98.5, financialHealth: 92, complianceScore: 95, trend: 'stable' },
+   114→  { id: '2', name: 'GlobalLogistics Corp', region: 'Singapore', tier: 1, riskScore: 0.28, riskLevel: 'MEDIUM', category: 'Logistics', onTimeDelivery: 94.2, financialHealth: 88, complianceScore: 91, trend: 'up' },
+   115→  { id: '3', name: 'PrecisionParts Vietnam', region: 'Vietnam', tier: 2, riskScore: 0.45, riskLevel: 'MEDIUM', category: 'Manufacturing', onTimeDelivery: 89.7, financialHealth: 75, complianceScore: 82, trend: 'down' },
+   116→  { id: '4', name: 'Shanghai Electronics', region: 'China', tier: 1, riskScore: 0.67, riskLevel: 'HIGH', category: 'Electronics', onTimeDelivery: 82.3, financialHealth: 68, complianceScore: 71, trend: 'down' },
+   117→  { id: '5', name: 'EuroMaterials GmbH', region: 'Germany', tier: 1, riskScore: 0.08, riskLevel: 'LOW', category: 'Raw Materials', onTimeDelivery: 99.1, financialHealth: 96, complianceScore: 98, trend: 'stable' },
+   118→  { id: '6', name: 'IndiaTech Solutions', region: 'India', tier: 2, riskScore: 0.35, riskLevel: 'MEDIUM', category: 'Software', onTimeDelivery: 91.5, financialHealth: 82, complianceScore: 88, trend: 'up' },
+   119→  { id: '7', name: 'BrazilMetals SA', region: 'Brazil', tier: 2, riskScore: 0.52, riskLevel: 'MEDIUM', category: 'Raw Materials', onTimeDelivery: 86.4, financialHealth: 71, complianceScore: 78, trend: 'stable' },
+   120→  { id: '8', name: 'KoreaDisplay Co', region: 'South Korea', tier: 1, riskScore: 0.19, riskLevel: 'LOW', category: 'Displays', onTimeDelivery: 96.8, financialHealth: 90, complianceScore: 93, trend: 'up' },
+   121→  { id: '9', name: 'MexicoAssembly Inc', region: 'Mexico', tier: 2, riskScore: 0.41, riskLevel: 'MEDIUM', category: 'Assembly', onTimeDelivery: 88.9, financialHealth: 78, complianceScore: 85, trend: 'stable' },
+   122→  { id: '10', name: 'JapanPrecision KK', region: 'Japan', tier: 1, riskScore: 0.05, riskLevel: 'LOW', category: 'Precision Parts', onTimeDelivery: 99.5, financialHealth: 98, complianceScore: 99, trend: 'stable' },
+   123→]
+   124→
+   125→const alertsData: Alert[] = [
+   126→  { id: '1', severity: 'critical', supplier: 'Shanghai Electronics', type: 'Financial Risk', message: 'Credit rating downgraded by Moody\'s - immediate review required', timestamp: new Date(Date.now() - 1000 * 60 * 5), acknowledged: false },
+   127→  { id: '2', severity: 'high', supplier: 'PrecisionParts Vietnam', type: 'Operational', message: 'Lead time increased by 45% due to capacity constraints', timestamp: new Date(Date.now() - 1000 * 60 * 23), acknowledged: false },
+   128→  { id: '3', severity: 'high', supplier: 'GlobalLogistics Corp', type: 'Geopolitical', message: 'New trade regulations affecting Singapore-EU shipping routes', timestamp: new Date(Date.now() - 1000 * 60 * 45), acknowledged: true },
+   129→  { id: '4', severity: 'medium', supplier: 'BrazilMetals SA', type: 'Environmental', message: 'EUDR compliance documentation pending - deadline in 14 days', timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2), acknowledged: false },
+   130→  { id: '5', severity: 'medium', supplier: 'IndiaTech Solutions', type: 'Cybersecurity', message: 'Security audit flagged outdated encryption protocols', timestamp: new Date(Date.now() - 1000 * 60 * 60 * 3), acknowledged: true },
+   131→  { id: '6', severity: 'low', supplier: 'MexicoAssembly Inc', type: 'Quality', message: 'Minor quality deviation detected in batch #4521', timestamp: new Date(Date.now() - 1000 * 60 * 60 * 5), acknowledged: true },
+   132→]
+   133→
+   134→const riskTrendData = [
+   135→  { date: 'Jan', score: 0.32, threshold: 0.6 },
+   136→  { date: 'Feb', score: 0.35, threshold: 0.6 },
+   137→  { date: 'Mar', score: 0.29, threshold: 0.6 },
+   138→  { date: 'Apr', score: 0.38, threshold: 0.6 },
+   139→  { date: 'May', score: 0.42, threshold: 0.6 },
+   140→  { date: 'Jun', score: 0.39, threshold: 0.6 },
+   141→  { date: 'Jul', score: 0.45, threshold: 0.6 },
+   142→  { date: 'Aug', score: 0.41, threshold: 0.6 },
+   143→  { date: 'Sep', score: 0.36, threshold: 0.6 },
+   144→  { date: 'Oct', score: 0.33, threshold: 0.6 },
+   145→  { date: 'Nov', score: 0.38, threshold: 0.6 },
+   146→  { date: 'Dec', score: 0.34, threshold: 0.6 },
+   147→]
+   148→
+   149→const demandForecastData = [
+   150→  { week: 'W1', actual: 1200, forecast: 1180, lower: 1100, upper: 1260 },
+   151→  { week: 'W2', actual: 1350, forecast: 1320, lower: 1240, upper: 1400 },
+   152→  { week: 'W3', actual: 1280, forecast: 1300, lower: 1220, upper: 1380 },
+   153→  { week: 'W4', actual: 1420, forecast: 1400, lower: 1320, upper: 1480 },
+   154→  { week: 'W5', actual: null, forecast: 1450, lower: 1370, upper: 1530 },
+   155→  { week: 'W6', actual: null, forecast: 1520, lower: 1440, upper: 1600 },
+   156→  { week: 'W7', actual: null, forecast: 1480, lower: 1400, upper: 1560 },
+   157→  { week: 'W8', actual: null, forecast: 1550, lower: 1470, upper: 1630 },
+   158→  { week: 'W9', actual: null, forecast: 1600, lower: 1520, upper: 1680 },
+   159→  { week: 'W10', actual: null, forecast: 1580, lower: 1500, upper: 1660 },
+   160→  { week: 'W11', actual: null, forecast: 1650, lower: 1570, upper: 1730 },
+   161→  { week: 'W12', actual: null, forecast: 1700, lower: 1620, upper: 1780 },
+   162→]
+   163→
+   164→const riskByRegionData = [
+   165→  { region: 'Asia-Pacific', value: 42, count: 156 },
+   166→  { region: 'Europe', value: 18, count: 89 },
+   167→  { region: 'North America', value: 12, count: 67 },
+   168→  { region: 'Latin America', value: 18, count: 45 },
+   169→  { region: 'Middle East', value: 10, count: 23 },
+   170→]
+   171→
+   172→const riskRadarData = [
+   173→  { subject: 'Financial', A: 85, B: 72, fullMark: 100 },
+   174→  { subject: 'Operational', A: 78, B: 68, fullMark: 100 },
+   175→  { subject: 'Geopolitical', A: 65, B: 82, fullMark: 100 },
+   176→  { subject: 'Compliance', A: 92, B: 75, fullMark: 100 },
+   177→  { subject: 'Environmental', A: 70, B: 65, fullMark: 100 },
+   178→  { subject: 'Cyber', A: 88, B: 70, fullMark: 100 },
+   179→]
+   180→
+   181→const complianceData = [
+   182→  { framework: 'UFLPA', score: 94, status: 'compliant', lastAudit: '2025-01-15' },
+   183→  { framework: 'EUDR', score: 87, status: 'review', lastAudit: '2025-02-20' },
+   184→  { framework: 'CSDDD', score: 91, status: 'compliant', lastAudit: '2025-01-28' },
+   185→  { framework: 'SOX', score: 98, status: 'compliant', lastAudit: '2025-03-01' },
+   186→  { framework: 'GDPR', score: 96, status: 'compliant', lastAudit: '2025-02-10' },
+   187→  { framework: 'REACH', score: 89, status: 'review', lastAudit: '2025-03-05' },
+   188→]
+   189→
+   190→const roadmapData: RoadmapMilestone[] = [
+   191→  {
+   192→    phase: 'Phase 1',
+   193→    title: 'Foundation',
+   194→    description: 'Core platform infrastructure and ML pipeline setup',
+   195→    status: 'completed',
+   196→    date: 'Q1 2025',
+   197→    items: ['Data ingestion pipeline', 'ML model training framework', 'Basic dashboard UI', 'User authentication']
+   198→  },
+   199→  {
+   200→    phase: 'Phase 2',
+   201→    title: 'Intelligence Core',
+   202→    description: 'Advanced AI models and real-time processing',
+   203→    status: 'completed',
+   204→    date: 'Q2 2025',
+   205→    items: ['XGBoost risk models', 'SHAP explainability', 'WebSocket alert streaming', 'Supplier profiling']
+   206→  },
+   207→  {
+   208→    phase: 'Phase 3',
+   209→    title: 'Predictive Analytics',
+   210→    description: 'Demand forecasting and predictive capabilities',
+   211→    status: 'in-progress',
+   212→    date: 'Q3 2025',
+   213→    items: ['90-day demand forecasting', 'Drift detection system', 'Model versioning', 'Confidence intervals']
+   214→  },
+   215→  {
+   216→    phase: 'Phase 4',
+   217→    title: 'Autonomous Operations',
+   218→    description: 'Self-healing supply chain and autonomous responses',
+   219→    status: 'upcoming',
+   220→    date: 'Q4 2025',
+   221→    items: ['Auto-escalation workflows', 'Digital twin integration', 'AI advisor chatbot', 'M&A matching engine']
+   222→  },
+   223→]
+   224→
+   225→const suggestedQuestions = [
+   226→  'Which Tier-2 suppliers have the highest risk increase this month?',
+   227→  'Show me demand forecast for Q4 2025',
+   228→  'What are my top compliance gaps?',
+   229→  'Identify single-source dependencies in Asia-Pacific'
+   230→]
+   231→
+   232→// ============================================
+   233→// PARTICLE SYSTEM COMPONENT
+   234→// ============================================
+   235→
+   236→function ParticleCanvas() {
+   237→  const canvasRef = useRef<HTMLCanvasElement>(null)
+   238→  
+   239→  useEffect(() => {
+   240→    const canvas = canvasRef.current
+   241→    if (!canvas) return
+   242→    
+   243→    const ctx = canvas.getContext('2d')
+   244→    if (!ctx) return
+   245→    
+   246→    let animationId: number
+   247→    const particles: Array<{
+   248→      x: number
+   249→      y: number
+   250→      size: number
+   251→      speedX: number
+   252→      speedY: number
+   253→      opacity: number
+   254→      pulse: number
+   255→    }> = []
+   256→    
+   257→    const resize = () => {
+   258→      canvas.width = window.innerWidth
+   259→      canvas.height = window.innerHeight
+   260→    }
+   261→    
+   262→    resize()
+   263→    window.addEventListener('resize', resize)
+   264→    
+   265→    const particleCount = Math.min(Math.floor(window.innerWidth * 0.06), 80)
+   266→    
+   267→    for (let i = 0; i < particleCount; i++) {
+   268→      particles.push({
+   269→        x: Math.random() * canvas.width,
+   270→        y: Math.random() * canvas.height,
+   271→        size: Math.random() * 1.5 + 0.5,
+   272→        speedX: (Math.random() - 0.5) * 0.3,
+   273→        speedY: (Math.random() - 0.5) * 0.3,
+   274→        opacity: Math.random() * 0.5 + 0.1,
+   275→        pulse: Math.random() * Math.PI * 2
+   276→      })
+   277→    }
+   278→    
+   279→    const drawConnections = () => {
+   280→      for (let i = 0; i < particles.length; i++) {
+   281→        for (let j = i + 1; j < particles.length; j++) {
+   282→          const dx = particles[i].x - particles[j].x
+   283→          const dy = particles[i].y - particles[j].y
+   284→          const dist = Math.sqrt(dx * dx + dy * dy)
+   285→          
+   286→          if (dist < 120) {
+   287→            const opacity = (1 - dist / 120) * 0.08
+   288→            ctx.beginPath()
+   289→            ctx.moveTo(particles[i].x, particles[i].y)
+   290→            ctx.lineTo(particles[j].x, particles[j].y)
+   291→            ctx.strokeStyle = `rgba(16, 185, 129, ${opacity})`
+   292→            ctx.lineWidth = 0.5
+   293→            ctx.stroke()
+   294→          }
+   295→        }
+   296→      }
+   297→    }
+   298→    
+   299→    const animate = () => {
+   300→      ctx.clearRect(0, 0, canvas.width, canvas.height)
+   301→      
+   302→      particles.forEach(p => {
+   303→        p.x += p.speedX
+   304→        p.y += p.speedY
+   305→        p.pulse += 0.02
+   306→        
+   307→        if (p.x < 0 || p.x > canvas.width || p.y < 0 || p.y > canvas.height) {
+   308→          p.x = Math.random() * canvas.width
+   309→          p.y = Math.random() * canvas.height
+   310→        }
+   311→        
+   312→        const o = p.opacity + Math.sin(p.pulse) * 0.15
+   313→        ctx.beginPath()
+   314→        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
+   315→        ctx.fillStyle = `rgba(16, 185, 129, ${o})`
+   316→        ctx.fill()
+   317→      })
+   318→      
+   319→      drawConnections()
+   320→      animationId = requestAnimationFrame(animate)
+   321→    }
+   322→    
+   323→    animate()
+   324→    
+   325→    return () => {
+   326→      window.removeEventListener('resize', resize)
+   327→      cancelAnimationFrame(animationId)
+   328→    }
+   329→  }, [])
+   330→  
+   331→  return (
+   332→    <canvas
+   333→      ref={canvasRef}
+   334→      className="fixed inset-0 pointer-events-none z-0"
+   335→      style={{ opacity: 0.6 }}
+   336→    />
+   337→  )
+   338→}
+   339→
+   340→// ============================================
+   341→// NAVIGATION COMPONENT
+   342→// ============================================
+   343→
+   344→function Navigation({ activeSection, setActiveSection }: { 
+   345→  activeSection: string
+   346→  setActiveSection: (section: string) => void 
+   347→}) {
+   348→  const [isScrolled, setIsScrolled] = useState(false)
+   349→  const [isMobileOpen, setIsMobileOpen] = useState(false)
+   350→  
+   351→  useEffect(() => {
+   352→    const handleScroll = () => setIsScrolled(window.scrollY > 40)
+   353→    window.addEventListener('scroll', handleScroll)
+   354→    return () => window.removeEventListener('scroll', handleScroll)
+   355→  }, [])
+   356→  
+   357→  const navItems = [
+   358→    { id: 'home', label: 'Home' },
+   359→    { id: 'dashboard', label: 'Dashboard' },
+   360→    { id: 'suppliers', label: 'Suppliers' },
+   361→    { id: 'forecasting', label: 'Forecasting' },
+   362→    { id: 'alerts', label: 'Alerts' },
+   363→    { id: 'compliance', label: 'Compliance' },
+   364→    { id: 'advisor', label: 'AI Advisor' },
+   365→    { id: 'roadmap', label: 'Roadmap' },
+   366→    { id: 'contact', label: 'Contact' },
+   367→  ]
+   368→  
+   369→  return (
+   370→    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+   371→      isScrolled ? 'glass border-b border-border/50 shadow-lg' : ''
+   372→    }`}>
+   373→      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+   374→        <div className="flex items-center justify-between h-16">
+   375→          {/* Brand */}
+   376→          <div className="flex items-center gap-3">
+   377→            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center font-bold text-sm text-background">
+   378→              SC
+   379→            </div>
+   380→            <span className="font-semibold text-lg hidden sm:block">AI Supply Chain</span>
+   381→          </div>
+   382→          
+   383→          {/* Desktop Navigation */}
+   384→          <div className="hidden lg:flex items-center gap-1">
+   385→            {navItems.map(item => (
+   386→              <button
+   387→                key={item.id}
+   388→                onClick={() => {
+   389→                  setActiveSection(item.id)
+   390→                  document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' })
+   391→                }}
+   392→                className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+   393→                  activeSection === item.id
+   394→                    ? 'bg-primary/10 text-primary'
+   395→                    : 'text-muted-foreground hover:text-foreground hover:bg-white/5'
+   396→                }`}
+   397→              >
+   398→                {item.label}
+   399→              </button>
+   400→            ))}
+   401→          </div>
+   402→          
+   403→          {/* Mobile Toggle */}
+   404→          <button
+   405→            onClick={() => setIsMobileOpen(!isMobileOpen)}
+   406→            className="lg:hidden p-2 rounded-lg hover:bg-white/5"
+   407→          >
+   408→            <div className="w-5 h-5 flex flex-col justify-center gap-1">
+   409→              <span className={`block h-0.5 w-full bg-current transition-transform ${isMobileOpen ? 'rotate-45 translate-y-1.5' : ''}`} />
+   410→              <span className={`block h-0.5 w-full bg-current transition-opacity ${isMobileOpen ? 'opacity-0' : ''}`} />
+   411→              <span className={`block h-0.5 w-full bg-current transition-transform ${isMobileOpen ? '-rotate-45 -translate-y-1.5' : ''}`} />
+   412→            </div>
+   413→          </button>
+   414→        </div>
+   415→        
+   416→        {/* Mobile Menu */}
+   417→        {isMobileOpen && (
+   418→          <div className="lg:hidden py-4 border-t border-border/50">
+   419→            <div className="grid grid-cols-2 gap-1">
+   420→              {navItems.map(item => (
+   421→                <button
+   422→                  key={item.id}
+   423→                  onClick={() => {
+   424→                    setActiveSection(item.id)
+   425→                    setIsMobileOpen(false)
+   426→                    document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' })
+   427→                  }}
+   428→                  className={`px-3 py-2 rounded-lg text-sm font-medium text-left transition-all ${
+   429→                    activeSection === item.id
+   430→                      ? 'bg-primary/10 text-primary'
+   431→                      : 'text-muted-foreground hover:text-foreground hover:bg-white/5'
+   432→                  }`}
+   433→                >
+   434→                  {item.label}
+   435→                </button>
+   436→              ))}
+   437→            </div>
+   438→          </div>
+   439→        )}
+   440→      </div>
+   441→    </nav>
+   442→  )
+   443→}
+   444→
+   445→// ============================================
+   446→// HERO SECTION
+   447→// ============================================
+   448→
+   449→function HeroSection() {
+   450→  return (
+   451→    <section id="home" className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden">
+   452→      {/* Background orbs */}
+   453→      <div className="absolute top-20 right-10 w-[500px] h-[500px] bg-violet-500/10 rounded-full blur-[120px]" />
+   454→      <div className="absolute bottom-20 left-10 w-[400px] h-[400px] bg-cyan-500/10 rounded-full blur-[120px]" />
+   455→      
+   456→      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+   457→        <Badge variant="secondary" className="mb-6 px-4 py-1.5 text-sm bg-primary/10 text-primary border-primary/20">
+   458→          <Zap className="w-3.5 h-3.5 mr-2" />
+   459→          AI-Powered Supply Chain Intelligence
+   460→        </Badge>
+   461→        
+   462→        <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold leading-tight mb-6">
+   463→          Predict Disruptions{' '}
+   464→          <span className="gradient-text">Before They Happen</span>
+   465→        </h1>
+   466→        
+   467→        <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-10 leading-relaxed">
+   468→          Real-time AI-powered supply chain risk intelligence platform. Forecast disruptions, 
+   469→          monitor suppliers, predict demand, and ensure compliance with explainable machine learning.
+   470→        </p>
+   471→        
+   472→        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+   473→          <Button 
+   474→            size="lg" 
+   475→            className="bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white px-8 h-12 text-base"
+   476→            onClick={() => document.getElementById('dashboard')?.scrollIntoView({ behavior: 'smooth' })}
+   477→          >
+   478→            Explore Dashboard
+   479→            <ArrowRight className="ml-2 w-4 h-4" />
+   480→          </Button>
+   481→          <Button 
+   482→            variant="outline" 
+   483→            size="lg"
+   484→            className="border-border/50 hover:border-primary/50 hover:bg-primary/5 px-8 h-12 text-base"
+   485→            onClick={() => document.getElementById('advisor')?.scrollIntoView({ behavior: 'smooth' })}
+   486→          >
+   487→            Try AI Advisor
+   488→          </Button>
+   489→        </div>
+   490→        
+   491→        {/* Stats */}
+   492→        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+   493→          {[
+   494→            { value: '99.2%', label: 'Prediction Accuracy', icon: Target },
+   495→            { value: '< 5s', label: 'Alert Latency', icon: Zap },
+   496→            { value: '10K+', label: 'Suppliers Tracked', icon: Building2 },
+   497→            { value: '24/7', label: 'Monitoring', icon: Activity },
+   498→          ].map((stat, i) => (
+   499→            <div key={i} className="glass rounded-xl p-4 text-center glow-emerald">
+   500→              <stat.icon className="w-5 h-5 mx-auto mb-2 text-primary" />
+   501→              <div className="text-2xl font-bold gradient-text">{stat.value}</div>
+   502→              <div className="text-xs text-muted-foreground mt-1">{stat.label}</div>
+   503→            </div>
+   504→          ))}
+   505→        </div>
+   506→      </div>
+   507→      
+   508→      {/* Scroll indicator */}
+   509→      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+   510→        <ChevronDown className="w-6 h-6 text-muted-foreground" />
+   511→      </div>
+   512→    </section>
+   513→  )
+   514→}
+   515→
+   516→// ============================================
+   517→// DASHBOARD SECTION
+   518→// ============================================
+   519→
+   520→function DashboardSection() {
+   521→  const [selectedPeriod, setSelectedPeriod] = useState('12m')
+   522→  const [isLive, setIsLive] = useState(true)
+   523→  
+   524→  return (
+   525→    <section id="dashboard" className="py-20 relative">
+   526→      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+   527→        {/* Section Header */}
+   528→        <div className="text-center mb-12">
+   529→          <Badge variant="secondary" className="mb-4 bg-cyan-500/10 text-cyan-400 border-cyan-500/20">
+   530→            <BarChart3 className="w-3.5 h-3.5 mr-2" />
+   531→            Command Center
+   532→          </Badge>
+   533→          <h2 className="text-3xl sm:text-4xl font-bold mb-4">Your Supply Chain Nervous System</h2>
+   534→          <p className="text-muted-foreground max-w-2xl mx-auto">
+   535→            Real-time KPIs, risk gauges, and trend charts in a unified view — no tab-switching, no delays.
+   536→          </p>
+   537→        </div>
+   538→        
+   539→        {/* Controls */}
+   540→        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+   541→          <div className="flex items-center gap-3">
+   542→            <Badge variant={isLive ? "default" : "secondary"} className={isLive ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/30" : ""}>
+   543→              <span className={`w-2 h-2 rounded-full mr-2 ${isLive ? 'bg-emerald-500 pulse-dot' : ''}`} />
+   544→              {isLive ? 'LIVE' : 'PAUSED'}
+   545→            </Badge>
+   546→            <Button
+   547→              variant="ghost"
+   548→              size="sm"
+   549→              onClick={() => setIsLive(!isLive)}
+   550→            >
+   551→              {isLive ? <Pause className="w-4 h-4 mr-1" /> : <Play className="w-4 h-4 mr-1" />}
+   552→              {isLive ? 'Pause' : 'Resume'}
+   553→            </Button>
+   554→          </div>
+   555→          <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
+   556→            <SelectTrigger className="w-32 bg-card border-border/50">
+   557→              <SelectValue />
+   558→            </SelectTrigger>
+   559→            <SelectContent>
+   560→              <SelectItem value="3m">3 Months</SelectItem>
+   561→              <SelectItem value="6m">6 Months</SelectItem>
+   562→              <SelectItem value="12m">12 Months</SelectItem>
+   563→              <SelectItem value="all">All Time</SelectItem>
+   564→            </SelectContent>
+   565→          </Select>
+   566→        </div>
+   567→        
+   568→        {/* KPI Cards */}
+   569→        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+   570→          {[
+   571→            { title: 'Portfolio Risk Score', value: '0.34', change: '-0.03', trend: 'down' as const, icon: Shield, color: 'emerald' },
+   572→            { title: 'High-Risk Suppliers', value: '12', change: '+2', trend: 'up' as const, icon: AlertTriangle, color: 'rose' },
+   573→            { title: 'On-Time Delivery', value: '94.2%', change: '+1.1%', trend: 'down' as const, icon: Truck, color: 'cyan' },
+   574→            { title: 'Active Alerts', value: '23', change: '-5', trend: 'down' as const, icon: Bell, color: 'amber' },
+   575→          ].map((kpi, i) => (
+   576→            <Card key={i} className="glass glass-hover border-border/50">
+   577→              <CardContent className="p-6">
+   578→                <div className="flex items-start justify-between mb-4">
+   579→                  <div className={`p-2.5 rounded-lg bg-${kpi.color === 'emerald' ? 'emerald' : kpi.color === 'rose' ? 'rose' : kpi.color === 'cyan' ? 'cyan' : 'amber'}-500/10`}>
+   580→                    <kpi.icon className={`w-5 h-5 text-${kpi.color === 'emerald' ? 'emerald' : kpi.color === 'rose' ? 'rose' : kpi.color === 'cyan' ? 'cyan' : 'amber'}-400`} />
+   581→                  </div>
+   582→                  <div className={`flex items-center text-sm ${kpi.trend === 'down' ? 'text-emerald-400' : 'text-rose-400'}`}>
+   583→                    {kpi.trend === 'down' ? <TrendingDown className="w-4 h-4 mr-1" /> : <TrendingUp className="w-4 h-4 mr-1" />}
+   584→                    {kpi.change}
+   585→                  </div>
+   586→                </div>
+   587→                <div className="text-2xl font-bold mb-1">{kpi.value}</div>
+   588→                <div className="text-sm text-muted-foreground">{kpi.title}</div>
+   589→              </CardContent>
+   590→            </Card>
+   591→          ))}
+   592→        </div>
+   593→        
+   594→        {/* Charts Row */}
+   595→        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+   596→          {/* Risk Trend Chart */}
+   597→          <Card className="glass border-border/50">
+   598→            <CardHeader className="pb-2">
+   599→              <CardTitle className="text-lg flex items-center gap-2">
+   600→                <LineChart className="w-5 h-5 text-primary" />
+   601→                Portfolio Risk Trend
+   602→              </CardTitle>
+   603→              <CardDescription>Monthly average risk score across all suppliers</CardDescription>
+   604→            </CardHeader>
+   605→            <CardContent>
+   606→              <ResponsiveContainer width="100%" height={280}>
+   607→                <AreaChart data={riskTrendData}>
+   608→                  <defs>
+   609→                    <linearGradient id="riskGradient" x1="0" y1="0" x2="0" y2="1">
+   610→                      <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
+   611→                      <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+   612→                    </linearGradient>
+   613→                    <linearGradient id="thresholdGradient" x1="0" y1="0" x2="0" y2="1">
+   614→                      <stop offset="5%" stopColor="#f43f5e" stopOpacity={0.3}/>
+   615→                      <stop offset="95%" stopColor="#f43f5e" stopOpacity={0}/>
+   616→                    </linearGradient>
+   617→                  </defs>
+   618→                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+   619→                  <XAxis dataKey="date" stroke="#8b9dc3" fontSize={12} />
+   620→                  <YAxis stroke="#8b9dc3" fontSize={12} domain={[0, 1]} />
+   621→                  <Tooltip
+   622→                    contentStyle={{
+   623→                      backgroundColor: 'rgba(10, 17, 40, 0.95)',
+   624→                      border: '1px solid rgba(16, 185, 129, 0.2)',
+   625→                      borderRadius: '12px',
+   626→                      color: '#f0f4ff'
+   627→                    }}
+   628→                  />
+   629→                  <Area
+   630→                    type="monotone"
+   631→                    dataKey="threshold"
+   632→                    stroke="#f43f5e"
+   633→                    strokeWidth={2}
+   634→                    fill="url(#thresholdGradient)"
+   635→                    strokeDasharray="5 5"
+   636→                  />
+   637→                  <Area
+   638→                    type="monotone"
+   639→                    dataKey="score"
+   640→                    stroke="#10b981"
+   641→                    strokeWidth={2}
+   642→                    fill="url(#riskGradient)"
+   643→                  />
+   644→                </AreaChart>
+   645→              </ResponsiveContainer>
+   646→            </CardContent>
+   647→          </Card>
+   648→          
+   649→          {/* Risk by Region */}
+   650→          <Card className="glass border-border/50">
+   651→            <CardHeader className="pb-2">
+   652→              <CardTitle className="text-lg flex items-center gap-2">
+   653→                <PieChart className="w-5 h-5 text-cyan-400" />
+   654→                Risk Distribution by Region
+   655→              </CardTitle>
+   656→              <CardDescription>Supplier count and aggregate risk per region</CardDescription>
+   657→            </CardHeader>
+   658→            <CardContent>
+   659→              <ResponsiveContainer width="100%" height={280}>
+   660→                <RechartsPieChart>
+   661→                  <Pie
+   662→                    data={riskByRegionData}
+   663→                    cx="50%"
+   664→                    cy="50%"
+   665→                    innerRadius={60}
+   666→                    outerRadius={100}
+   667→                    paddingAngle={4}
+   668→                    dataKey="value"
+   669→                  >
+   670→                    {['#10b981', '#06b6d4', '#8b5cf6', '#f59e0b', '#f43f5e'].map((color, index) => (
+   671→                      <Cell key={`cell-${index}`} fill={color} />
+   672→                    ))}
+   673→                  </Pie>
+   674→                  <Tooltip
+   675→                    contentStyle={{
+   676→                      backgroundColor: 'rgba(10, 17, 40, 0.95)',
+   677→                      border: '1px solid rgba(16, 185, 129, 0.2)',
+   678→                      borderRadius: '12px',
+   679→                      color: '#f0f4ff'
+   680→                    }}
+   681→                  />
+   682→                  <Legend 
+   683→                    wrapperStyle={{ color: '#8b9dc3', fontSize: '12px' }}
+   684→                  />
+   685→                </RechartsPieChart>
+   686→              </ResponsiveContainer>
+   687→            </CardContent>
+   688→          </Card>
+   689→        </div>
+   690→        
+   691→        {/* Risk Radar Chart */}
+   692→        <Card className="glass border-border/50">
+   693→          <CardHeader className="pb-2">
+   694→            <CardTitle className="text-lg flex items-center gap-2">
+   695→              <Radio className="w-5 h-5 text-violet-400" />
+   696→              Multi-Dimensional Risk Profile
+   697→            </CardTitle>
+   698→            <CardDescription>Current portfolio vs. industry benchmark across risk dimensions</CardDescription>
+   699→          </CardHeader>
+   700→          <CardContent>
+   701→            <ResponsiveContainer width="100%" height={350}>
+   702→              <RadarChart data={riskRadarData}>
+   703→                <PolarGrid stroke="rgba(255,255,255,0.1)" />
+   704→                <PolarAngleAxis dataKey="subject" stroke="#8b9dc3" fontSize={12} />
+   705→                <PolarRadiusAxis angle={30} domain={[0, 100]} stroke="#8b9dc3" />
+   706→                <Radar
+   707→                  name="Your Portfolio"
+   708→                  dataKey="A"
+   709→                  stroke="#10b981"
+   710→                  fill="#10b981"
+   711→                  fillOpacity={0.2}
+   712→                  strokeWidth={2}
+   713→                />
+   714→                <Radar
+   715→                  name="Industry Benchmark"
+   716→                  dataKey="B"
+   717→                  stroke="#8b5cf6"
+   718→                  fill="#8b5cf6"
+   719→                  fillOpacity={0.1}
+   720→                  strokeWidth={2}
+   721→                />
+   722→                <Legend 
+   723→                  wrapperStyle={{ color: '#8b9dc3', fontSize: '12px' }}
+   724→                />
+   725→                <Tooltip
+   726→                  contentStyle={{
+   727→                    backgroundColor: 'rgba(10, 17, 40, 0.95)',
+   728→                    border: '1px solid rgba(16, 185, 129, 0.2)',
+   729→                    borderRadius: '12px',
+   730→                    color: '#f0f4ff'
+   731→                  }}
+   732→                />
+   733→              </RadarChart>
+   734→            </ResponsiveContainer>
+   735→          </CardContent>
+   736→        </Card>
+   737→      </div>
+   738→    </section>
+   739→  )
+   740→}
+   741→
+   742→// ============================================
+   743→// SUPPLIER INTELLIGENCE SECTION
+   744→// ============================================
+   745→
+   746→function SupplierSection() {
+   747→  const [searchTerm, setSearchTerm] = useState('')
+   748→  const [filterTier, setFilterTier] = useState<string>('all')
+   749→  const [filterRisk, setFilterRisk] = useState<string>('all')
+   750→  const [selectedSupplier, setSelectedSupplier] = useState<Supplier | null>(null)
+   751→  
+   752→  const filteredSuppliers = suppliersData.filter(supplier => {
+   753→    const matchesSearch = supplier.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+   754→                         supplier.region.toLowerCase().includes(searchTerm.toLowerCase())
+   755→    const matchesTier = filterTier === 'all' || supplier.tier.toString() === filterTier
+   756→    const matchesRisk = filterRisk === 'all' || supplier.riskLevel === filterRisk
+   757→    return matchesSearch && matchesTier && matchesRisk
+   758→  })
+   759→  
+   760→  const getRiskColor = (level: string) => {
+   761→    switch (level) {
+   762→      case 'LOW': return 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30'
+   763→      case 'MEDIUM': return 'bg-amber-500/15 text-amber-400 border-amber-500/30'
+   764→      case 'HIGH': return 'bg-rose-500/15 text-rose-400 border-rose-500/30'
+   765→      default: return ''
+   766→    }
+   767→  }
+   768→  
+   769→  const getTrendIcon = (trend: string) => {
+   770→    switch (trend) {
+   771→      case 'up': return <TrendingUp className="w-4 h-4 text-emerald-400" />
+   772→      case 'down': return <TrendingDown className="w-4 h-4 text-rose-400" />
+   773→      default: return <Minus className="w-4 h-4 text-muted-foreground" />
+   774→    }
+   775→  }
+   776→  
+   777→  return (
+   778→    <section id="suppliers" className="py-20 relative">
+   779→      <div className="absolute inset-0 grid-bg opacity-50" />
+   780→      
+   781→      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+   782→        {/* Section Header */}
+   783→        <div className="text-center mb-12">
+   784→          <Badge variant="secondary" className="mb-4 bg-violet-500/10 text-violet-400 border-violet-500/20">
+   785→            <Building2 className="w-3.5 h-3.5 mr-2" />
+   786→            Supplier Intelligence
+   787→          </Badge>
+   788→          <h2 className="text-3xl sm:text-4xl font-bold mb-4">Know Every Node in Your Network</h2>
+   789→          <p className="text-muted-foreground max-w-2xl mx-auto">
+   790→            Deep supplier profiles with ML-driven risk assessments. Click any supplier to see detailed SHAP analysis.
+   791→          </p>
+   792→        </div>
+   793→        
+   794→        {/* Filters */}
+   795→        <div className="flex flex-wrap gap-4 mb-6">
+   796→          <div className="relative flex-1 min-w-[200px]">
+   797→            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+   798→            <Input
+   799→              placeholder="Search suppliers or regions..."
+   800→              value={searchTerm}
+   801→              onChange={(e) => setSearchTerm(e.target.value)}
+   802→              className="pl-10 bg-card/50 border-border/50"
+   803→            />
+   804→          </div>
+   805→          <Select value={filterTier} onValueChange={setFilterTier}>
+   806→            <SelectTrigger className="w-32 bg-card/50 border-border/50">
+   807→              <SelectValue placeholder="Tier" />
+   808→            </SelectTrigger>
+   809→            <SelectContent>
+   810→              <SelectItem value="all">All Tiers</SelectItem>
+   811→              <SelectItem value="1">Tier 1</SelectItem>
+   812→              <SelectItem value="2">Tier 2</SelectItem>
+   813→            </SelectContent>
+   814→          </Select>
+   815→          <Select value={filterRisk} onValueChange={setFilterRisk}>
+   816→            <SelectTrigger className="w-36 bg-card/50 border-border/50">
+   817→              <SelectValue placeholder="Risk Level" />
+   818→            </SelectTrigger>
+   819→            <SelectContent>
+   820→              <SelectItem value="all">All Levels</SelectItem>
+   821→              <SelectItem value="LOW">Low Risk</SelectItem>
+   822→              <SelectItem value="MEDIUM">Medium Risk</SelectItem>
+   823→              <SelectItem value="HIGH">High Risk</SelectItem>
+   824→            </SelectContent>
+   825→          </Select>
+   826→        </div>
+   827→        
+   828→        {/* Supplier Table */}
+   829→        <Card className="glass border-border/50 mb-6">
+   830→          <CardContent className="p-0">
+   831→            <Table>
+   832→              <TableHeader>
+   833→                <TableRow className="border-border/30 hover:bg-transparent">
+   834→                  <TableHead>Supplier</TableHead>
+   835→                  <TableHead>Region</TableHead>
+   836→                  <TableHead>Tier</TableHead>
+   837→                  <TableHead>Risk Score</TableHead>
+   838→                  <TableHead>Risk Level</TableHead>
+   839→                  <TableHead>OTD %</TableHead>
+   840→                  <TableHead>Trend</TableHead>
+   841→                  <TableHead></TableHead>
+   842→                </TableRow>
+   843→              </TableHeader>
+   844→              <TableBody>
+   845→                {filteredSuppliers.map((supplier) => (
+   846→                  <TableRow 
+   847→                    key={supplier.id} 
+   848→                    className="border-border/20 cursor-pointer hover:bg-white/[0.02]"
+   849→                    onClick={() => setSelectedSupplier(supplier)}
+   850→                  >
+   851→                    <TableCell className="font-medium">{supplier.name}</TableCell>
+   852→                    <TableCell>
+   853→                      <div className="flex items-center gap-2">
+   854→                        <MapPin className="w-3.5 h-3.5 text-muted-foreground" />
+   855→                        {supplier.region}
+   856→                      </div>
+   857→                    </TableCell>
+   858→                    <TableCell>
+   859→                      <Badge variant="outline" className="border-border/50">
+   860→                        T{supplier.tier}
+   861→                      </Badge>
+   862→                    </TableCell>
+   863→                    <TableCell>
+   864→                      <div className="flex items-center gap-2">
+   865→                        <Progress 
+   866→                          value={supplier.riskScore * 100} 
+   867→                          className="w-16 h-2"
+   868→                        />
+   869→                        <span className="text-sm font-mono">{supplier.riskScore.toFixed(2)}</span>
+   870→                      </div>
+   871→                    </TableCell>
+   872→                    <TableCell>
+   873→                      <Badge variant="outline" className={getRiskColor(supplier.riskLevel)}>
+   874→                        {supplier.riskLevel}
+   875→                      </Badge>
+   876→                    </TableCell>
+   877→                    <TableCell className="font-mono">{supplier.onTimeDelivery}%</TableCell>
+   878→                    <TableCell>{getTrendIcon(supplier.trend)}</TableCell>
+   879→                    <TableCell>
+   880→                      <Button variant="ghost" size="sm">
+   881→                        <Eye className="w-4 h-4" />
+   882→                      </Button>
+   883→                    </TableCell>
+   884→                  </TableRow>
+   885→                ))}
+   886→              </TableBody>
+   887→            </Table>
+   888→          </CardContent>
+   889→        </Card>
+   890→        
+   891→        {/* Supplier Detail Modal */}
+   892→        {selectedSupplier && (
+   893→          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedSupplier(null)}>
+   894→            <Card className="glass border-border/50 max-w-2xl w-full max-h-[80vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+   895→              <CardHeader>
+   896→                <div className="flex items-start justify-between">
+   897→                  <div>
+   898→                    <CardTitle className="text-xl">{selectedSupplier.name}</CardTitle>
+   899→                    <CardDescription className="mt-1">
+   900→                      {selectedSupplier.category} · Tier {selectedSupplier.tier} · {selectedSupplier.region}
+   901→                    </CardDescription>
+   902→                  </div>
+   903→                  <Badge variant="outline" className={getRiskColor(selectedSupplier.riskLevel)}>
+   904→                    {selectedSupplier.riskLevel} RISK
+   905→                  </Badge>
+   906→                </div>
+   907→              </CardHeader>
+   908→              <CardContent className="space-y-6">
+   909→                {/* Metrics Grid */}
+   910→                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+   911→                  {[
+   912→                    { label: 'Risk Score', value: selectedSupplier.riskScore.toFixed(2), icon: Shield },
+   913→                    { label: 'On-Time Delivery', value: `${selectedSupplier.onTimeDelivery}%`, icon: Truck },
+   914→                    { label: 'Financial Health', value: `${selectedSupplier.financialHealth}%`, icon: TrendingUp },
+   915→                    { label: 'Compliance', value: `${selectedSupplier.complianceScore}%`, icon: CheckCircle2 },
+   916→                  ].map((metric, i) => (
+   917→                    <div key={i} className="p-3 rounded-lg bg-white/[0.02] border border-border/30">
+   918→                      <metric.icon className="w-4 h-4 text-muted-foreground mb-2" />
+   919→                      <div className="text-lg font-semibold">{metric.value}</div>
+   920→                      <div className="text-xs text-muted-foreground">{metric.label}</div>
+   921→                    </div>
+   922→                  ))}
+   923→                </div>
+   924→                
+   925→                {/* SHAP Explanation */}
+   926→                <div>
+   927→                  <h4 className="font-medium mb-3 flex items-center gap-2">
+   928→                    <Brain className="w-4 h-4 text-primary" />
+   929→                    SHAP Feature Attribution
+   930→                  </h4>
+   931→                  <div className="space-y-3">
+   932→                    {[
+   933→                      { feature: 'Lead Time Variance', impact: '+0.18', direction: 'increases' },
+   934→                      { feature: 'Financial Ratio Change', impact: '+0.12', direction: 'increases' },
+   935→                      { feature: 'Geographic Concentration', impact: '+0.08', direction: 'increases' },
+   936→                      { feature: 'Historical Performance', impact: '-0.15', direction: 'decreases' },
+   937→                      { feature: 'Compliance History', impact: '-0.09', direction: 'decreases' },
+   938→                    ].map((shap, i) => (
+   939→                      <div key={i} className="flex items-center gap-3">
+   940→                        <span className="text-sm text-muted-foreground w-44 truncate">{shap.feature}</span>
+   941→                        <div className="flex-1 h-2 bg-white/5 rounded-full overflow-hidden">
+   942→                          <div 
+   943→                            className={`h-full rounded-full ${shap.direction === 'increases' ? 'bg-rose-500' : 'bg-emerald-500'}`}
+   944→                            style={{ width: `${Math.abs(parseFloat(shap.impact)) * 100}%` }}
+   945→                          />
+   946→                        </div>
+   947→                        <span className={`text-sm font-mono w-12 text-right ${shap.direction === 'increases' ? 'text-rose-400' : 'text-emerald-400'}`}>
+   948→                          {shap.impact}
+   949→                        </span>
+   950→                      </div>
+   951→                    ))}
+   952→                  </div>
+   953→                </div>
+   954→                
+   955→                <Button 
+   956→                  className="w-full" 
+   957→                  variant="outline"
+   958→                  onClick={() => setSelectedSupplier(null)}
+   959→                >
+   960→                  Close Detail View
+   961→                </Button>
+   962→              </CardContent>
+   963→            </Card>
+   964→          </div>
+   965→        )}
+   966→      </div>
+   967→    </section>
+   968→  )
+   969→}
+   970→
+   971→// ============================================
+   972→// DEMAND FORECASTING SECTION
+   973→// ============================================
+   974→
+   975→function ForecastingSection() {
+   976→  const [selectedSku, setSelectedSku] = useState('all')
+   977→  const [confidenceLevel, setConfidenceLevel] = useState<'80' | '95'>('95')
+   978→  
+   979→  return (
+   980→    <section id="forecasting" className="py-20 relative">
+   981→      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+   982→        {/* Section Header */}
+   983→        <div className="text-center mb-12">
+   984→          <Badge variant="secondary" className="mb-4 bg-amber-500/10 text-amber-400 border-amber-500/20">
+   985→            <TrendingUp className="w-3.5 h-3.5 mr-2" />
+   986→            Demand Forecasting
+   987→          </Badge>
+   988→          <h2 className="text-3xl sm:text-4xl font-bold mb-4">Foresee Demand. Quantify Uncertainty.</h2>
+   989→          <p className="text-muted-foreground max-w-2xl mx-auto">
+   990→            90-day Prophet-style projections with confidence bands. Plan inventory with precision.
+   991→          </p>
+   992→        </div>
+   993→        
+   994→        {/* Controls */}
+   995→        <div className="flex flex-wrap gap-4 mb-8 justify-between">
+   996→          <Select value={selectedSku} onValueChange={setSelectedSku}>
+   997→            <SelectTrigger className="w-48 bg-card/50 border-border/50">
+   998→              <SelectValue placeholder="Product Line" />
+   999→            </SelectTrigger>
+  1000→            <SelectContent>
+  1001→              <SelectItem value="all">All Products</SelectItem>
+  1002→              <SelectItem value="electronics">Electronics</SelectItem>
+  1003→              <SelectItem value="mechanical">Mechanical Parts</SelectItem>
+  1004→              <SelectItem value="raw-materials">Raw Materials</SelectItem>
+  1005→            </SelectContent>
+  1006→          </Select>
+  1007→          
+  1008→          <div className="flex items-center gap-2">
+  1009→            <span className="text-sm text-muted-foreground">Confidence:</span>
+  1010→            <Tabs value={confidenceLevel} onValueChange={(v) => setConfidenceLevel(v as '80' | '95')}>
+  1011→              <TabsList className="bg-card/50">
+  1012→                <TabsTrigger value="80" className="text-xs">80%</TabsTrigger>
+  1013→                <TabsTrigger value="95" className="text-xs">95%</TabsTrigger>
+  1014→              </TabsList>
+  1015→            </Tabs>
+  1016→          </div>
+  1017→        </div>
+  1018→        
+  1019→        {/* Forecast Chart */}
+  1020→        <Card className="glass border-border/50 mb-8">
+  1021→          <CardHeader className="pb-2">
+  1022→            <CardTitle className="text-lg flex items-center gap-2">
+  1023→              <LineChart className="w-5 h-5 text-amber-400" />
+  1024→              12-Week Demand Forecast
+  1025→            </CardTitle>
+  1026→            <CardDescription>
+  1027→              Actuals (solid) vs Forecast (line) with {confidenceLevel}% confidence bands
+  1028→            </CardDescription>
+  1029→          </CardHeader>
+  1030→          <CardContent>
+  1031→            <ResponsiveContainer width="100%" height={400}>
+  1032→              <ComposedChart data={demandForecastData}>
+  1033→                <defs>
+  1034→                  <linearGradient id="forecastGradient" x1="0" y1="0" x2="0" y2="1">
+  1035→                    <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.3}/>
+  1036→                    <stop offset="95%" stopColor="#06b6d4" stopOpacity={0.05}/>
+  1037→                  </linearGradient>
+  1038→                </defs>
+  1039→                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+  1040→                <XAxis dataKey="week" stroke="#8b9dc3" fontSize={12} />
+  1041→                <YAxis stroke="#8b9dc3" fontSize={12} />
+  1042→                <Tooltip
+  1043→                  contentStyle={{
+  1044→                    backgroundColor: 'rgba(10, 17, 40, 0.95)',
+  1045→                    border: '1px solid rgba(16, 185, 129, 0.2)',
+  1046→                    borderRadius: '12px',
+  1047→                    color: '#f0f4ff'
+  1048→                  }}
+  1049→                />
+  1050→                <Legend 
+  1051→                  wrapperStyle={{ color: '#8b9dc3', fontSize: '12px' }}
+  1052→                />
+  1053→                <Area
+  1054→                  type="monotone"
+  1055→                  dataKey="upper"
+  1056→                  stroke="transparent"
+  1057→                  fill="url(#forecastGradient)"
+  1058→                />
+  1059→                <Area
+  1060→                  type="monotone"
+  1061→                  dataKey="lower"
+  1062→                  stroke="#06b6d4"
+  1063→                  fill="rgba(5, 8, 15, 1)"
+  1064→                />
+  1065→                <Line
+  1066→                  type="monotone"
+  1067→                  dataKey="actual"
+  1068→                  stroke="#10b981"
+  1069→                  strokeWidth={2}
+  1070→                  dot={{ r: 4, fill: '#10b981' }}
+  1071→                  name="Actual"
+  1072→                />
+  1073→                <Line
+  1074→                  type="monotone"
+  1075→                  dataKey="forecast"
+  1076→                  stroke="#06b6d4"
+  1077→                  strokeWidth={2}
+  1078→                  strokeDasharray="5 5"
+  1079→                  dot={false}
+  1080→                  name="Forecast"
+  1081→                />
+  1082→              </ComposedChart>
+  1083→            </ResponsiveContainer>
+  1084→          </CardContent>
+  1085→        </Card>
+  1086→        
+  1087→        {/* Forecast Summary Cards */}
+  1088→        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+  1089→          <Card className="glass border-border/50">
+  1090→            <CardContent className="p-6">
+  1091→              <div className="flex items-center gap-3 mb-4">
+  1092→                <div className="p-2 rounded-lg bg-emerald-500/10">
+  1093→                  <Package className="w-5 h-5 text-emerald-400" />
+  1094→                </div>
+  1095→                <span className="font-medium">Peak Week</span>
+  1096→              </div>
+  1097→              <div className="text-3xl font-bold gradient-text">Week 12</div>
+  1098→              <p className="text-sm text-muted-foreground mt-1">Expected volume: 1,700 units</p>
+  1099→            </CardContent>
+  1100→          </Card>
+  1101→          
+  1102→          <Card className="glass border-border/50">
+  1103→            <CardContent className="p-6">
+  1104→              <div className="flex items-center gap-3 mb-4">
+  1105→                <div className="p-2 rounded-lg bg-cyan-500/10">
+  1106→                  <Activity className="w-5 h-5 text-cyan-400" />
+  1107→                </div>
+  1108→                <span className="font-medium">Avg Weekly Growth</span>
+  1109→              </div>
+  1110→              <div className="text-3xl font-bold gradient-text">+3.2%</div>
+  1111→              <p className="text-sm text-muted-foreground mt-1">vs. previous quarter</p>
+  1112→            </CardContent>
+  1113→          </Card>
+  1114→          
+  1115→          <Card className="glass border-border/50">
+  1116→            <CardContent className="p-6">
+  1117→              <div className="flex items-center gap-3 mb-4">
+  1118→                <div className="p-2 rounded-lg bg-violet-500/10">
+  1119→                  <Brain className="w-5 h-5 text-violet-400" />
+  1120→                </div>
+  1121→                <span className="font-medium">Model Accuracy</span>
+  1122→              </div>
+  1123→              <div className="text-3xl font-bold gradient-text">94.8%</div>
+  1124→              <p className="text-sm text-muted-foreground mt-1">MAPE over last 90 days</p>
+  1125→            </CardContent>
+  1126→          </Card>
+  1127→        </div>
+  1128→      </div>
+  1129→    </section>
+  1130→  )
+  1131→}
+  1132→
+  1133→// ============================================
+  1134→// ALERT HUB SECTION
+  1135→// ============================================
+  1136→
+  1137→function AlertsSection() {
+  1138→  const [alerts, setAlerts] = useState<Alert[]>(alertsData)
+  1139→  const [filterSeverity, setFilterSeverity] = useState<string>('all')
+  1140→  const { toast } = useToast()
+  1141→  
+  1142→  const filteredAlerts = alerts.filter(alert => 
+  1143→    filterSeverity === 'all' || alert.severity === filterSeverity
+  1144→  )
+  1145→  
+  1146→  const acknowledgeAlert = (id: string) => {
+  1147→    setAlerts(prev => prev.map(a => 
+  1148→      a.id === id ? { ...a, acknowledged: true } : a
+  1149→    ))
+  1150→    toast({
+  1151→      title: "Alert Acknowledged",
+  1152→      description: "The alert has been marked as acknowledged.",
+  1153→    })
+  1154→  }
+  1155→  
+  1156→  const getSeverityStyles = (severity: string) => {
+  1157→    switch (severity) {
+  1158→      case 'critical': return {
+  1159→        badge: 'bg-rose-500/15 text-rose-400 border-rose-500/30',
+  1160→        dot: 'bg-rose-500',
+  1161→        icon: <AlertTriangle className="w-4 h-4" />
+  1162→      }
+  1163→      case 'high': return {
+  1164→        badge: 'bg-orange-500/15 text-orange-400 border-orange-500/30',
+  1165→        dot: 'bg-orange-500',
+  1166→        icon: <AlertTriangle className="w-4 h-4" />
+  1167→      }
+  1168→      case 'medium': return {
+  1169→        badge: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
+  1170→        dot: 'bg-amber-500',
+  1171→        icon: <Bell className="w-4 h-4" />
+  1172→      }
+  1173→      default: return {
+  1174→        badge: 'bg-blue-500/15 text-blue-400 border-blue-500/30',
+  1175→        dot: 'bg-blue-500',
+  1176→        icon: <Bell className="w-4 h-4" />
+  1177→      }
+  1178→    }
+  1179→  }
+  1180→  
+  1181→  const unacknowledgedCount = alerts.filter(a => !a.acknowledged).length
+  1182→  
+  1183→  return (
+  1184→    <section id="alerts" className="py-20 relative">
+  1185→      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  1186→        {/* Section Header */}
+  1187→        <div className="text-center mb-12">
+  1188→          <Badge variant="secondary" className="mb-4 bg-rose-500/10 text-rose-400 border-rose-500/20">
+  1189→            <Bell className="w-3.5 h-3.5 mr-2" />
+  1190→            Real-Time Alert Hub
+  1191→            {unacknowledgedCount > 0 && (
+  1192→              <span className="ml-2 px-1.5 py-0.5 text-xs bg-rose-500 text-white rounded-full">
+  1193→                {unacknowledgedCount}
+  1194→              </span>
+  1195→            )}
+  1196→          </Badge>
+  1197→          <h2 className="text-3xl sm:text-4xl font-bold mb-4">Never Be Caught Off Guard</h2>
+  1198→          <p className="text-muted-foreground max-w-2xl mx-auto">
+  1199→            WebSocket-powered streaming delivers alerts in &lt;5 seconds. Triage instantly with one-click actions.
+  1200→          </p>
+  1201→        </div>
+  1202→        
+  1203→        {/* Alert Controls */}
+  1204→        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+  1205→          <div className="flex items-center gap-2">
+  1206→            <span className="flex items-center gap-2 text-sm text-muted-foreground">
+  1207→              <span className="w-2 h-2 rounded-full bg-emerald-500 pulse-dot" />
+  1208→              Live Streaming Active
+  1209→            </span>
+  1210→          </div>
+  1211→          <div className="flex items-center gap-2">
+  1212→            <Select value={filterSeverity} onValueChange={setFilterSeverity}>
+  1213→              <SelectTrigger className="w-36 bg-card/50 border-border/50">
+  1214→                <SelectValue placeholder="Severity" />
+  1215→              </SelectTrigger>
+  1216→              <SelectContent>
+  1217→                <SelectItem value="all">All Severities</SelectItem>
+  1218→                <SelectItem value="critical">Critical</SelectItem>
+  1219→                <SelectItem value="high">High</SelectItem>
+  1220→                <SelectItem value="medium">Medium</SelectItem>
+  1221→                <SelectItem value="low">Low</SelectItem>
+  1222→              </SelectContent>
+  1223→            </Select>
+  1224→            <Button variant="outline" size="sm" className="gap-2">
+  1225→              <RefreshCw className="w-4 h-4" />
+  1226→              Refresh
+  1227→            </Button>
+  1228→          </div>
+  1229→        </div>
+  1230→        
+  1231→        {/* Alerts List */}
+  1232→        <div className="space-y-3">
+  1233→          {filteredAlerts.map((alert) => {
+  1234→            const styles = getSeverityStyles(alert.severity)
+  1235→            const timeAgo = formatTimeAgo(alert.timestamp)
+  1236→            
+  1237→            return (
+  1238→              <Card 
+  1239→                key={alert.id} 
+  1240→                className={`glass border-border/50 transition-all hover:border-border ${
+  1241→                  !alert.acknowledged ? 'ring-1 ring-rose-500/20' : 'opacity-75'
+  1242→                }`}
+  1243→              >
+  1244→                <CardContent className="p-4">
+  1245→                  <div className="flex items-start gap-4">
+  1246→                    <div className={`mt-1 w-3 h-3 rounded-full ${styles.dot} ${!alert.acknowledged ? 'pulse-dot' : ''}`} />
+  1247→                    
+  1248→                    <div className="flex-1 min-w-0">
+  1249→                      <div className="flex items-center gap-2 mb-1 flex-wrap">
+  1250→                        <Badge variant="outline" className={`text-xs ${styles.badge}`}>
+  1251→                          {alert.severity.toUpperCase()}
+  1252→                        </Badge>
+  1253→                        <span className="font-medium">{alert.supplier}</span>
+  1254→                        <span className="text-xs text-muted-foreground">· {alert.type}</span>
+  1255→                      </div>
+  1256→                      <p className="text-sm text-muted-foreground mb-2">{alert.message}</p>
+  1257→                      <span className="text-xs text-muted-foreground">{timeAgo}</span>
+  1258→                    </div>
+  1259→                    
+  1260→                    {!alert.acknowledged && (
+  1261→                      <Button
+  1262→                        variant="outline"
+  1263→                        size="sm"
+  1264→                        onClick={() => acknowledgeAlert(alert.id)}
+  1265→                        className="shrink-0"
+  1266→                      >
+  1267→                        <CheckCircle2 className="w-4 h-4 mr-1" />
+  1268→                        Acknowledge
+  1269→                      </Button>
+  1270→                    )}
+  1271→                  </div>
+  1272→                </CardContent>
+  1273→              </Card>
+  1274→            )
+  1275→          })}
+  1276→        </div>
+  1277→        
+  1278→        {filteredAlerts.length === 0 && (
+  1279→          <Card className="glass border-border/50">
+  1280→            <CardContent className="p-12 text-center">
+  1281→              <CheckCircle2 className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+  1282→              <h3 className="text-lg font-medium mb-2">No Alerts Match Your Filters</h3>
+  1283→              <p className="text-sm text-muted-foreground">Try adjusting your severity filter to see more alerts.</p>
+  1284→            </CardContent>
+  1285→          </Card>
+  1286→        )}
+  1287→      </div>
+  1288→    </section>
+  1289→  )
+  1290→}
+  1291→
+  1292→// Helper function for time formatting
+  1293→function formatTimeAgo(date: Date): string {
+  1294→  const seconds = Math.floor((Date.now() - date.getTime()) / 1000)
+  1295→  
+  1296→  if (seconds < 60) return `${seconds}s ago`
+  1297→  if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`
+  1298→  if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`
+  1299→  return `${Math.floor(seconds / 86400)}d ago`
+  1300→}
+  1301→
+  1302→// ============================================
+  1303→// COMPLIANCE TRACKER SECTION
+  1304→// ============================================
+  1305→
+  1306→function ComplianceSection() {
+  1307→  return (
+  1308→    <section id="compliance" className="py-20 relative">
+  1309→      <div className="absolute inset-0 grid-bg opacity-30" />
+  1310→      
+  1311→      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  1312→        {/* Section Header */}
+  1313→        <div className="text-center mb-12">
+  1314→          <Badge variant="secondary" className="mb-4 bg-emerald-500/10 text-emerald-400 border-emerald-500/20">
+  1315→            <Lock className="w-3.5 h-3.5 mr-2" />
+  1316→            Compliance Command Center
+  1317→          </Badge>
+  1318→          <h2 className="text-3xl sm:text-4xl font-bold mb-4">Six Frameworks. One Dashboard.</h2>
+  1319→          <p className="text-muted-foreground max-w-2xl mx-auto">
+  1320→            UFLPA, EUDR, CSDDD, SOX, GDPR, REACH — tracked in parallel with automated gap analyses.
+  1321→          </p>
+  1322→        </div>
+  1323→        
+  1324→        {/* Compliance Table */}
+  1325→        <Card className="glass border-border/50 mb-8">
+  1326→          <CardContent className="p-0">
+  1327→            <Table>
+  1328→              <TableHeader>
+  1329→                <TableRow className="border-border/30 hover:bg-transparent">
+  1330→                  <TableHead>Framework</TableHead>
+  1331→                  <TableHead>Compliance Score</TableHead>
+  1332→                  <TableHead>Status</TableHead>
+  1333→                  <TableHead>Last Audit</TableHead>
+  1334→                  <TableHead>Progress</TableHead>
+  1335→                </TableRow>
+  1336→              </TableHeader>
+  1337→              <TableBody>
+  1338→                {complianceData.map((item, i) => (
+  1339→                  <TableRow key={i} className="border-border/20">
+  1340→                    <TableCell className="font-medium">{item.framework}</TableCell>
+  1341→                    <TableCell>
+  1342→                      <span className={`font-mono font-semibold ${
+  1343→                        item.score >= 95 ? 'text-emerald-400' : 
+  1344→                        item.score >= 85 ? 'text-amber-400' : 'text-rose-400'
+  1345→                      }`}>
+  1346→                        {item.score}%
+  1347→                      </span>
+  1348→                    </TableCell>
+  1349→                    <TableCell>
+  1350→                      <Badge variant="outline" className={
+  1351→                        item.status === 'compliant' 
+  1352→                          ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30'
+  1353→                          : 'bg-amber-500/15 text-amber-400 border-amber-500/30'
+  1354→                      }>
+  1355→                        {item.status === 'compliant' ? 'Compliant' : 'Review Needed'}
+  1356→                      </Badge>
+  1357→                    </TableCell>
+  1358→                    <TableCell className="text-muted-foreground font-mono text-sm">
+  1359→                      {item.lastAudit}
+  1360→                    </TableCell>
+  1361→                    <TableCell className="w-32">
+  1362→                      <Progress value={item.score} className="h-2" />
+  1363→                    </TableCell>
+  1364→                  </TableRow>
+  1365→                ))}
+  1366→              </TableBody>
+  1367→            </Table>
+  1368→          </CardContent>
+  1369→        </Card>
+  1370→        
+  1371→        {/* Compliance Summary */}
+  1372→        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+  1373→          <Card className="glass border-border/50">
+  1374→            <CardContent className="p-6 text-center">
+  1375→              <div className="text-4xl font-bold gradient-text mb-2">94.2%</div>
+  1376→              <div className="text-sm text-muted-foreground">Average Compliance Score</div>
+  1377→            </CardContent>
+  1378→          </Card>
+  1379→          <Card className="glass border-border/50">
+  1380→            <CardContent className="p-6 text-center">
+  1381→              <div className="text-4xl font-bold text-emerald-400 mb-2">4/6</div>
+  1382→              <div className="text-sm text-muted-foreground">Fully Compliant</div>
+  1383→            </CardContent>
+  1384→          </Card>
+  1385→          <Card className="glass border-border/50">
+  1386→            <CardContent className="p-6 text-center">
+  1387→              <div className="text-4xl font-bold text-amber-400 mb-2">2</div>
+  1388→              <div className="text-sm text-muted-foreground">Need Attention</div>
+  1389→            </CardContent>
+  1390→          </Card>
+  1391→        </div>
+  1392→      </div>
+  1393→    </section>
+  1394→  )
+  1395→}
+  1396→
+  1397→// ============================================
+  1398→// AI ADVISOR CHATBOT SECTION
+  1399→// ============================================
+  1400→
+  1401→function AdvisorSection() {
+  1402→  const [messages, setMessages] = useState<ChatMessage[]>([
+  1403→    {
+  1404→      id: '1',
+  1405→      role: 'assistant',
+  1406→      content: 'Hello! I\'m your AI Supply Chain Risk Advisor. I can help you analyze supplier risks, forecast demand, check compliance status, and identify potential disruptions. What would you like to know?',
+  1407→      timestamp: new Date()
+  1408→    }
+  1409→  ])
+  1410→  const [input, setInput] = useState('')
+  1411→  const [isTyping, setIsTyping] = useState(false)
+  1412→  const messagesEndRef = useRef<HTMLDivElement>(null)
+  1413→  
+  1414→  const scrollToBottom = () => {
+  1415→    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  1416→  }
+  1417→  
+  1418→  useEffect(() => {
+  1419→    scrollToBottom()
+  1420→  }, [messages])
+  1421→  
+  1422→  const sendMessage = async (content?: string) => {
+  1423→    const messageText = content || input.trim()
+  1424→    if (!messageText) return
+  1425→    
+  1426→    const userMessage: ChatMessage = {
+  1427→      id: Date.now().toString(),
+  1428→      role: 'user',
+  1429→      content: messageText,
+  1430→      timestamp: new Date()
+  1431→    }
+  1432→    
+  1433→    setMessages(prev => [...prev, userMessage])
+  1434→    setInput('')
+  1435→    setIsTyping(true)
+  1436→    
+  1437→    // Simulate AI response
+  1438→    setTimeout(() => {
+  1439→      const aiResponse: ChatMessage = {
+  1440→        id: (Date.now() + 1).toString(),
+  1441→        role: 'assistant',
+  1442→        content: generateAIResponse(messageText),
+  1443→        timestamp: new Date()
+  1444→      }
+  1445→      setMessages(prev => [...prev, aiResponse])
+  1446→      setIsTyping(false)
+  1447→    }, 1500)
+  1448→  }
+  1449→  
+  1450→  const generateAIResponse = (query: string): string => {
+  1451→    const q = query.toLowerCase()
+  1452→    
+  1453→    if (q.includes('tier-2') || q.includes('tier 2')) {
+  1454→      return `Based on current data, **PrecisionParts Vietnam** shows the highest risk increase among Tier-2 suppliers this month (+0.12 points). Key drivers:\n\n• Lead time variance increased 45%\n• Financial health score declined 8 points\n• New environmental regulation exposure\n\nRecommendation: Schedule a supplier review meeting and activate backup sourcing options.`
+  1455→    }
+  1456→    
+  1457→    if (q.includes('demand') || q.includes('forecast')) {
+  1458→      return `Here's the **Q4 2025 demand outlook**:\n\n📈 **Overall Trend**: +3.2% WoW growth expected\n📦 **Peak Volume**: Week 12 at ~1,700 units\n🎯 **Confidence**: 94.8% model accuracy (MAPE)\n\n**Top 3 SKUs by growth:**\n1. Electronic Components (+8.2%)\n2. Precision Parts (+5.1%)\n3. Raw Materials (+2.8%)\n\nWould you like me to drill into any specific product line?`
+  1459→    }
+  1460→    
+  1461→    if (q.includes('compliance') || q.includes('gap')) {
+  1462→      return `**Current Compliance Status:**\n\n✅ **Fully Compliant (4/6)**:\n• UFLPA: 94%\n• CSDDD: 91%\n• SOX: 98%\n• GDPR: 96%\n\n⚠️ **Needs Review (2/6)**:\n• **EUDR**: 87% - Deforestation documentation pending\n• **REACH**: 89% - Chemical reporting update required\n\n**Recommended Actions:**\n1. Prioritize EUDR documentation collection (deadline: 14 days)\n2. Schedule REACH compliance review with legal team`
+  1463→    }
+  1464→    
+  1465→    if (q.includes('asia') || q.includes('apac') || q.includes('single-source')) {
+  1466→      return `**Asia-Pacific Single-Source Analysis:**\n\n🔴 **Critical Dependencies Identified:**\n\n1. **Semiconductors** - TechComponents Ltd (Taiwan)\n   • 78% of semiconductor sourcing\n   • Risk Score: 0.12 (LOW but concentrated)\n\n2. **Displays** - KoreaDisplay Co (South Korea)\n   • 65% of display components\n   • Risk Score: 0.19 (LOW)\n\n3. **Electronics Assembly** - Shanghai Electronics\n   • 52% of assembly capacity\n   • Risk Score: 0.67 (⚠️ HIGH)\n\n**Recommendation**: Diversify Shanghai Electronics dependency immediately. I've identified 3 qualified alternatives in Vietnam and Mexico.`
+  1467→    }
+  1468→    
+  1469→    return `I understand you're asking about "${query}". Let me analyze that for you.\n\nBased on our supply chain intelligence platform, I can provide insights on:\n\n• 📊 **Risk Analysis** - Supplier scores, trends, SHAP explanations\n• 📈 **Demand Forecasting** - 90-day projections with confidence bands\n• 🔒 **Compliance Status** - All 6 regulatory frameworks\n• 🌍 **Geopolitical Risks** - Trade policy, sanctions, regional stability\n• 🏭 **Operational Metrics** - OTD, lead times, quality scores\n\nCould you be more specific about what aspect you'd like to explore?`
+  1470→  }
+  1471→  
+  1472→  const handleKeyPress = (e: React.KeyboardEvent) => {
+  1473→    if (e.key === 'Enter' && !e.shiftKey) {
+  1474→      e.preventDefault()
+  1475→      sendMessage()
+  1476→    }
+  1477→  }
+  1478→  
+  1479→  return (
+  1480→    <section id="advisor" className="py-20 relative">
+  1481→      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+  1482→        {/* Section Header */}
+  1483→        <div className="text-center mb-12">
+  1484→          <Badge variant="secondary" className="mb-4 bg-violet-500/10 text-violet-400 border-violet-500/20">
+  1485→            <Bot className="w-3.5 h-3.5 mr-2" />
+  1486→            AI Risk Advisor
+  1487→          </Badge>
+  1488→          <h2 className="text-3xl sm:text-4xl font-bold mb-4">An Advisor That Never Sleeps</h2>
+  1489→          <p className="text-muted-foreground max-w-2xl mx-auto">
+  1490→            Ask questions in plain language. Get answers grounded in live supply chain data.
+  1491→          </p>
+  1492→        </div>
+  1493→        
+  1494→        {/* Chat Interface */}
+  1495→        <Card className="glass border-border/50 overflow-hidden">
+  1496→          {/* Messages */}
+  1497→          <div className="h-[400px] overflow-y-auto p-6 space-y-4">
+  1498→            {messages.map((message) => (
+  1499→              <div
+  1500→                key={message.id}
+  1501→                className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+  1502→              >
+  1503→                <div
+  1504→                  className={`max-w-[80%] rounded-2xl px-4 py-3 ${
+  1505→                    message.role === 'user'
+  1506→                      ? 'bg-primary/20 text-foreground border border-primary/30'
+  1507→                      : 'bg-white/[0.03] border border-border/50'
+  1508→                  }`}
+  1509→                >
+  1510→                  {message.role === 'assistant' && (
+  1511→                    <div className="flex items-center gap-2 mb-2">
+  1512→                      <Bot className="w-4 h-4 text-violet-400" />
+  1513→                      <span className="text-xs text-muted-foreground">AI Advisor</span>
+  1514→                    </div>
+  1515→                  )}
+  1516→                  <div className="text-sm whitespace-pre-wrap">{message.content}</div>
+  1517→                </div>
+  1518→              </div>
+  1519→            ))}
+  1520→            
+  1521→            {isTyping && (
+  1522→              <div className="flex justify-start">
+  1523→                <div className="bg-white/[0.03] border border-border/50 rounded-2xl px-4 py-3">
+  1524→                  <div className="flex items-center gap-2">
+  1525→                    <Bot className="w-4 h-4 text-violet-400" />
+  1526→                    <div className="flex gap-1">
+  1527→                      <span className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+  1528→                      <span className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+  1529→                      <span className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+  1530→                    </div>
+  1531→                  </div>
+  1532→                </div>
+  1533→              </div>
+  1534→            )}
+  1535→            <div ref={messagesEndRef} />
+  1536→          </div>
+  1537→          
+  1538→          {/* Suggested Questions */}
+  1539→          {messages.length <= 1 && (
+  1540→            <div className="px-6 pb-4">
+  1541→              <p className="text-xs text-muted-foreground mb-3">Try asking:</p>
+  1542→              <div className="flex flex-wrap gap-2">
+  1543→                {suggestedQuestions.map((question, i) => (
+  1544→                  <Button
+  1545→                    key={i}
+  1546→                    variant="outline"
+  1547→                    size="sm"
+  1548→                    className="text-xs h-auto py-1.5 px-3 border-border/50 hover:border-primary/30 hover:bg-primary/5"
+  1549→                    onClick={() => sendMessage(question)}
+  1550→                  >
+  1551→                    {question}
+  1552→                  </Button>
+  1553→                ))}
+  1554→              </div>
+  1555→            </div>
+  1556→          )}
+  1557→          
+  1558→          {/* Input */}
+  1559→          <div className="border-t border-border/30 p-4">
+  1560→            <div className="flex gap-2">
+  1561→              <Textarea
+  1562→                value={input}
+  1563→                onChange={(e) => setInput(e.target.value)}
+  1564→                onKeyDown={handleKeyPress}
+  1565→                placeholder="Ask about supplier risks, demand forecasts, compliance..."
+  1566→                className="flex-1 min-h-[44px] max-h-32 resize-none bg-card/50 border-border/50"
+  1567→                rows={1}
+  1568→              />
+  1569→              <Button
+  1570→                onClick={() => sendMessage()}
+  1571→                disabled={!input.trim() || isTyping}
+  1572→                className="bg-gradient-to-r from-violet-500 to-cyan-500 hover:from-violet-600 hover:to-cyan-600 text-white px-4"
+  1573→              >
+  1574→                <SendIcon className="w-4 h-4" />
+  1575→              </Button>
+  1576→            </div>
+  1577→          </div>
+  1578→        </Card>
+  1579→      </div>
+  1580→    </section>
+  1581→  )
+  1582→}
+  1583→
+  1584→// Send Icon Component
+  1585→function SendIcon({ className }: { className?: string }) {
+  1586→  return (
+  1587→    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  1588→      <line x1="22" y1="2" x2="11" y2="13"></line>
+  1589→      <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+  1590→    </svg>
+  1591→  )
+  1592→}
+  1593→
+  1594→// ============================================
+  1595→// ROADMAP SECTION
+  1596→// ============================================
+  1597→
+  1598→function RoadmapSection() {
+  1599→  return (
+  1600→    <section id="roadmap" className="py-20 relative">
+  1601→      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+  1602→        {/* Section Header */}
+  1603→        <div className="text-center mb-12">
+  1604→          <Badge variant="secondary" className="mb-4 bg-cyan-500/10 text-cyan-400 border-cyan-500/20">
+  1605→            <Clock className="w-3.5 h-3.5 mr-2" />
+  1606→            Development Roadmap
+  1607→          </Badge>
+  1608→          <h2 className="text-3xl sm:text-4xl font-bold mb-4">From Prototype to Production</h2>
+  1609→          <p className="text-muted-foreground max-w-2xl mx-auto">
+  1610→            Four phases of development transforming vision into an autonomous supply chain intelligence platform.
+  1611→          </p>
+  1612→        </div>
+  1613→        
+  1614→        {/* Timeline */}
+  1615→        <div className="relative">
+  1616→          {/* Timeline line */}
+  1617→          <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-emerald-500 via-cyan-500 to-violet-500 transform md:-translate-x-1/2" />
+  1618→          
+  1619→          <div className="space-y-12">
+  1620→            {roadmapData.map((milestone, index) => (
+  1621→              <div
+  1622→                key={index}
+  1623→                className={`relative flex flex-col md:flex-row items-start gap-8 ${
+  1624→                  index % 2 === 0 ? 'md:flex-row-reverse' : ''
+  1625→                }`}
+  1626→              >
+  1627→                {/* Timeline dot */}
+  1628→                <div className={`absolute left-8 md:left-1/2 w-4 h-4 rounded-full border-4 border-background transform -translate-x-1/2 z-10 ${
+  1629→                  milestone.status === 'completed' ? 'bg-emerald-500' :
+  1630→                  milestone.status === 'in-progress' ? 'bg-amber-500 pulse-dot' :
+  1631→                  'bg-muted-foreground'
+  1632→                }`} />
+  1633→                
+  1634→                {/* Content */}
+  1635→                <div className={`ml-16 md:ml-0 md:w-1/2 ${index % 2 === 0 ? 'md:text-right' : ''}`}>
+  1636→                  <Card className={`glass border-border/50 inline-block ${
+  1637→                    milestone.status === 'in-progress' ? 'animated-border' : ''
+  1638→                  }`}>
+  1639→                    <CardContent className="p-6">
+  1640→                      <div className="flex items-center gap-2 mb-2 flex-wrap" style={{ justifyContent: index % 2 === 0 ? 'flex-end' : 'flex-start' }}>
+  1641→                        <Badge variant="outline" className={
+  1642→                          milestone.status === 'completed' ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30' :
+  1643→                          milestone.status === 'in-progress' ? 'bg-amber-500/15 text-amber-400 border-amber-500/30' :
+  1644→                          'bg-muted-foreground/15 text-muted-foreground border-muted-foreground/30'
+  1645→                        }>
+  1646→                          {milestone.phase}
+  1647→                        </Badge>
+  1648→                        <Badge variant="secondary" className="text-xs">
+  1649→                          {milestone.date}
+  1650→                        </Badge>
+  1651→                      </div>
+  1652→                      <h3 className="text-xl font-bold mb-2">{milestone.title}</h3>
+  1653→                      <p className="text-sm text-muted-foreground mb-4">{milestone.description}</p>
+  1654→                      <ul className={`text-sm space-y-1 ${index % 2 === 0 ? 'md:text-right' : ''}`}>
+  1655→                        {milestone.items.map((item, i) => (
+  1656→                          <li key={i} className="flex items-center gap-2" style={{ justifyContent: index % 2 === 0 ? 'flex-end' : 'flex-start' }}>
+  1657→                            {milestone.status === 'completed' ? (
+  1658→                              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+  1659→                            ) : milestone.status === 'in-progress' ? (
+  1660→                              <div className="w-4 h-4 rounded-full border-2 border-amber-500 border-t-transparent animate-spin shrink-0" />
+  1661→                            ) : (
+  1662→                              <div className="w-4 h-4 rounded-full border-2 border-muted-foreground shrink-0" />
+  1663→                            )}
+  1664→                            <span className={milestone.status === 'completed' ? 'line-through text-muted-foreground' : ''}>
+  1665→                              {item}
+  1666→                            </span>
+  1667→                          </li>
+  1668→                        ))}
+  1669→                      </ul>
+  1670→                    </CardContent>
+  1671→                  </Card>
+  1672→                </div>
+  1673→                
+  1674→                {/* Spacer for opposite side */}
+  1675→                <div className="hidden md:block md:w-1/2" />
+  1676→              </div>
+  1677→            ))}
+  1678→          </div>
+  1679→        </div>
+  1680→      </div>
+  1681→    </section>
+  1682→  )
+  1683→}
+  1684→
+  1685→// ============================================
+  1686→// CONTACT FORM SECTION
+  1687→// ============================================
+  1688→
+  1689→function ContactSection() {
+  1690→  const [formData, setFormData] = useState({
+  1691→    name: '',
+  1692→    email: '',
+  1693→    organization: '',
+  1694→    interest: '',
+  1695→    message: ''
+  1696→  })
+  1697→  const [isSubmitting, setIsSubmitting] = useState(false)
+  1698→  const { toast } = useToast()
+  1699→  
+  1700→  const handleSubmit = async (e: React.FormEvent) => {
+  1701→    e.preventDefault()
+  1702→    setIsSubmitting(true)
+  1703→    
+  1704→    // Simulate form submission
+  1705→    await new Promise(resolve => setTimeout(resolve, 1500))
+  1706→    
+  1707→    toast({
+  1708→      title: "Demo Request Received! 🎉",
+  1709→      description: "We'll contact you within 24 hours to schedule your personalized demo.",
+  1710→    })
+  1711→    
+  1712→    setFormData({ name: '', email: '', organization: '', interest: '', message: '' })
+  1713→    setIsSubmitting(false)
+  1714→  }
+  1715→  
+  1716→  return (
+  1717→    <section id="contact" className="py-20 relative">
+  1718→      <div className="absolute top-20 right-10 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[120px]" />
+  1719→      <div className="absolute bottom-20 left-10 w-[400px] h-[400px] bg-violet-500/5 rounded-full blur-[120px]" />
+  1720→      
+  1721→      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+  1722→        {/* Section Header */}
+  1723→        <div className="text-center mb-12">
+  1724→          <Badge variant="secondary" className="mb-4 bg-primary/10 text-primary border-primary/20">
+  1725→            <MessageSquare className="w-3.5 h-3.5 mr-2" />
+  1726→            Get Started
+  1727→          </Badge>
+  1728→          <h2 className="text-3xl sm:text-4xl font-bold mb-4">Let's Build the Future Together</h2>
+  1729→          <p className="text-muted-foreground max-w-2xl mx-auto">
+  1730→            Request a personalized demo and see how explainable AI transforms supply chain risk management.
+  1731→          </p>
+  1732→        </div>
+  1733→        
+  1734→        <div className="grid lg:grid-cols-5 gap-8">
+  1735→          {/* Form */}
+  1736→          <div className="lg:col-span-3">
+  1737→            <Card className="glass border-border/50">
+  1738→              <CardContent className="p-8">
+  1739→                <form onSubmit={handleSubmit} className="space-y-6">
+  1740→                  <div className="grid sm:grid-cols-2 gap-4">
+  1741→                    <div className="space-y-2">
+  1742→                      <Label htmlFor="name">Full Name</Label>
+  1743→                      <Input
+  1744→                        id="name"
+  1745→                        placeholder="John Smith"
+  1746→                        value={formData.name}
+  1747→                        onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+  1748→                        required
+  1749→                        className="bg-card/50 border-border/50"
+  1750→                      />
+  1751→                    </div>
+  1752→                    <div className="space-y-2">
+  1753→                      <Label htmlFor="email">Email</Label>
+  1754→                      <Input
+  1755→                        id="email"
+  1756→                        type="email"
+  1757→                        placeholder="john@company.com"
+  1758→                        value={formData.email}
+  1759→                        onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+  1760→                        required
+  1761→                        className="bg-card/50 border-border/50"
+  1762→                      />
+  1763→                    </div>
+  1764→                  </div>
+  1765→                  
+  1766→                  <div className="grid sm:grid-cols-2 gap-4">
+  1767→                    <div className="space-y-2">
+  1768→                      <Label htmlFor="organization">Organization</Label>
+  1769→                      <Input
+  1770→                        id="organization"
+  1771→                        placeholder="Acme Corp"
+  1772→                        value={formData.organization}
+  1773→                        onChange={(e) => setFormData(prev => ({ ...prev, organization: e.target.value }))}
+  1774→                        className="bg-card/50 border-border/50"
+  1775→                      />
+  1776→                    </div>
+  1777→                    <div className="space-y-2">
+  1778→                      <Label htmlFor="interest">Interest</Label>
+  1779→                      <Select value={formData.interest} onValueChange={(value) => setFormData(prev => ({ ...prev, interest: value }))}>
+  1780→                        <SelectTrigger className="bg-card/50 border-border/50">
+  1781→                          <SelectValue placeholder="Select your interest" />
+  1782→                        </SelectTrigger>
+  1783→                        <SelectContent>
+  1784→                          <SelectItem value="enterprise">Enterprise License</SelectItem>
+  1785→                          <SelectItem value="investor">Investor Briefing</SelectItem>
+  1786→                          <SelectItem value="partnership">Partnership</SelectItem>
+  1787→                          <SelectItem value="technical">Technical Deep-Dive</SelectItem>
+  1788→                          <SelectItem value="other">Other</SelectItem>
+  1789→                        </SelectContent>
+  1790→                      </Select>
+  1791→                    </div>
+  1792→                  </div>
+  1793→                  
+  1794→                  <div className="space-y-2">
+  1795→                    <Label htmlFor="message">Message</Label>
+  1796→                    <Textarea
+  1797→                      id="message"
+  1798→                      placeholder="Tell us about your supply chain challenges..."
+  1799→                      rows={5}
+  1800→                      value={formData.message}
+  1801→                      onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
+  1802→                      className="bg-card/50 border-border/50 resize-none"
+  1803→                    />
+  1804→                  </div>
+  1805→                  
+  1806→                  <Button
+  1807→                    type="submit"
+  1808→                    disabled={isSubmitting}
+  1809→                    className="w-full bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white h-12"
+  1810→                  >
+  1811→                    {isSubmitting ? (
+  1812→                      <>
+  1813→                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2" />
+  1814→                        Submitting...
+  1815→                      </>
+  1816→                    ) : (
+  1817→                      <>
+  1818→                        Schedule Demo
+  1819→                        <ArrowRight className="ml-2 w-4 h-4" />
+  1820→                      </>
+  1821→                    )}
+  1822→                  </Button>
+  1823→                </form>
+  1824→              </CardContent>
+  1825→            </Card>
+  1826→          </div>
+  1827→          
+  1828→          {/* Info Sidebar */}
+  1829→          <div className="lg:col-span-2 space-y-6">
+  1830→            <Card className="glass border-border/50">
+  1831→              <CardContent className="p-6">
+  1832→                <h3 className="font-semibold mb-4 flex items-center gap-2">
+  1833→                  <Eye className="w-5 h-5 text-primary" />
+  1834→                  What You'll See
+  1835→                </h3>
+  1836→                <ul className="space-y-3">
+  1837→                  {[
+  1838→                    'Live Command Center with real-time KPIs',
+  1839→                    'SHAP-based explainable risk scoring',
+  1840→                    'WebSocket alert streaming',
+  1841→                    'AI-powered risk advisor chatbot',
+  1842→                    '90-day demand forecasting',
+  1843→                    'Multi-regulatory compliance tracking',
+  1844→                    'Model operations dashboard'
+  1845→                  ].map((item, i) => (
+  1846→                    <li key={i} className="flex items-start gap-3 text-sm">
+  1847→                      <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
+  1848→                      <span>{item}</span>
+  1849→                    </li>
+  1850→                  ))}
+  1851→                </ul>
+  1852→                <Separator className="my-4" />
+  1853→                <p className="text-xs text-muted-foreground">
+  1854→                  Duration: 30 minutes · Platform: Web-based · No installation required
+  1855→                </p>
+  1856→              </CardContent>
+  1857→            </Card>
+  1858→            
+  1859→            <Card className="glass border-border/50">
+  1860→              <CardContent className="p-6">
+  1861→                <h3 className="font-semibold mb-4">Direct Access</h3>
+  1862→                <div className="space-y-4">
+  1863→                  <div className="flex items-center gap-3">
+  1864→                    <div className="p-2 rounded-lg bg-emerald-500/10">
+  1865→                      <MessageSquare className="w-4 h-4 text-emerald-400" />
+  1866→                    </div>
+  1867→                    <div>
+  1868→                      <div className="text-sm font-medium">Email</div>
+  1869→                      <div className="text-xs text-muted-foreground">partnerships@aisupplychain.ai</div>
+  1870→                    </div>
+  1871→                  </div>
+  1872→                  <div className="flex items-center gap-3">
+  1873→                    <div className="p-2 rounded-lg bg-cyan-500/10">
+  1874→                      <Users className="w-4 h-4 text-cyan-400" />
+  1875→                    </div>
+  1876→                    <div>
+  1877→                      <div className="text-sm font-medium">LinkedIn</div>
+  1878→                      <div className="text-xs text-muted-foreground">Connect for updates</div>
+  1879→                    </div>
+  1880→                  </div>
+  1881→                  <div className="flex items-center gap-3">
+  1882→                    <div className="p-2 rounded-lg bg-violet-500/10">
+  1883→                      <Github className="w-4 h-4 text-violet-400" />
+  1884→                    </div>
+  1885→                    <div>
+  1886→                      <div className="text-sm font-medium">GitHub</div>
+  1887→                      <div className="text-xs text-muted-foreground">View technical blog</div>
+  1888→                    </div>
+  1889→                  </div>
+  1890→                </div>
+  1891→              </CardContent>
+  1892→            </Card>
+  1893→          </div>
+  1894→        </div>
+  1895→      </div>
+  1896→    </section>
+  1897→  )
+  1898→}
+  1899→
+  1900→// GitHub Icon
+  1901→function Github({ className }: { className?: string }) {
+  1902→  return (
+  1903→    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+  1904→      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+  1905→    </svg>
+  1906→  )
+  1907→}
+  1908→
+  1909→// ============================================
+  1910→// FOOTER COMPONENT
+  1911→// ============================================
+  1912→
+  1913→function Footer() {
+  1914→  return (
+  1915→    <footer className="border-t border-border/30 py-12">
+  1916→      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  1917→        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+  1918→          <div className="flex items-center gap-3">
+  1919→            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center font-bold text-xs text-background">
+  1920→              SC
+  1921→            </div>
+  1922→            <span className="font-medium">AI Supply Chain Risk Predictor</span>
+  1923→          </div>
+  1924→          
+  1925→          <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground">
+  1926→            <a href="#home" className="hover:text-foreground transition-colors">Home</a>
+  1927→            <a href="#dashboard" className="hover:text-foreground transition-colors">Dashboard</a>
+  1928→            <a href="#suppliers" className="hover:text-foreground transition-colors">Suppliers</a>
+  1929→            <a href="#forecasting" className="hover:text-foreground transition-colors">Forecasting</a>
+  1930→            <a href="#contact" className="hover:text-foreground transition-colors">Contact</a>
+  1931→          </div>
+  1932→          
+  1933→          <div className="text-sm text-muted-foreground text-center md:text-right">
+  1934→            © 2025 AI Supply Chain Risk Predictor. All rights reserved.
+  1935→          </div>
+  1936→        </div>
+  1937→        
+  1938→        <Separator className="my-6" />
+  1939→        
+  1940→        <div className="text-center text-xs text-muted-foreground">
+  1941→          Built with Next.js 16, TypeScript, Tailwind CSS 4, shadcn/ui, Recharts
+  1942→        </div>
+  1943→      </div>
+  1944→    </footer>
+  1945→  )
+  1946→}
+  1947→
+  1948→// ============================================
+  1949→// MAIN PAGE COMPONENT
+  1950→// ============================================
+  1951→
+  1952→export default function Home() {
+  1953→  const [activeSection, setActiveSection] = useState('home')
+  1954→  
+  1955→  // Intersection Observer for scroll spy
+  1956→  useEffect(() => {
+  1957→    const observer = new IntersectionObserver(
+  1958→      (entries) => {
+  1959→        entries.forEach(entry => {
+  1960→          if (entry.isIntersecting) {
+  1961→            setActiveSection(entry.target.id)
+  1962→          }
+  1963→        })
+  1964→      },
+  1965→      { threshold: 0.3 }
+  1966→    )
+  1967→    
+  1968→    const sections = document.querySelectorAll('section[id]')
+  1969→    sections.forEach(section => observer.observe(section))
+  1970→    
+  1971→    return () => observer.disconnect()
+  1972→  }, [])
+  1973→  
+  1974→  return (
+  1975→    <main className="min-h-screen relative">
+  1976→      {/* Particle Background */}
+  1977→      <ParticleCanvas />
+  1978→      
+  1979→      {/* Grid Background */}
+  1980→      <div className="fixed inset-0 grid-bg opacity-30 pointer-events-none z-0" />
+  1981→      
+  1982→      {/* Navigation */}
+  1983→      <Navigation activeSection={activeSection} setActiveSection={setActiveSection} />
+  1984→      
+  1985→      {/* Main Content */}
+  1986→      <div className="relative z-10">
+  1987→        <HeroSection />
+  1988→        <DashboardSection />
+  1989→        <SupplierSection />
+  1990→        <ForecastingSection />
+  1991→        <AlertsSection />
+  1992→        <ComplianceSection />
+  1993→        <AdvisorSection />
+  1994→        <RoadmapSection />
+  1995→        <ContactSection />
+  1996→        <Footer />
+  1997→      </div>
+  1998→    </main>
+  1999→  )
+  2000→}
+
+[showing lines 1-2000 of 2001; use offset=2001 with limit to continue reading]
