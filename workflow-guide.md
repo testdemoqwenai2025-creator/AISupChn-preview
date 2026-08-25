@@ -80,6 +80,40 @@ git push origin main
 
 ---
 
+## ⛔ PREVIEW SOURCE RULE (EXCEPTIONALLY IMPORTANT)
+
+### ✅ **ONLY GITHUB PAGES FOR PREVIEWS**
+
+```
+ALLOWED PREVIEW URL:
+┌─────────────────────────────────────────────────────────────┐
+│ https://testdemoqwenai2025-creator.github.io/Demo2AISupChn/ │
+│                                                             │
+│ • This is the ONLY valid preview source                     │
+│ • No exceptions, no alternatives                            │
+│ • All previews must come from GitHub Pages                  │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### ❌ **FORBIDDEN SERVICES (NEVER USE)**
+
+| Service | URL Pattern | Status |
+|---------|-------------|--------|
+| jsDelivr CDN | `cdn.jsdelivr.net/...` | ❌ **FORBIDDEN** |
+| raw.githack | `raw.githack.com/...` | ❌ **FORBIDDEN** |
+| GitHub Raw | `raw.githubusercontent.com/...` | ❌ **FORBIDDEN** |
+| Any external CDN | `*.cloudflare.com/*` etc. | ❌ **FORBIDDEN** |
+
+### 📋 **RULE SUMMARY**
+
+> **"Previews come from GitHub Pages and NOWHERE ELSE"**
+
+- ✅ **ALWAYS** provide: `https://testdemoqwenai2025-creator.github.io/Demo2AISupChn/`
+- ❌ **NEVER** provide: External CDN URLs, raw file links, alternative services
+- ⚠️ **NO EXCEPTIONS**: Even if GitHub Pages is slow, wait for it - do not use alternatives
+
+---
+
 ## 📁 Current Sandbox Structure
 
 ```
