@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roadmap — AI Supply Chain Risk Predictor</title>
+  <meta name="description" content="Our strategic execution plan across four sprints — from seeded prototype data to live web-integrated intelligence, real ML models, and autonomous supply chain operations.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <canvas id="particle-canvas"></canvas>
+  <div class="grid-lines"></div>
+
+  <!-- NAVIGATION -->
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">
+      <div class="brand-icon">SC</div>
+      <span>AI Supply Chain</span>
+    </a>
+    <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="vision.html">Vision</a></li>
+      <li><a href="platform.html">Platform</a></li>
+      <li><a href="intelligence.html">Intelligence</a></li>
+      <li><a href="ma-matching.html">M&amp;A</a></li>
+      <li><a href="roadmap.html" class="active">Roadmap</a></li>
+      <li><a href="contact.html" class="nav-cta">Get Started</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero reveal">
+    <div class="orb orb-emerald" style="width:600px;height:600px;top:-200px;right:-150px;"></div>
+    <div class="orb orb-amber" style="width:400px;height:400px;bottom:-150px;left:-100px;"></div>
+    <span class="hero-tag reveal">Roadmap</span>
+    <h1>From Prototype to Production</h1>
+    <p class="reveal">Our strategic execution plan spans four focused sprints, each building on the last to transform a seeded-data demonstration into a live, web-integrated intelligence platform. Every sprint replaces simulated inputs with real-world signals — from news sentiment to trade flows to financial filings — until the platform operates on the same data landscape that actual supply chain disruptions emerge from.</p>
+  </section>
+
+  <!-- EXECUTION PLAN -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <div class="section-label">Execution Plan</div>
+        <h2 class="section-title">Four Sprints to Production-Grade Intelligence</h2>
+        <p>A phased approach that progressively replaces simulated data with real-world web data sources. Each sprint delivers a demonstrable milestone — from the current investor-ready prototype to a fully autonomous, self-healing supply chain intelligence system powered by the internet itself.</p>
+      </div>
+
+      <!-- TIMELINE -->
+      <div class="timeline">
+
+        <!-- Phase 1 -->
+        <div class="timeline-item reveal">
+          <div class="timeline-dot active"></div>
+          <div class="timeline-content">
+            <span class="phase">Sprint 1 — Complete</span>
+            <h3>Foundation &amp; Seed Data</h3>
+            <p>This is the platform as it exists today — a fully functional Next.js 16 application with eight integrated views, a SQLite database managed through Prisma ORM, real-time WebSocket-powered risk alerts, and an AI chat advisor capable of contextual Q&amp;A about supply chain risk. The system is seeded with 15 diverse suppliers spanning electronics, chemicals, textiles, and raw materials, 80 historical risk events across geopolitical, financial, environmental, and operational categories, and 450 demand forecast records covering multiple product lines and time horizons.</p>
+            <p>Every view is interactive and cross-linked: the Command Center aggregates KPIs, the Supplier Intelligence module profiles each vendor with risk scoring, the Risk Intelligence engine classifies and explains threats, the Demand Forecast view projects future procurement needs, the Alert Hub streams real-time notifications, the Compliance Tracker maps regulatory obligations, the AI Advisor answers natural-language questions, and MLOps monitors model health. This is what investors see today — a convincing, data-rich prototype that proves the architecture, the user experience, and the analytical depth of the final product.</p>
+          </div>
+        </div>
+
+        <!-- Phase 2 -->
+        <div class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="phase">Sprint 2 — Next</span>
+            <h3>Live Data Integration</h3>
+            <p>The critical transition from demonstration to production begins by connecting real free-tier data sources that replace every seeded record with live signals from the open internet. NewsAPI provides global news sentiment analysis in multiple languages, extracting real-time risk signals from thousands of articles daily. The GDELT Project monitors events across 300+ categories worldwide, offering early warning on political instability, labor disputes, and regulatory changes before they escalate into supply disruptions.</p>
+            <p>World Bank Worldwide Governance Indicators supply institutional quality metrics for 200+ countries, giving the platform a grounded understanding of regulatory environments, corruption risk, and government effectiveness in every supplier's operating region. Yahoo Finance delivers real-time stock prices, market capitalization, and financial ratios for publicly traded suppliers, enabling genuine financial health assessment instead of simulated balance sheets. Together, these four APIs form the first layer of a live data mesh, with ETL pipelines that ingest, normalize, and store incoming signals in the existing SQLite database, making the transition seamless for all downstream analytics and ML features.</p>
+          </div>
+        </div>
+
+        <!-- Phase 3 -->
+        <div class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="phase">Sprint 3 — Planned</span>
+            <h3>ML Pipeline &amp; XGBoost Training</h3>
+            <p>With live data flowing into the platform, Sprint 3 activates the machine learning pipeline that transforms raw signals into predictive intelligence. Real XGBoost ensemble models are trained on the collected feature data — news sentiment scores, GDELT event counts, governance indicator values, financial ratios, and supplier metadata — replacing the simulated 90.6% AUC metrics with genuine model performance measured against actual outcomes. Optuna hyperparameter optimization automates the search for the best model configuration across hundreds of parameter combinations, using Bayesian search strategies that converge on optimal settings far faster than manual tuning.</p>
+            <p>SHAP explainability integration ensures every prediction can be decomposed into its driving factors, maintaining the transparency that enterprise stakeholders require for trust and regulatory compliance. Population Stability Index drift detection monitors each feature's distribution over time, triggering automated retraining when the statistical properties of incoming data shift beyond acceptable thresholds. This sprint transforms the platform from a data dashboard with impressive visualizations into a genuine predictive engine whose outputs are grounded in real statistical evidence and whose reliability can be measured, monitored, and improved continuously.</p>
+          </div>
+        </div>
+
+        <!-- Phase 4 -->
+        <div class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="phase">Sprint 4 — Future</span>
+            <h3>Advanced Intelligence</h3>
+            <p>The fourth sprint dramatically expands the platform's data horizons by integrating deep, domain-specific sources that most supply chain tools never access. SEC EDGAR filing analysis parses 10-K, 10-Q, and 8-K reports from publicly listed suppliers, extracting textual risk factors, management discussion signals, and financial statement data through NLP pipelines that detect deteriorating conditions months before they appear in stock price movements. UN Comtrade international trade flow data maps the physical dependencies between countries, revealing hidden concentration risks — for example, when 68% of a critical raw material flows through a single port or border crossing.</p>
+            <p>ACLED armed conflict event data provides granular, subnational conflict monitoring that quantifies geopolitical risk at the precise geographic level where a supplier's factories operate, rather than relying on country-level averages that obscure regional variations. Satellite imagery integration, accessed through open APIs like Copernicus and Landsat, enables monitoring of supplier facilities, port congestion, and infrastructure disruptions from orbit — detecting flooding, fires, or construction delays that ground-based sensors miss. Automated compliance checking cross-references supplier activities against evolving trade regulations, sanctions lists, and environmental standards. Digital twin simulations model the cascading effects of a disruption across the entire supply network, enabling what-if analysis that quantifies the downstream impact of losing any single node.</p>
+          </div>
+        </div>
+
+        <!-- Phase 5 -->
+        <div class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="phase">Sprint 5 — Vision</span>
+            <h3>Autonomous Operations</h3>
+            <p>The final phase represents the long-term vision: a supply chain intelligence platform that not only predicts disruptions but autonomously responds to them. Self-healing supply chain capabilities enable the system to detect an emerging disruption, evaluate the severity and scope of its potential impact, and automatically activate pre-approved contingency plans — rerouting orders to backup suppliers, adjusting safety stock levels, or triggering alternative logistics arrangements — all before a human operator has finished reading the alert notification.</p>
+            <p>Predictive geopolitical intelligence synthesizes signals from every integrated data source to forecast instability windows weeks or months in advance, identifying the compound effects that individual signals mask — when declining governance indicators, rising conflict events, and tightening financial conditions converge on a single supplier region, the platform flags it as a systemic risk cluster rather than three isolated data points. Cognitive compliance continuously monitors regulatory landscapes across all operating jurisdictions, proactively identifying upcoming regulatory changes and recommending compliance adjustments before mandates take effect. This is the path to the zero-surprise supply chain: not a promise that disruptions will never happen, but a guarantee that no disruption will arrive without warning, without context, and without a plan already in motion.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- DATA SOURCES -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <div class="section-label">Data Sources</div>
+        <h2 class="section-title">The World Wide Web as Backend</h2>
+        <p>The internet is the largest sensor network ever created. Every news article, government filing, trade manifest, and financial report is a signal about the state of global supply chains. By connecting to open and free-tier APIs, we transform the web into the platform's real-time data backbone — replacing simulated demonstrations with the same information landscape that actual supply chain professionals monitor, just aggregated and analyzed at machine speed and scale.</p>
+      </div>
+
+      <div class="tech-grid">
+
+        <div class="tech-card reveal">
+          <div class="tech-card-icon amber">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>
+          </div>
+          <h3>NewsAPI</h3>
+          <p>Global news sentiment analysis across 15+ languages, processing thousands of articles daily to extract real-time risk signals. Natural language processing identifies supplier mentions, disruption keywords, and sentiment shifts that precede measurable supply chain impacts by days or weeks.</p>
+        </div>
+
+        <div class="tech-card reveal">
+          <div class="tech-card-icon rose">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <h3>GDELT</h3>
+          <p>Global event monitoring across 300+ categories updated every 15 minutes, tracking political instability, labor disputes, regulatory changes, and social unrest. The world's most comprehensive event database provides early warning on disruptions that traditional monitoring misses entirely.</p>
+        </div>
+
+        <div class="tech-card reveal">
+          <div class="tech-card-icon emerald">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M3 7v1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7H3l2-4h14l2 4"/><path d="M5 21V10.85"/><path d="M19 21V10.85"/><path d="M9 21v-4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v4"/></svg>
+          </div>
+          <h3>World Bank WGI</h3>
+          <p>Governance indicators for 200+ countries covering voice and accountability, political stability, government effectiveness, regulatory quality, rule of law, and control of corruption. These six aggregate indicators ground every supplier risk assessment in measurable institutional quality metrics.</p>
+        </div>
+
+        <div class="tech-card reveal">
+          <div class="tech-card-icon amber">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <h3>SEC EDGAR</h3>
+          <p>Public company financial filings including 10-K annual reports, 10-Q quarterly filings, and 8-K current reports. NLP pipelines extract risk factor disclosures, management discussion sentiment, and financial statement data to detect deteriorating supplier health months before stock price movements reflect the underlying issues.</p>
+        </div>
+
+        <div class="tech-card reveal">
+          <div class="tech-card-icon rose">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </div>
+          <h3>UN Comtrade</h3>
+          <p>International trade flow data covering the bilateral trade relationships between every country and every commodity category. Dependency mapping reveals hidden concentration risks — when a critical component flows through a single trade corridor, the platform quantifies the exposure and identifies diversification opportunities before a disruption occurs.</p>
+        </div>
+
+        <div class="tech-card reveal">
+          <div class="tech-card-icon emerald">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>ACLED</h3>
+          <p>Armed conflict event and demonstration data at subnational granularity, covering every country with daily updates. Geopolitical risk quantification moves beyond country-level averages to assess the precise threat level at the location of each supplier's facilities, warehouses, and logistics hubs.</p>
+        </div>
+
+        <div class="tech-card reveal">
+          <div class="tech-card-icon amber">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          </div>
+          <h3>Yahoo Finance</h3>
+          <p>Real-time stock prices, market capitalization, and financial ratios for publicly listed suppliers. The platform monitors current ratio, debt-to-equity, operating margin, and revenue trends as leading indicators of financial distress, generating supplier health scores grounded in observable market data rather than self-reported assessments.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- MLOPS FEEDBACK LOOP -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <div class="section-label">MLOps Feedback Loop</div>
+        <h2 class="section-title">Continuous Learning Architecture</h2>
+      </div>
+
+      <div class="glass-card animated-border reveal">
+        <div class="card-inner">
+          <div class="mlops-loop">
+            <div class="mlops-stage">
+              <div class="mlops-stage-icon emerald">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+              </div>
+              <span class="mlops-stage-label">Data Collection</span>
+            </div>
+            <div class="mlops-arrow">→</div>
+            <div class="mlops-stage">
+              <div class="mlops-stage-icon amber">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+              </div>
+              <span class="mlops-stage-label">Feature Engineering</span>
+            </div>
+            <div class="mlops-arrow">→</div>
+            <div class="mlops-stage">
+              <div class="mlops-stage-icon rose">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+              </div>
+              <span class="mlops-stage-label">Model Training</span>
+            </div>
+            <div class="mlops-arrow">→</div>
+            <div class="mlops-stage">
+              <div class="mlops-stage-icon emerald">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+              </div>
+              <span class="mlops-stage-label">Deployment</span>
+            </div>
+            <div class="mlops-arrow">→</div>
+            <div class="mlops-stage">
+              <div class="mlops-stage-icon amber">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              </div>
+              <span class="mlops-stage-label">Monitoring</span>
+            </div>
+            <div class="mlops-arrow">→</div>
+            <div class="mlops-stage">
+              <div class="mlops-stage-icon rose">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </div>
+              <span class="mlops-stage-label">Drift Detection</span>
+            </div>
+            <div class="mlops-arrow">→</div>
+            <div class="mlops-stage">
+              <div class="mlops-stage-icon emerald">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              </div>
+              <span class="mlops-stage-label">Retraining</span>
+            </div>
+            <div class="mlops-arrow mlops-arrow-loop">↺</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEXT PHASE -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <div class="section-label">Next Phase</div>
+        <h2 class="section-title">What We Are Building Right Now</h2>
+      </div>
+
+      <div class="animated-border reveal">
+        <div class="card-inner">
+          <h3 style="font-size:1.5rem;font-weight:700;margin-bottom:1rem;">Sprint 2: Live Data Integration</h3>
+          <p>The immediate next phase focuses on the single most transformative step in the platform's evolution: replacing all simulated data with real web data. We are building ETL pipelines that connect to NewsAPI, GDELT, World Bank WGI, and Yahoo Finance — all free-tier APIs with no licensing costs — and ingest their signals into the existing SQLite database through Prisma-managed schemas. Every supplier profile, risk event, demand forecast, and compliance record will be grounded in observable, verifiable data from the open internet.</p>
+          <p>This sprint transforms the platform from a compelling prototype into a production-ready tool that delivers genuine intelligence value from day one. The architecture is designed for extensibility — adding a new data source means writing one ingestion module that normalizes the API's output into the platform's canonical feature format, and the entire downstream ML and analytics stack adapts automatically. By the end of Sprint 2, the platform will be monitoring real-world supply chain signals in real time, making predictions based on actual data distributions, and providing stakeholders with insights that are not just visually convincing but factually grounded and operationally actionable.</p>
+          <div class="hero-actions" style="margin-top:2rem;">
+            <a href="platform.html" class="btn btn-primary">View Platform</a>
+            <a href="contact.html" class="btn btn-ghost">Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="brand-icon" style="width:28px;height:28px;font-size:0.7rem;">SC</div>
+        AI Supply Chain Risk Predictor
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="vision.html">Vision</a>
+        <a href="platform.html">Platform</a>
+        <a href="intelligence.html">Intelligence</a>
+        <a href="ma-matching.html">M&amp;A</a>
+        <a href="hitl.html">HITL</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <div class="footer-copy">
+      &copy; 2025 AI Supply Chain Risk Predictor. All rights reserved.
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

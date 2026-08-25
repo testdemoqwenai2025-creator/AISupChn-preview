@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Human-in-the-Loop Orchestration — AI Supply Chain Risk Predictor</title>
+  <meta name="description" content="Collaborative supply agency where autonomous agents handle 90% of cognitive labor. Humans make Boolean decisions on high-risk escalations only. The future of enterprise AI orchestration.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <canvas id="particle-canvas"></canvas>
+  <div class="grid-lines"></div>
+
+  <!-- NAVIGATION -->
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">
+      <div class="brand-icon">SC</div>
+      <span>AI Supply Chain</span>
+    </a>
+    <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="vision.html">Vision</a></li>
+      <li><a href="platform.html">Platform</a></li>
+      <li><a href="intelligence.html">Intelligence</a></li>
+      <li><a href="ma-matching.html">M&amp;A</a></li>
+      <li><a href="hitl.html" class="active">HITL</a></li>
+      <li><a href="roadmap.html">Roadmap</a></li>
+      <li><a href="contact.html" class="nav-cta">Get Started</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="orb orb-emerald" style="width:700px;height:700px;top:-300px;right:-200px;"></div>
+    <div class="orb orb-cyan" style="width:500px;height:500px;bottom:-200px;left:-200px;"></div>
+    <div class="hero-tag"><span class="pulse-dot"></span>Human-in-the-Loop Orchestration</div>
+    <h1>AI Handles the Labor.<br><span class="gradient-text">Humans Make the Decisions.</span></h1>
+    <p>A collaborative supply agency where autonomous agents execute 90% of cognitive labor, generating documents, filling forms, and analyzing data. Humans interact only through Boolean expressions: approve, reject, or escalate. The result is enterprise operations at machine speed with human judgment at every critical juncture.</p>
+  </section>
+
+  <!-- 90/10 COGNITIVE SPLIT -->
+  <section class="section" style="padding-top:0;">
+    <div class="section-inner">
+      <div class="cognitive-split reveal">
+        <div class="donut-chart">
+          <svg viewBox="0 0 200 200">
+            <circle class="donut-bg" cx="100" cy="100" r="80"></circle>
+            <circle class="donut-agent" cx="100" cy="100" r="80"
+              stroke-dasharray="502.6" stroke-dashoffset="502.6"></circle>
+            <circle class="donut-human" cx="100" cy="100" r="80"
+              stroke-dasharray="502.6" stroke-dashoffset="502.6"
+              style="transform: rotate(324deg); transform-origin: center;"></circle>
+          </svg>
+          <div class="donut-center">
+            <div class="donut-pct">90%</div>
+            <div class="donut-label">Automated</div>
+          </div>
+        </div>
+        <div class="cognitive-legend">
+          <div class="legend-item">
+            <div class="legend-dot agent"></div>
+            <div>
+              <h4>Autonomous Agent Labor (90%)</h4>
+              <p>Document generation, form population, data extraction, compliance checking, risk classification, demand forecasting, supplier onboarding, audit trail maintenance, report generation, and data normalization across all connected systems.</p>
+            </div>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot human"></div>
+            <div>
+              <h4>Human Boolean Decisions (10%)</h4>
+              <p>High-risk financial approvals, legal clause negotiations, strategic supplier selection, M&amp;A go/no-go decisions, regulatory exception requests, contract overrides, and executive-level escalations that require human accountability.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIVE ACTIVITY FEED + STATS -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <div class="section-label">Live Operations</div>
+        <h2 class="section-title">Collaborative Agency in Motion</h2>
+        <p class="section-desc">Watch the real-time feed of agent actions and human decisions. Every automated action is logged, every human decision is recorded with full audit traceability.</p>
+      </div>
+
+      <div class="stat-chips reveal" style="margin-bottom:24px;">
+        <div class="stat-chip"><span class="chip-value emerald">1,247</span><span class="chip-label">Tasks Auto-Completed Today</span></div>
+        <div class="stat-chip"><span class="chip-value cyan">23</span><span class="chip-label">Pending Human Review</span></div>
+        <div class="stat-chip"><span class="chip-value amber">4</span><span class="chip-label">Escalated to VP</span></div>
+        <div class="stat-chip"><span class="chip-value emerald">99.2%</span><span class="chip-label">Auto-Approval Accuracy</span></div>
+      </div>
+
+      <div class="live-feed reveal" id="hitl-live-feed"></div>
+    </div>
+  </section>
+
+  <div class="divider-label"><span>Orchestration Architecture</span></div>
+
+  <!-- WORKFLOW ORCHESTRATION ENGINE -->
+  <section class="section" style="padding-top:0;">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <div class="section-label">Workflow Engine</div>
+        <h2 class="section-title">Every Task Flows Through Intelligence Gates</h2>
+        <p class="section-desc">The orchestration engine evaluates every task against configurable risk thresholds. Low-risk tasks flow through autonomously. High-risk decisions branch to human supervisors with full AI-generated context.</p>
+      </div>
+
+      <div class="workflow-viz reveal">
+        <div class="wf-node wf-agent">
+          <div class="wf-node-icon agent">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <h5>Event Trigger</h5>
+          <p>Filing, Alert, Schedule</p>
+        </div>
+        <div class="wf-arrow">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+        <div class="wf-node wf-agent">
+          <div class="wf-node-icon agent">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-2.82 1.18V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1V3a1.65 1.65 0 0 0-1-1H5a2 2 0 0 0 0 4h.09"/></svg>
+          </div>
+          <h5>Agent Processing</h5>
+          <p>7 Agents Consume Task</p>
+        </div>
+        <div class="wf-arrow">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+        <div class="wf-node wf-auto">
+          <div class="wf-node-icon auto">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <h5>Risk Gate</h5>
+          <p>Boolean Evaluation</p>
+        </div>
+        <div class="wf-arrow">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;align-items:center;">
+          <div class="wf-node wf-auto" style="min-width:130px;">
+            <div class="wf-node-icon auto">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h5>Auto-Execute</h5>
+            <p>Low Risk Tasks</p>
+          </div>
+          <div class="wf-branch-label yes">risk &lt; 0.3</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;align-items:center;">
+          <div class="wf-node wf-human" style="min-width:130px;">
+            <div class="wf-node-icon human">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <h5>Human Decision</h5>
+            <p>Boolean: Yes / No</p>
+          </div>
+          <div class="wf-branch-label no">risk &ge; 0.3</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider-label"><span>Plugin Ecosystem</span></div>
+
+  <!-- PLUGIN MARKETPLACE -->
+  <section class="section" style="padding-top:0;">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <div class="section-label">Cognitive Plugins</div>
+        <h2 class="section-title">Modular Intelligence, Activated on Demand</h2>
+        <p class="section-desc">Each plugin encapsulates a domain of cognitive labor. Toggle them active or inactive based on your operational needs. The orchestration engine routes tasks only to active plugins, ensuring you control exactly what AI automates.</p>
+      </div>
+
+      <div class="plugin-grid-hitol reveal">
+        <!-- Plugin 1 -->
+        <div class="plugin-card">
+          <div class="plugin-header">
+            <div class="plugin-identity">
+              <div class="plugin-icon-wrap emerald">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              </div>
+              <div>
+                <div class="plugin-name">Document Generator</div>
+                <div class="plugin-version">v3.2.1</div>
+              </div>
+            </div>
+            <label class="toggle-switch"><input type="checkbox" checked class="plugin-toggle"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="plugin-desc">Auto-generates compliance forms, onboarding documents, NDA templates, supplier questionnaires, and audit reports. Populates 100% of fields from connected data sources.</div>
+          <div class="plugin-meta">
+            <div class="plugin-meta-item"><strong>4,281</strong> docs generated</div>
+            <div class="plugin-meta-item"><strong>2.1s</strong> avg. generation</div>
+            <div class="plugin-meta-item"><strong>0.3%</strong> error rate</div>
+          </div>
+        </div>
+
+        <!-- Plugin 2 -->
+        <div class="plugin-card">
+          <div class="plugin-header">
+            <div class="plugin-identity">
+              <div class="plugin-icon-wrap cyan">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <div>
+                <div class="plugin-name">Compliance Engine</div>
+                <div class="plugin-version">v2.8.0</div>
+              </div>
+            </div>
+            <label class="toggle-switch"><input type="checkbox" checked class="plugin-toggle"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="plugin-desc">Monitors 6 regulatory frameworks (UFLPA, EUDR, CSDDD, SOX, GDPR, REACH). Auto-fills compliance checklists, flags gaps, and generates remediation workflows.</div>
+          <div class="plugin-meta">
+            <div class="plugin-meta-item"><strong>892</strong> checks completed</div>
+            <div class="plugin-meta-item"><strong>6</strong> frameworks</div>
+            <div class="plugin-meta-item"><strong>99.7%</strong> accuracy</div>
+          </div>
+        </div>
+
+        <!-- Plugin 3 -->
+        <div class="plugin-card">
+          <div class="plugin-header">
+            <div class="plugin-identity">
+              <div class="plugin-icon-wrap violet">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </div>
+              <div>
+                <div class="plugin-name">NLP Contract Analyzer</div>
+                <div class="plugin-version">v1.4.2</div>
+              </div>
+            </div>
+            <label class="toggle-switch"><input type="checkbox" checked class="plugin-toggle"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="plugin-desc">Parses contract clauses, identifies force majeure risks, non-compete conflicts, and liability caps. Extracts key terms into structured data for comparison against standard templates.</div>
+          <div class="plugin-meta">
+            <div class="plugin-meta-item"><strong>312</strong> contracts analyzed</div>
+            <div class="plugin-meta-item"><strong>47</strong> risks flagged</div>
+            <div class="plugin-meta-item"><strong>v1.4</strong> model</div>
+          </div>
+        </div>
+
+        <!-- Plugin 4 -->
+        <div class="plugin-card plugin-inactive">
+          <div class="plugin-header">
+            <div class="plugin-identity">
+              <div class="plugin-icon-wrap amber">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              </div>
+              <div>
+                <div class="plugin-name">Sanctions Screener</div>
+                <div class="plugin-version">v1.0.0-beta</div>
+              </div>
+            </div>
+            <label class="toggle-switch"><input type="checkbox" class="plugin-toggle"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="plugin-desc">Cross-references supplier entities against OFAC, EU, and UN sanctions lists. Flags matches in real time and blocks transactions until human clearance. Requires compliance officer activation.</div>
+          <div class="plugin-meta">
+            <div class="plugin-meta-item"><strong>Beta</strong> status</div>
+            <div class="plugin-meta-item"><strong>12</strong> lists monitored</div>
+            <div class="plugin-meta-item"><strong>Pending</strong> approval</div>
+          </div>
+        </div>
+
+        <!-- Plugin 5 -->
+        <div class="plugin-card">
+          <div class="plugin-header">
+            <div class="plugin-identity">
+              <div class="plugin-icon-wrap rose">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </div>
+              <div>
+                <div class="plugin-name">Financial Risk Classifier</div>
+                <div class="plugin-version">v2.1.0</div>
+              </div>
+            </div>
+            <label class="toggle-switch"><input type="checkbox" checked class="plugin-toggle"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="plugin-desc">XGBoost ensemble scoring supplier financial health. 40+ features from EDGAR filings, Yahoo Finance, and World Bank data. SHAP explainability for every score. Triggers escalation if distress probability exceeds threshold.</div>
+          <div class="plugin-meta">
+            <div class="plugin-meta-item"><strong>94%</strong> AUC</div>
+            <div class="plugin-meta-item"><strong>40+</strong> features</div>
+            <div class="plugin-meta-item"><strong>SHAP</strong> explained</div>
+          </div>
+        </div>
+
+        <!-- Plugin 6 -->
+        <div class="plugin-card">
+          <div class="plugin-header">
+            <div class="plugin-identity">
+              <div class="plugin-icon-wrap emerald">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+              </div>
+              <div>
+                <div class="plugin-name">Supplier Onboarding</div>
+                <div class="plugin-version">v2.3.0</div>
+              </div>
+            </div>
+            <label class="toggle-switch"><input type="checkbox" checked class="plugin-toggle"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="plugin-desc">End-to-end automated onboarding: generates welcome packets, populates KYC forms, initiates compliance checks, creates supplier profiles in the database, and schedules introductory calls. Human approves final activation.</div>
+          <div class="plugin-meta">
+            <div class="plugin-meta-item"><strong>156</strong> suppliers onboarded</div>
+            <div class="plugin-meta-item"><strong>8.2min</strong> avg. time</div>
+            <div class="plugin-meta-item"><strong>Down</strong> from 4.2hrs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider-label"><span>Automated Form Intelligence</span></div>
+
+  <!-- AUTO-FILL FORM DEMO -->
+  <section class="section" style="padding-top:0;">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <div class="section-label">Form Automation</div>
+        <h2 class="section-title">Zero-Touch Form Population</h2>
+        <p class="section-desc">The Document Generator plugin extracts data from EDGAR filings, financial APIs, and internal databases to auto-fill every field. Humans never type into forms. They only review and approve.</p>
+      </div>
+
+      <div class="glass-card reveal">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+          <div>
+            <h3 style="font-size:1.05rem;font-weight:700;">Supplier Compliance Form — UFLPA</h3>
+            <p style="font-size:0.82rem;color:var(--text-muted);margin-top:4px;">Auto-generated for SolarTech Manufacturing Inc. from EDGAR 10-K filing</p>
+          </div>
+          <button id="auto-fill-btn" class="btn btn-primary" style="padding:8px 20px;font-size:0.82rem;">Run Auto-Fill</button>
+        </div>
+        <div class="hitl-form">
+          <div class="form-row">
+            <div class="form-field">
+              <label>Supplier Legal Name</label>
+              <input type="text" class="auto-fill-target" data-autofill="SolarTech Manufacturing Inc." placeholder="Waiting for AI..." readonly>
+              <span class="field-status auto-filled" style="display:none;">Auto-Filled</span>
+            </div>
+            <div class="form-field">
+              <label>CIK Number</label>
+              <input type="text" class="auto-fill-target" data-autofill="0001849362" placeholder="Waiting for AI..." readonly>
+              <span class="field-status auto-filled" style="display:none;">Auto-Filled</span>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label>Entity Type</label>
+              <input type="text" class="auto-fill-target" data-autofill="Public Corporation (10-K Filer)" placeholder="Waiting for AI..." readonly>
+              <span class="field-status auto-filled" style="display:none;">Auto-Filled</span>
+            </div>
+            <div class="form-field">
+              <label>Jurisdiction of Incorporation</label>
+              <input type="text" class="auto-fill-target" data-autofill="Delaware, United States" placeholder="Waiting for AI..." readonly>
+              <span class="field-status auto-filled" style="display:none;">Auto-Filled</span>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label>Primary SIC Code</label>
+              <input type="text" class="auto-fill-target" data-autofill="3674 - Semiconductors &amp; Related Devices" placeholder="Waiting for AI..." readonly>
+              <span class="field-status auto-filled" style="display:none;">Auto-Filled</span>
+            </div>
+            <div class="form-field">
+              <label>Fiscal Year End</label>
+              <input type="text" class="auto-fill-target" data-autofill="December 31, 2025" placeholder="Waiting for AI..." readonly>
+              <span class="field-status auto-filled" style="display:none;">Auto-Filled</span>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label>UFLPA Region Risk Score</label>
+              <input type="text" class="auto-fill-target" data-autofill="72/100 (Elevated)" placeholder="Waiting for AI..." readonly>
+              <span class="field-status auto-filled" style="display:none;">Auto-Filled</span>
+            </div>
+            <div class="form-field">
+              <label>Supply Chain Tier Classification</label>
+              <input type="text" class="auto-fill-target" data-autofill="Tier 2 — Component Supplier" placeholder="Waiting for AI..." readonly>
+              <span class="field-status auto-filled" style="display:none;">Auto-Filled</span>
+            </div>
+          </div>
+          <!-- Human-required field -->
+          <div class="form-row">
+            <div class="form-field">
+              <label>Executive Approval (Human Required)</label>
+              <input type="text" class="human-val" placeholder="Click Approve or Reject below" style="border-color:rgba(6,182,212,0.3);" readonly>
+              <span class="field-status human-required">Human Decision</span>
+            </div>
+            <div class="form-field">
+              <label>Risk Override Justification</label>
+              <input type="text" class="human-val" placeholder="Required if risk score &gt; 60" style="border-color:rgba(6,182,212,0.3);" readonly>
+              <span class="field-status human-required">Conditional</span>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:20px;display:flex;gap:10px;justify-content:flex-end;">
+          <button class="decision-btn approve" data-action="approve" style="flex:none;padding:10px 28px;">&#10003; Approve &amp; File</button>
+          <button class="decision-btn reject" data-action="reject" style="flex:none;padding:10px 28px;">&#10007; Reject</button>
+          <button class="decision-btn escalate" data-action="escalate" style="flex:none;padding:10px 28px;">&#8593; Escalate</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider-label"><span>Human Decision Queue</span></div>
+
+  <!-- DECISION QUEUE -->
+  <section class="section" style="padding-top:0;">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <div class="section-label">Boolean Decisions</div>
+        <h2 class="section-title">Humans Decide. AI Explains Why.</h2>
+        <p class="section-desc">Every escalated decision arrives with full AI context: what happened, why it matters, what the AI recommends, and the confidence level. The human's job is a single Boolean expression: approve, reject, or escalate further.</p>
+      </div>
+
+      <div class="dual-decision-grid reveal">
+        <!-- Decision 1: Critical -->
+        <div class="decision-card">
+          <div class="decision-header">
+            <div>
+              <div class="decision-title">M&amp;A NDA Execution</div>
+              <div class="decision-subtitle">Pinnacle Semiconductor / Acme Corp</div>
+            </div>
+            <span class="decision-badge critical">Critical</span>
+          </div>
+          <div class="decision-context">
+            The NLP Contract Analyzer detected 3 non-standard clauses in the proposed NDA: (1) a 5-year survival period beyond term (industry standard: 2 years), (2) broad definition of "Confidential Information" including publicly available data derived from disclosed materials, and (3) a unilateral indemnification clause favoring the counterparty. The Financial Risk Classifier rates Pinnacle's acquisition as high-confidence (2.4x DCF upside) but the NDA terms create downstream liability exposure estimated at $12-18M.
+          </div>
+          <div class="decision-ai-rec">
+            <span class="rec-label">AI Recommends</span>
+            <span class="rec-text">Reject &mdash; request clause revisions before signing. Counterparty has accepted modifications in 78% of historical negotiations.</span>
+            <span class="rec-confidence">91%</span>
+          </div>
+          <div class="decision-actions">
+            <button class="decision-btn approve" data-action="approve">Approve</button>
+            <button class="decision-btn reject" data-action="reject">Reject</button>
+            <button class="decision-btn escalate" data-action="escalate">Escalate to Legal</button>
+          </div>
+        </div>
+
+        <!-- Decision 2: High -->
+        <div class="decision-card">
+          <div class="decision-header">
+            <div>
+              <div class="decision-title">Supplier Risk Reclassification</div>
+              <div class="decision-subtitle">Berlin Steel GmbH / Tier 2 to Tier 1</div>
+            </div>
+            <span class="decision-badge high">High</span>
+          </div>
+          <div class="decision-context">
+            Berlin Steel's operational metrics have improved for 6 consecutive quarters: on-time delivery 94.2% (from 81%), quality score 97/100 (from 84), and zero compliance violations. The XGBoost model now scores them at 18/100 (low risk). The Supplier Onboarding plugin recommends upgrading to Tier 1 status, which would increase their order allocation by 40% and grant them access to strategic component designs. However, their geographic concentration in Germany creates a single-country dependency risk.
+          </div>
+          <div class="decision-ai-rec">
+            <span class="rec-label">AI Recommends</span>
+            <span class="rec-text">Approve with monitoring. Add geographic concentration risk as a watch item. Schedule quarterly review.</span>
+            <span class="rec-confidence">87%</span>
+          </div>
+          <div class="decision-actions">
+            <button class="decision-btn approve" data-action="approve">Approve</button>
+            <button class="decision-btn reject" data-action="reject">Defer</button>
+            <button class="decision-btn escalate" data-action="escalate">Escalate to VP</button>
+          </div>
+        </div>
+
+        <!-- Decision 3: Medium -->
+        <div class="decision-card">
+          <div class="decision-header">
+            <div>
+              <div class="decision-title">Compliance Exception Request</div>
+              <div class="decision-subtitle">ShenZen Micro / EUDR Due Diligence Extension</div>
+            </div>
+            <span class="decision-badge medium">Medium</span>
+          </div>
+          <div class="decision-context">
+            ShenZen Micro requests a 45-day extension for EUDR (EU Deforestation Regulation) due diligence documentation. Their primary rubber supplier in Myanmar is undergoing certification transition. The Compliance Engine has verified that 4 of 5 required documents are already submitted. The missing document (geolocation data for rubber plantations) is expected from the certification body within 30 days. Standard SLA allows 30-day extensions; this request exceeds that by 15 days.
+          </div>
+          <div class="decision-ai-rec">
+            <span class="rec-label">AI Recommends</span>
+            <span class="rec-text">Approve with conditions. Grant 35 days (not 45). Require weekly progress updates from certification body.</span>
+            <span class="rec-confidence">79%</span>
+          </div>
+          <div class="decision-actions">
+            <button class="decision-btn approve" data-action="approve">Approve</button>
+            <button class="decision-btn reject" data-action="reject">Deny</button>
+            <button class="decision-btn escalate" data-action="escalate">Escalate</button>
+          </div>
+        </div>
+
+        <!-- Decision 4: Low -->
+        <div class="decision-card">
+          <div class="decision-header">
+            <div>
+              <div class="decision-title">Demand Forecast Override</div>
+              <div class="decision-subtitle">SKU-0042 / Q4 2026 Projection</div>
+            </div>
+            <span class="decision-badge low">Low</span>
+          </div>
+          <div class="decision-context">
+            The Forecast Agent projects 23,400 units for SKU-0042 in Q4 2026 (up 18% YoY). The Demand Planning team manually submitted a request to cap the forecast at 20,000 units citing uncertain macroeconomic conditions in the EU market. The AI model's confidence interval is 21,200-25,600 units. The difference (3,400 units) represents approximately $2.1M in additional procurement commitment. The agent flagged this as low risk but the human override request requires acknowledgment.
+          </div>
+          <div class="decision-ai-rec">
+            <span class="rec-label">AI Recommends</span>
+            <span class="rec-text">Reject override. Model confidence is high. EU macro risk is already priced into the forecast range.</span>
+            <span class="rec-confidence">94%</span>
+          </div>
+          <div class="decision-actions">
+            <button class="decision-btn approve" data-action="approve">Accept Override</button>
+            <button class="decision-btn reject" data-action="reject">Keep AI Forecast</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider-label"><span>Escalation Rules Engine</span></div>
+
+  <!-- ESCALATION RULES -->
+  <section class="section" style="padding-top:0;">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <div class="section-label">Boolean Expressions</div>
+        <h2 class="section-title">Configurable Escalation Logic</h2>
+        <p class="section-desc">Every escalation rule is a Boolean expression. The orchestration engine evaluates these expressions in real time against incoming data. When a rule fires, the task is routed to the appropriate human decision-maker with full context. Rules can be created, modified, or deactivated without code changes.</p>
+      </div>
+
+      <!-- Tabbed Rules -->
+      <div class="reveal">
+        <div class="tab-nav">
+          <button class="tab-btn active" data-tab="tab-financial">Financial</button>
+          <button class="tab-btn" data-tab="tab-legal">Legal</button>
+          <button class="tab-btn" data-tab="tab-compliance">Compliance</button>
+          <button class="tab-btn" data-tab="tab-operational">Operational</button>
+        </div>
+
+        <div id="tab-financial" class="tab-panel active">
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div class="rule-card">
+              <div class="rule-expression"><span class="kw">IF</span> <span class="str">distress_probability</span> <span class="op">&gt;=</span> <span class="num">0.85</span> <span class="kw">AND</span> <span class="str">debt_to_equity</span> <span class="op">&gt;</span> <span class="num">3.0</span> <span class="kw">THEN</span> <span class="bool">ESCALATE</span> <span class="str">financial_review</span></div>
+              <div class="rule-result"><span class="rule-action">Route to CFO for emergency financial review and potential M&amp;A watchlist addition</span><span class="rule-tier" style="color:var(--rose);">Critical</span></div>
+            </div>
+            <div class="rule-card">
+              <div class="rule-expression"><span class="kw">IF</span> <span class="str">supplier_revenue_decline_q</span> <span class="op">&gt;=</span> <span class="num">4</span> <span class="kw">AND</span> <span class="str">current_ratio</span> <span class="op">&lt;</span> <span class="num">1.2</span> <span class="kw">THEN</span> <span class="bool">ESCALATE</span> <span class="str">liquidity_alert</span></div>
+              <div class="rule-result"><span class="rule-action">Flag for supply chain finance team assessment and payment term review</span><span class="rule-tier" style="color:var(--amber);">High</span></div>
+            </div>
+            <div class="rule-card">
+              <div class="rule-expression"><span class="kw">IF</span> <span class="str">accrual_anomaly_score</span> <span class="op">&gt;</span> <span class="num">0.7</span> <span class="kw">THEN</span> <span class="bool">ESCALATE</span> <span class="str">earnings_quality_review</span></div>
+              <div class="rule-result"><span class="rule-action">Forward to financial analyst for manual review of accruals and cash flow quality</span><span class="rule-tier" style="color:var(--cyan);">Medium</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-legal" class="tab-panel">
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div class="rule-card">
+              <div class="rule-expression"><span class="kw">IF</span> <span class="str">contract_clause_risk</span> <span class="op">==</span> <span class="str">"force_majeure_conflict"</span> <span class="kw">THEN</span> <span class="bool">ESCALATE</span> <span class="str">legal_review</span></div>
+              <div class="rule-result"><span class="rule-action">Route to legal counsel for clause-by-clause analysis and redline recommendation</span><span class="rule-tier" style="color:var(--rose);">Critical</span></div>
+            </div>
+            <div class="rule-card">
+              <div class="rule-expression"><span class="kw">IF</span> <span class="str">indemnification_cap</span> <span class="op">&gt;</span> <span class="num">15000000</span> <span class="kw">THEN</span> <span class="bool">ESCALATE</span> <span class="str">liability_review</span></div>
+              <div class="rule-result"><span class="rule-action">Forward to VP Legal for liability exposure assessment before contract execution</span><span class="rule-tier" style="color:var(--amber);">High</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-compliance" class="tab-panel">
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div class="rule-card">
+              <div class="rule-expression"><span class="kw">IF</span> <span class="str">sanctions_list_match</span> <span class="op">==</span> <span class="bool">TRUE</span> <span class="kw">THEN</span> <span class="bool">BLOCK</span> <span class="kw">AND</span> <span class="bool">ESCALATE</span> <span class="str">immediate_compliance</span></div>
+              <div class="rule-result"><span class="rule-action">Block all transactions immediately. Alert Chief Compliance Officer within 5 minutes</span><span class="rule-tier" style="color:var(--rose);">Critical</span></div>
+            </div>
+            <div class="rule-card">
+              <div class="rule-expression"><span class="kw">IF</span> <span class="str">compliance_gap_count</span> <span class="op">&gt;=</span> <span class="num">3</span> <span class="kw">AND</span> <span class="str">framework</span> <span class="op">IN</span> [<span class="str">"UFLPA"</span>, <span class="str">"EUDR"</span>] <span class="kw">THEN</span> <span class="bool">ESCALATE</span> <span class="str">regulatory_compliance</span></div>
+              <div class="rule-result"><span class="rule-action">Suspend supplier onboarding. Create remediation workflow for compliance team</span><span class="rule-tier" style="color:var(--amber);">High</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-operational" class="tab-panel">
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div class="rule-card">
+              <div class="rule-expression"><span class="kw">IF</span> <span class="str">on_time_delivery</span> <span class="op">&lt;</span> <span class="num">0.75</span> <span class="kw">FOR</span> <span class="num">3</span> <span class="kw">CONSECUTIVE</span> <span class="str">months</span> <span class="kw">THEN</span> <span class="bool">ESCALATE</span> <span class="str">supplier_review</span></div>
+              <div class="rule-result"><span class="rule-action">Trigger supplier performance review with operations team. Consider alternative sourcing</span><span class="rule-tier" style="color:var(--amber);">High</span></div>
+            </div>
+            <div class="rule-card">
+              <div class="rule-expression"><span class="kw">IF</span> <span class="str">quality_score</span> <span class="op">&lt;</span> <span class="num">80</span> <span class="kw">AND</span> <span class="str">defect_rate</span> <span class="op">&gt;</span> <span class="num">0.02</span> <span class="kw">THEN</span> <span class="bool">ESCALATE</span> <span class="str">quality_hold</span></div>
+              <div class="rule-result"><span class="rule-action">Place incoming shipments on quality hold. Notify quality assurance manager</span><span class="rule-tier" style="color:var(--cyan);">Medium</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DESIGN PRINCIPLES -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <div class="section-label">Design Philosophy</div>
+        <h2 class="section-title">Principles That Define Collaborative AI</h2>
+        <p class="section-desc">These are not just UI patterns. They are architectural principles that should guide every enterprise AI platform built after this one.</p>
+      </div>
+
+      <div class="accordion reveal">
+        <div class="accordion-item open">
+          <button class="accordion-trigger">
+            <span>Principle 1: Humans Never Fill Forms</span>
+            <svg class="accordion-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="accordion-body"><div class="accordion-content">
+            If a human is typing data into a field, the system has failed. Every data point should be extractable from existing sources: SEC filings, trade databases, internal ERP systems, previous documents, or real-time APIs. The human's role is verification, not data entry. Forms should arrive 100% pre-populated with a single Boolean decision at the bottom: approve, reject, or request changes. This principle reduces human cognitive load by 90%, eliminates transcription errors, and transforms 30-minute form-filling tasks into 30-second review-and-approve decisions. The auto-fill animation on this page demonstrates this principle in action.
+          </div></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger">
+            <span>Principle 2: Every Escalation Carries Its Own Context</span>
+            <svg class="accordion-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="accordion-body"><div class="accordion-content">
+            When a task is escalated to a human, the decision card must contain everything needed to make an informed decision without switching to another application. This means: (1) What triggered the escalation and the raw data behind it, (2) What the AI recommends and why, with a confidence score, (3) What happens if approved versus rejected, including downstream impact analysis, (4) Historical context from similar past decisions and their outcomes, and (5) The specific risk tier and the name/role of the recommended decision-maker. A human should never need to ask "why am I seeing this?" The answer should be embedded in the decision card itself.
+          </div></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger">
+            <span>Principle 3: Plugins Are Independent Cognitive Units</span>
+            <svg class="accordion-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="accordion-body"><div class="accordion-content">
+            Each plugin encapsulates a complete domain of cognitive labor with its own ML models, data sources, output schemas, and performance metrics. Plugins should be independently deployable, versionable, and toggleable. Deactivating the Sanctions Screener should not affect the Document Generator. Each plugin publishes its capabilities to the orchestration engine, which routes tasks to the appropriate plugin based on task type and risk classification. This microservices-inspired architecture allows organizations to adopt AI incrementally, starting with low-risk automations and progressively activating higher-stakes plugins as confidence grows.
+          </div></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger">
+            <span>Principle 4: Boolean Is the Only Human Input</span>
+            <svg class="accordion-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="accordion-body"><div class="accordion-content">
+            The human interface should be as simple as possible: approve, reject, or escalate. These are Boolean expressions. The AI has already done the analysis, extracted the data, generated the documents, and formulated the recommendation. The human's cognitive contribution is judgment, not labor. This is fundamentally different from traditional enterprise software that asks humans to fill 50-field forms, navigate 12-tab interfaces, and manually cross-reference data across systems. In the HITL paradigm, the human is a decision-maker, not a data entry clerk. The decision cards on this page are the canonical implementation of this principle.
+          </div></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger">
+            <span>Principle 5: Full Audit Trail, Zero Ambiguity</span>
+            <svg class="accordion-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="accordion-body"><div class="accordion-content">
+            Every automated action and every human decision is logged with: timestamp, agent/human identity, input data, output decision, confidence score (for AI), reasoning (for humans), and downstream impact. This audit trail serves three purposes: regulatory compliance (SOX, GDPR, EU AI Act require decision traceability), continuous improvement (every human override trains the AI to be more accurate next time), and accountability (when a $50M supply chain decision goes wrong, there must be a clear record of who approved what and why). The live feed on this page demonstrates the real-time logging aspect of this principle.
+          </div></div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger">
+            <span>Principle 6: The Feedback Loop Closes the Intelligence Gap</span>
+            <svg class="accordion-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="accordion-body"><div class="accordion-content">
+            When a human overrides an AI recommendation, that override becomes a training signal. If the AI recommended "Approve" with 91% confidence but the human rejected, the model's feature weights are adjusted to account for the human's reasoning (captured in the escalation context). Over time, the AI learns the organization's risk appetite, the decision-makers' preferences, and the edge cases that pure data-driven models miss. This creates a virtuous cycle: better AI recommendations lead to fewer escalations, which means humans spend less time on low-value decisions and more time on strategic judgment calls. The 90/10 split improves toward 95/5 over time, but the remaining 5% becomes increasingly high-stakes and strategically important.
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="section-inner reveal">
+      <div class="animated-border">
+        <div class="card-inner" style="text-align:center;">
+          <h2 style="font-size:clamp(1.4rem,3vw,2rem);font-weight:800;letter-spacing:-0.02em;margin-bottom:16px;">The Collaborative Agency is the Enterprise AI Endgame</h2>
+          <p style="font-size:1rem;color:var(--text-secondary);max-width:640px;margin:0 auto 28px;line-height:1.7;">Most AI platforms force humans to adapt to the machine. This platform adapts the machine to the human. Agents do the cognitive labor of reading, writing, analyzing, and generating. Humans do what only humans can: exercise judgment, take accountability, and make the decisions that shape organizations.</p>
+          <div class="hero-actions">
+            <a href="contact.html" class="btn btn-primary">Schedule a Briefing</a>
+            <a href="platform.html" class="btn btn-ghost">View Full Platform</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="brand-icon" style="width:28px;height:28px;font-size:0.7rem;">SC</div>
+        AI Supply Chain
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="vision.html">Vision</a>
+        <a href="platform.html">Platform</a>
+        <a href="intelligence.html">Intelligence</a>
+        <a href="ma-matching.html">M&amp;A</a>
+        <a href="hitl.html">HITL</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <div class="footer-copy">
+      AI Supply Chain Risk Predictor &mdash; Confidential &middot; For authorised viewers only
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/hitl.js"></script>
+</body>
+</html>
