@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Supply Chain Risk Predictor — Predict Disruptions Before They Happen</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--bg:#05080f;--bg2:#0a1128;--glass:rgba(10,17,40,.6);--border:rgba(16,185,129,.12);--text:#f0f4ff;--text2:#8b9dc3;--accent:#10b981;--accent2:#34d399;--cyan:#06b6d4;--purple:#8b5cf6;--violet:#7c3aed;--blue:#2563eb;--amber:#fbbf24;--red:#ef4444}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+    nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(5,8,15,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 2rem}
+    .nav-inner{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;height:64px}
+    .logo{display:flex;align-items:center;gap:.5rem;font-size:1.25rem;font-weight:700}
+    .nav-links{display:flex;gap:2rem;align-items:center}
+    .nav-links a{color:var(--text2);text-decoration:none;font-size:.875rem;transition:color .2s}
+    .nav-links a:hover{color:var(--accent)}
+    .btn-nav{padding:.5rem 1rem;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer;font-size:.875rem}
+    .theme-toggle{width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center}
+    .theme-toggle svg{width:18px;height:18px;fill:var(--amber)}
+    .hero{min-height:100vh;display:flex;align-items:center;padding:100px 2rem 4rem;max-width:1400px;margin:0 auto}
+    .hero-grid{display:grid;grid-template-columns:1fr 320px;gap:4rem;align-items:center;width:100%}
+    .hero-left{max-width:650px}
+    .badge{display:inline-flex;align-items:center;gap:.5rem;padding:.5rem 1rem;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);border-radius:9999px;font-size:.8rem;font-weight:600;color:var(--accent);margin-bottom:1.5rem}
+    h1{font-size:clamp(2.5rem,5vw,4rem);font-weight:800;line-height:1.1;margin-bottom:1.5rem}
+    .gradient-text{background:linear-gradient(135deg,var(--accent),var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .subtitle{font-size:1.125rem;color:var(--text2);margin-bottom:2rem;line-height:1.7}
+    .subtitle strong{color:var(--accent)}
+    .buttons{display:flex;gap:1rem;margin-bottom:2.5rem;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:.5rem;padding:1rem 2rem;border-radius:12px;font-weight:600;font-size:1rem;cursor:pointer;transition:all .3s;text-decoration:none;border:none}
+    .btn-primary{background:linear-gradient(135deg,var(--accent),var(--cyan));color:white;box-shadow:0 4px 20px rgba(16,185,129,.3)}
+    .btn-primary:hover{transform:translateY(-2px)}
+    .btn-outline{background:transparent;color:var(--text);border:2px solid var(--border)}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;max-width:480px}
+    .stat{background:var(--glass);backdrop-filter:blur(10px);border:1px solid transparent;border-radius:12px;padding:1rem;text-align:center;transition:all .3s}
+    .stat:hover{border-color:rgba(16,185,129,.2);transform:scale(1.05)}
+    .stat-value{font-size:1.25rem;font-weight:700;color:var(--accent2)}
+    .stat-label{font-size:.7rem;color:var(--text2)}
+    .command-center{width:300px;height:580px;background:linear-gradient(180deg,var(--violet),var(--blue),var(--cyan));border-radius:24px;overflow:hidden;box-shadow:0 25px 60px -12px rgba(124,58,237,.5)}
+    .cc-header{padding:1.75rem 1.5rem;text-align:center;color:white}
+    .cc-title{font-size:1.125rem;font-weight:700}
+    .cc-subtitle{font-size:.8rem;opacity:.8}
+    .cc-body{background:rgba(0,0,0,.35);padding:1.25rem;height:calc(100% - 130px)}
+    .risk-card{background:linear-gradient(135deg,rgba(245,158,11,.2),rgba(239,68,68,.2));border:1px solid rgba(245,158,11,.3);border-radius:16px;padding:1.25rem;text-align:center;margin-bottom:1rem}
+    .risk-value{font-size:1.75rem;font-weight:800;color:var(--amber)}
+    .risk-bar{width:100%;height:8px;background:rgba(255,255,255,.1);border-radius:4px;margin-top:.75rem;overflow:hidden}
+    .risk-fill{height:100%;background:linear-gradient(90deg,var(--amber),#f97316);border-radius:4px;width:58%}
+    .metrics{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:1rem}
+    .metric{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:.75rem;text-align:center}
+    .metric-value{font-size:1rem;font-weight:700;color:white}
+    .metric-label{font-size:.65rem;color:rgba(255,255,255,.5)}
+    .alert{display:flex;align-items:center;gap:.5rem;padding:.6rem;background:rgba(255,255,255,.04);border-radius:8px;font-size:.72rem;margin-bottom:.5rem}
+    .alert-dot{width:6px;height:6px;border-radius:50%}
+    .alert-critical .alert-dot{background:var(--red)}
+    .alert-warning .alert-dot{background:var(--amber)}
+    .alert-info .alert-dot{background:var(--blue)}
+    .footer{border-top:1px solid var(--border);padding:4rem 2rem 2rem;margin-top:4rem}
+    .footer-grid{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+    .footer-col h4{font-weight:600;margin-bottom:1rem}
+    .footer-links{list-style:none}
+    .footer-links li{margin-bottom:.5rem}
+    .footer-links a{color:var(--text2);text-decoration:none;font-size:.875rem}
+    .footer-links a:hover{color:var(--accent)}
+    .footer-bottom{max-width:1400px;margin:0 auto;padding-top:2rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:.875rem;color:var(--text2)}
+    .footer-legal{display:flex;gap:1.5rem}
+    .footer-legal a{color:var(--text2);text-decoration:none}
+    @media(max-width:1024px){.hero-grid{grid-template-columns:1fr}.command-center{display:none}.stats{max-width:100%}}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <div class="logo">🛡️ AI Supply Chain</div>
+      <div class="nav-links">
+        <a href="#dashboard">Dashboard</a>
+        <a href="#command-center">Command Center</a>
+        <a href="#pricing">Pricing</a>
+        <button class="theme-toggle" onclick="toggleTheme()">☀️</button>
+        <a href="#login" class="btn-nav">Login</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-grid">
+      <div class="hero-left">
+        <div class="badge">⚡ AI-Powered Supply Chain Intelligence</div>
+        <h1>Predict Risks Before They<br><span class="gradient-text">Disrupt Your Supply Chain</span></h1>
+        <p class="subtitle">Enterprise-grade AI platform with <strong>94% accuracy</strong> across <strong style="color:#06b6d4">190+ countries</strong>. Real-time risk prediction, compliance automation.</p>
+        <div class="buttons">
+          <a href="#dashboard" class="btn btn-primary">Launch Dashboard →</a>
+          <a href="#features" class="btn btn-outline">⚡ Explore Features</a>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="stat-value">94%</div><div class="stat-label">Accuracy</div></div>
+          <div class="stat"><div class="stat-value">190+</div><div class="stat-label">Countries</div></div>
+          <div class="stat"><div class="stat-value">&lt;5min</div><div class="stat-label">Alert Time</div></div>
+          <div class="stat"><div class="stat-value">$12B+</div><div class="stat-label">Mitigated</div></div>
+        </div>
+      </div>
+      <div class="command-center">
+        <div class="cc-header">
+          <div style="font-size:2rem;margin-bottom:.5rem">🛡️</div>
+          <div class="cc-title">AI Command Center</div>
+          <div class="cc-subtitle">Live Risk Monitoring</div>
+          <div style="margin-top:.75rem;display:flex;align-items:center;justify-content:center;gap:.5rem;font-size:.75rem">
+            <span style="width:8px;height:8px;background:#10b981;border-radius:50%;animation:pulse 2s infinite"></span>
+            Real-time Active
+          </div>
+        </div>
+        <div class="cc-body">
+          <div class="risk-card">
+            <div style="font-size:.7rem;opacity:.6;margin-bottom:.5rem">Global Risk Index</div>
+            <div class="risk-value">MEDIUM</div>
+            <div class="risk-bar"><div class="risk-fill"></div></div>
+          </div>
+          <div class="metrics">
+            <div class="metric"><div class="metric-value">2,847</div><div class="metric-label">Suppliers</div></div>
+            <div class="metric"><div class="metric-value" style="color:#ef4444">23</div><div class="metric-label">Alerts</div></div>
+            <div class="metric"><div class="metric-value" style="color:#06b6d4">190+</div><div class="metric-label">Regions</div></div>
+            <div class="metric"><div class="metric-value" style="color:#10b981">99.9%</div><div class="metric-label">Uptime</div></div>
+          </div>
+          <div class="alert alert-critical"><span class="alert-dot"></span><span style="flex:1;color:rgba(255,255,255,.7)">Taiwan Strait delay risk</span><span style="color:rgba(255,255,255,.4);font-size:.65rem">2m ago</span></div>
+          <div class="alert alert-warning"><span class="alert-dot"></span><span style="flex:1;color:rgba(255,255,255,.7)">Supplier risk elevated</span><span style="color:rgba(255,255,255,.4);font-size:.65rem">15m ago</span></div>
+          <div class="alert alert-info"><span class="alert-dot"></span><span style="flex:1;color:rgba(255,255,255,.7)">New compliance rule active</span><span style="color:rgba(255,255,255,.4);font-size:.65rem">1h ago</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div style="font-size:1.25rem;font-weight:700;margin-bottom:1rem">🛡️ AI Supply Chain</div>
+        <p style="color:var(--text2);font-size:.875rem;max-width:280px">Enterprise-grade AI supply chain risk prediction platform.</p>
+      </div>
+      <div class="footer-col"><h4>Product</h4><ul class="footer-links"><li><a href="#">Dashboard</a></li><li><a href="#">Command Center</a></li><li><a href="#">Pricing</a></li></ul></div>
+      <div class="footer-col"><h4>Company</h4><ul class="footer-links"><li><a href="#">About Us</a></li><li><a href="#">Customers</a></li><li><a href="#">Support</a></li></ul></div>
+      <div class="footer-col"><h4>Legal</h4><ul class="footer-links"><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li><li><a href="#"><strong>GDPR</strong></a></li><li><a href="#"><strong>SOC 2</strong></a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2024 AI Supply Chain Risk Predictor. All rights reserved.</div>
+      <div class="footer-legal"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a><a href="#"><strong>GDPR</strong></a><a href="#"><strong>SOC 2</strong></a></div>
+    </div>
+  </footer>
+  <script>function toggleTheme(){document.body.style.filter=document.body.style.filter?'':'invert(1) hue-rotate(180deg)'}@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}</script>
+</body>
+</html>
