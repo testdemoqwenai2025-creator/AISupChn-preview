@@ -1,0 +1,15 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/about/page": "/about",
+  "/command-center/page": "/command-center",
+  "/customers/page": "/customers",
+  "/dashboard/page": "/dashboard",
+  "/events/page": "/events",
+  "/industries/page": "/industries",
+  "/intelligence/page": "/intelligence",
+  "/page": "/",
+  "/platform/page": "/platform",
+  "/product/page": "/product",
+  "/support/page": "/support"
+}

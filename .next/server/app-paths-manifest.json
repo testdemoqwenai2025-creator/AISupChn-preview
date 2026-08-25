@@ -1,0 +1,15 @@
+{
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/about/page": "app/about/page.js",
+  "/command-center/page": "app/command-center/page.js",
+  "/customers/page": "app/customers/page.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/events/page": "app/events/page.js",
+  "/industries/page": "app/industries/page.js",
+  "/intelligence/page": "app/intelligence/page.js",
+  "/page": "app/page.js",
+  "/platform/page": "app/platform/page.js",
+  "/product/page": "app/product/page.js",
+  "/support/page": "app/support/page.js"
+}
