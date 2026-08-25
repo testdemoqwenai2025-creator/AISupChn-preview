@@ -1,0 +1,1533 @@
+     1→<!DOCTYPE html>
+     2→<html lang="en">
+     3→<head>
+     4→  <meta charset="utf-8">
+     5→  <meta name="viewport" content="width=device-width, initial-scale=1">
+     6→  <title>NeuralChain AI | Enterprise Supply Chain Intelligence Platform</title>
+     7→  <style>
+     8→    /* ═══════════════════════════════════════════════════════════════
+     9→       NEURALCHAIN AI - VISUAL DESIGN SYSTEM v5.0
+    10→       "Cognitive Canvas" - Exceptional Left/Right Visual Architecture
+    11→       ═══════════════════════════════════════════════════════════════ */
+    12→    
+    13→    :root {
+    14→      --space-black: #030712;
+    15→      --void-deeper: #0a0f1e;
+    16→      --deep-cosmos: #0f172a;
+    17→      --nebula-blue: #1e293b;
+    18→      --neural-core: #6366f1;
+    19→      --synaptic-glow: #818cf8;
+    20→      --data-stream: #06b6d4;
+    21→      --quantum-emerald: #10b981;
+    22→      --predictive-amber: #f59e0b;
+    23→      --alert-ruby: #ef4444;
+    24→      --glass-bg: rgba(15, 23, 42, 0.75);
+    25→      --glass-border: rgba(99, 102, 241, 0.15);
+    26→      --glass-hover: rgba(99, 102, 241, 0.1);
+    27→      --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    28→      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    29→      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    30→      --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    31→    }
+    32→    
+    33→    [data-theme="light"] {
+    34→      --space-black: #f8fafc; --void-deeper: #f1f5f9; --deep-cosmos: #e2e8f0;
+    35→      --nebula-blue: #cbd5e1; --glass-bg: rgba(255, 255, 255, 0.85); --glass-border: rgba(99, 102, 241, 0.25);
+    36→    }
+    37→    
+    38→    * { margin: 0; padding: 0; box-sizing: border-box; }
+    39→    
+    40→    body {
+    41→      font-family: var(--font-display); background: var(--space-black); color: #f1f5f9;
+    42→      line-height: 1.6; overflow-x: hidden; transition: background 0.5s, color 0.5s;
+    43→    }
+    44→
+    45→    /* ═══════════════════════════════════════════════════════════════
+    46→       SCROLL PROGRESS BAR
+    47→       ═══════════════════════════════════════════════════════════════ */
+    48→    
+    49→    .scroll-progress {
+    50→      position: fixed; top: 72px; left: 0; width: 100%; height: 3px;
+    51→      background: rgba(99, 102, 241, 0.1); z-index: 9999;
+    52→    }
+    53→    .scroll-progress-bar {
+    54→      height: 100%; background: linear-gradient(90deg, var(--neural-core), var(--data-stream), var(--quantum-emerald));
+    55→      width: 0%; transition: width 0.1s linear;
+    56→      box-shadow: 0 0 10px var(--neural-core);
+    57→    }
+    58→
+    59→    /* ═══════════════════════════════════════════════════════════════
+    60→       QUANTUM RIBBON - HEADER WITH HOME BUTTON
+    61→       ═══════════════════════════════════════════════════════════════ */
+    62→    
+    63→    .quantum-ribbon {
+    64→      position: fixed; top: 0; left: 0; right: 0; z-index: 10000;
+    65→      background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%);
+    66→      border-bottom: 1px solid var(--glass-border); transition: all 0.4s var(--ease-smooth);
+    67→    }
+    68→    .quantum-ribbon::before {
+    69→      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+    70→      background: linear-gradient(90deg, transparent, var(--neural-core), var(--data-stream), var(--quantum-emerald), transparent);
+    71→      opacity: 0.6;
+    72→    }
+    73→    .quantum-ribbon::after {
+    74→      content: ''; position: absolute; bottom: -1px; left: 0; width: 100%; height: 2px;
+    75→      background: linear-gradient(90deg, transparent, var(--neural-core), var(--data-stream), var(--quantum-emerald), var(--neural-core), transparent);
+    76→      background-size: 200% 100%; animation: dataStreamFlow 4s linear infinite;
+    77→    }
+    78→    @keyframes dataStreamFlow { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+    79→    
+    80→    .ribbon-inner {
+    81→      max-width: 1600px; margin: 0 auto; padding: 0 2rem; height: 72px;
+    82→      display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+    83→    }
+    84→
+    85→    /* Brand */
+    86→    .brand-neural { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; text-decoration: none; }
+    87→    .brand-icon-container { position: relative; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; }
+    88→    .neural-core-icon {
+    89→      width: 40px; height: 40px; border-radius: 12px;
+    90→      background: linear-gradient(135deg, var(--neural-core), var(--data-stream));
+    91→      display: flex; align-items: center; justify-content: center; font-size: 20px;
+    92→      animation: neuralPulse 3s ease-in-out infinite;
+    93→      box-shadow: 0 0 20px rgba(99, 102, 241, 0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+    94→    }
+    95→    @keyframes neuralPulse {
+    96→      0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(99,102,241,0.4), 0 0 40px rgba(99,102,241,0.2); }
+    97→      50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(99,102,241,0.6), 0 0 60px rgba(99,102,241,0.3); }
+    98→    }
+    99→    .orbit-ring {
+   100→      position: absolute; width: 52px; height: 52px; border: 1px solid rgba(99, 102, 241, 0.3);
+   101→      border-radius: 50%; animation: orbitSpin 8s linear infinite;
+   102→    }
+   103→    .orbit-ring::before, .orbit-ring::after {
+   104→      content: ''; position: absolute; width: 4px; height: 4px; border-radius: 50%;
+   105→      background: var(--data-stream); box-shadow: 0 0 8px var(--data-stream);
+   106→    }
+   107→    .orbit-ring::before { top: 0; left: 50%; transform: translateX(-50%); }
+   108→    .orbit-ring::after { bottom: 0; right: 0; background: var(--quantum-emerald); box-shadow: 0 0 8px var(--quantum-emerald); }
+   109→    @keyframes orbitSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+   110→    .brand-text-group { display: flex; flex-direction: column; gap: 2px; }
+   111→    .brand-title {
+   112→      font-size: 1.125rem; font-weight: 700; letter-spacing: -0.02em;
+   113→      background: linear-gradient(135deg, #f1f5f9 0%, var(--synaptic-glow) 50%, var(--data-stream) 100%);
+   114→      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+   115→    }
+   116→    .brand-subtitle { font-size: 0.7rem; font-weight: 500; color: var(--data-stream); text-transform: uppercase; letter-spacing: 0.15em; font-family: var(--font-mono); }
+   117→
+   118→    /* Navigation */
+   119→    .nav-intelligence { display: flex; align-items: center; gap: 0.25rem; }
+   120→    .nav-link {
+   121→      position: relative; padding: 0.5rem 1rem; color: #94a3b8; text-decoration: none;
+   122→      font-size: 0.875rem; font-weight: 500; border-radius: 8px;
+   123→      transition: all 0.3s var(--ease-smooth); cursor: pointer; display: flex; align-items: center; gap: 0.25rem;
+   124→    }
+   125→    .nav-link::before {
+   126→      content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%) scaleX(0);
+   127→      width: 60%; height: 2px; background: linear-gradient(90deg, var(--neural-core), var(--data-stream));
+   128→      border-radius: 1px; transition: transform 0.3s var(--ease-smooth);
+   129→    }
+   130→    .nav-link:hover { color: #f1f5f9; background: var(--glass-hover); }
+   131→    .nav-link:hover::before { transform: translateX(-50%) scaleX(1); }
+   132→    .nav-link.active { color: var(--synaptic-glow); background: var(--glass-active); }
+   133→    .nav-link.active::before { transform: translateX(-50%) scaleX(1); }
+   134→
+   135→    /* Action Center with Home Button */
+   136→    .action-center { display: flex; align-items: center; gap: 0.75rem; }
+   137→    
+   138→    /* Home Button - Always Visible */
+   139→    .btn-home {
+   140→      padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600;
+   141→      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(6, 182, 212, 0.15));
+   142→      border: 1px solid rgba(16, 185, 129, 0.3); color: var(--quantum-emerald);
+   143→      cursor: pointer; text-decoration: none; transition: all 0.3s var(--ease-smooth);
+   144→      display: flex; align-items: center; gap: 0.5rem;
+   145→    }
+   146→    .btn-home:hover { background: rgba(16, 185, 129, 0.25); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); }
+   147→    
+   148→    /* Return/Back Button */
+   149→    .btn-return {
+   150→      padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600;
+   151→      background: transparent; border: 1px solid var(--glass-border); color: #94a3b8;
+   152→      cursor: pointer; text-decoration: none; transition: all 0.3s var(--ease-smooth);
+   153→      display: flex; align-items: center; gap: 0.5rem;
+   154→    }
+   155→    .btn-return:hover { background: var(--glass-hover); border-color: var(--neural-core); color: #f1f5f9; }
+   156→    
+   157→    .theme-quantum {
+   158→      position: relative; width: 48px; height: 28px; border-radius: 14px;
+   159→      background: linear-gradient(135deg, var(--nebula-blue), var(--deep-cosmos));
+   160→      border: 1px solid var(--glass-border); cursor: pointer; transition: all 0.4s var(--ease-smooth); overflow: hidden;
+   161→    }
+   162→    .theme-knob {
+   163→      position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%;
+   164→      background: linear-gradient(135deg, #fbbf24, #f59e0b); display: flex; align-items: center;
+   165→      justify-content: center; font-size: 12px; transition: all 0.4s var(--ease-bounce);
+   166→      box-shadow: 0 2px 8px rgba(251, 191, 36, 0.4); z-index: 1;
+   167→    }
+   168→    [data-theme="light"] .theme-knob { left: 23px; background: linear-gradient(135deg, #6366f1, #818cf8); box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4); }
+   169→    .theme-quantum:hover { border-color: var(--neural-core); box-shadow: 0 0 20px rgba(99, 102, 241, 0.2); }
+   170→    
+   171→    .btn-command {
+   172→      padding: 0.5rem 1.5rem; border-radius: 10px; font-size: 0.875rem; font-weight: 600;
+   173→      cursor: pointer; transition: all 0.3s var(--ease-smooth); text-decoration: none;
+   174→      display: flex; align-items: center; gap: 0.5rem;
+   175→    }
+   176→    .btn-ghost { background: transparent; border: 1px solid var(--glass-border); color: #f1f5f9; }
+   177→    .btn-ghost:hover { background: var(--glass-hover); border-color: var(--neural-core); }
+   178→    .btn-primary-quantum {
+   179→      background: linear-gradient(135deg, var(--neural-core), var(--data-stream)); border: none; color: white;
+   180→      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35);
+   181→    }
+   182→    .btn-primary-quantum:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(99, 102, 241, 0.45); }
+   183→
+   184→    /* Status Bar */
+   185→    .compute-status {
+   186→      display: flex; align-items: center; gap: 1.5rem; padding: 0.5rem 1rem;
+   187→      background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 10px;
+   188→      font-family: var(--font-mono); font-size: 0.7rem;
+   189→    }
+   190→    .status-item { display: flex; align-items: center; gap: 0.25rem; color: var(--quantum-emerald); }
+   191→    .status-value { color: #f1f5f9; font-weight: 600; }
+   192→    .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--quantum-emerald); box-shadow: 0 0 8px var(--quantum-emerald); animation: livePulse 2s ease-in-out infinite; }
+   193→    @keyframes livePulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.2); } }
+   194→
+   195→    /* Page Container */
+   196→    .page-spacer { height: 72px; }
+   197→    .page-section { min-height: calc(100vh - 72px); display: none; position: relative; overflow: hidden; }
+   198→    .page-section.active { display: block; animation: pageEnter 0.6s var(--ease-smooth); }
+   199→    @keyframes pageEnter { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+   200→
+   201→    /* ═══════════════════════════════════════════════════════════════
+   202→       COGNITIVE CANVAS - Left/Right Visual System
+   203→       "The Thought Process Made Visible"
+   204→       ═══════════════════════════════════════════════════════════════ */
+   205→    
+   206→    .cognitive-canvas {
+   207→      position: fixed; top: 72px; left: 0; right: 0; bottom: 0;
+   208→      pointer-events: none; z-index: 1;
+   209→    }
+   210→    
+   211→    /* Left Visual Panel - "The Input & Processing" */
+   212→    .visual-left {
+   213→      position: fixed; top: 72px; left: 0; width: 280px; height: calc(100vh - 72px);
+   214→      pointer-events: none; z-index: 2; overflow: hidden;
+   215→    }
+   216→    
+   217→    /* Right Visual Panel - "The Output & Intelligence" */
+   218→    .visual-right {
+   219→      position: fixed; top: 72px; right: 0; width: 280px; height: calc(100vh - 72px);
+   220→      pointer-events: none; z-index: 2; overflow: hidden;
+   221→    }
+   222→    
+   223→    /* Data Flow Visualization (Left Side) */
+   224→    .data-flow-container {
+   225→      width: 100%; height: 100%; position: relative;
+   226→      background: linear-gradient(180deg, transparent 0%, rgba(99, 102, 241, 0.03) 50%, transparent 100%);
+   227→    }
+   228→    
+   229→    /* Neural Nodes */
+   230→    .neural-node {
+   231→      position: absolute; width: 8px; height: 8px; border-radius: 50%;
+   232→      background: var(--neural-core); box-shadow: 0 0 15px var(--neural-core);
+   233→      animation: nodePulse 3s ease-in-out infinite;
+   234→    }
+   235→    @keyframes nodePulse { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.5); } }
+   236→    
+   237→    /* Connection Lines (SVG) */
+   238→    .connection-lines {
+   239→      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+   240→    }
+   241→    .connection-lines path {
+   242→      stroke: url(#lineGradient); stroke-width: 1; fill: none;
+   243→      stroke-dasharray: 5, 5; animation: dashMove 20s linear infinite;
+   244→    }
+   245→    @keyframes dashMove { to { stroke-dashoffset: -1000; } }
+   246→    
+   247→    /* Data Particles */
+   248→    .data-particle {
+   249→      position: absolute; width: 3px; height: 3px; border-radius: 50%;
+   250→      background: var(--data-stream); box-shadow: 0 0 8px var(--data-stream);
+   251→      animation: particleFlow 8s linear infinite;
+   252→    }
+   253→    @keyframes particleFlow {
+   254→      0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+   255→      10% { opacity: 1; }
+   256→      90% { opacity: 1; }
+   257→      100% { transform: translateY(-100px) translateX(50px); opacity: 0; }
+   258→    }
+   259→    
+   260→    /* Insight Visualization (Right Side) */
+   261→    .insight-container {
+   262→      width: 100%; height: 100%; position: relative;
+   263→      background: linear-gradient(180deg, transparent 0%, rgba(6, 182, 212, 0.03) 50%, transparent 100%);
+   264→    }
+   265→    
+   266→    /* Insight Orbs */
+   267→    .insight-orb {
+   268→      position: absolute; border-radius: 50%;
+   269→      background: radial-gradient(circle, var(--data-stream) 0%, transparent 70%);
+   270→      animation: orbFloat 6s ease-in-out infinite;
+   271→    }
+   272→    @keyframes orbFloat {
+   273→      0%, 100% { transform: scale(1) translateY(0); opacity: 0.3; }
+   274→      50% { transform: scale(1.2) translateY(-20px); opacity: 0.6; }
+   275→    }
+   276→    
+   277→    /* Prediction Waves */
+   278→    .prediction-wave {
+   279→      position: absolute; left: 50%; transform: translateX(-50%);
+   280→      width: 150px; height: 150px; border: 2px solid var(--quantum-emerald);
+   281→      border-radius: 50%; animation: waveExpand 4s ease-out infinite;
+   282→    }
+   283→    @keyframes waveExpand {
+   284→      0% { transform: translateX(-50%) scale(0.5); opacity: 0.8; }
+   285→      100% { transform: translateX(-50%) scale(2); opacity: 0; }
+   286→    }
+   287→    
+   288→    /* Hex Grid Pattern */
+   289→    .hex-grid {
+   290→      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+   291→      background-image: 
+   292→        linear-gradient(30deg, var(--glass-border) 12%, transparent 12.5%, transparent 87%, var(--glass-border) 87.5%, var(--glass-border)),
+   293→        linear-gradient(150deg, var(--glass-border) 12%, transparent 12.5%, transparent 87%, var(--glass-border) 87.5%, var(--glass-border)),
+   294→        linear-gradient(30deg, var(--glass-border) 12%, transparent 12.5%, transparent 87%, var(--glass-border) 87.5%, var(--glass-border)),
+   295→        linear-gradient(150deg, var(--glass-border) 12%, transparent 12.5%, transparent 87%, var(--glass-border) 87.5%, var(--glass-border));
+   296→      background-size: 80px 140px;
+   297→      background-position: 0 0, 0 0, 40px 70px, 40px 70px;
+   298→      opacity: 0.3;
+   299→    }
+   300→    
+   301→    /* Circuit Lines Pattern */
+   302→    .circuit-pattern {
+   303→      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+   304→      background-image:
+   305→        linear-gradient(90deg, transparent 95%, var(--neural-core) 95%, var(--neural-core) 100%),
+   306→        linear-gradient(0deg, transparent 95%, var(--neural-core) 95%, var(--neural-core) 100%);
+   307→      background-size: 60px 60px;
+   308→      opacity: 0.1;
+   309→    }
+   310→    
+   311→    /* Floating Icons */
+   312→    .float-icon {
+   313→      position: absolute; font-size: 1.5rem; opacity: 0.15;
+   314→      animation: floatIcon 10s ease-in-out infinite;
+   315→    }
+   316→    @keyframes floatIcon {
+   317→      0%, 100% { transform: translateY(0) rotate(0deg); }
+   318→      33% { transform: translateY(-20px) rotate(5deg); }
+   319→      66% { transform: translateY(10px) rotate(-3deg); }
+   320→    }
+   321→
+   322→    /* ═══════════════════════════════════════════════════════════════
+   323→       LANDING PAGE - Hero Section
+   324→       ═══════════════════════════════════════════════════════════════ */
+   325→    
+   326→    .landing-hero {
+   327→      min-height: calc(100vh - 72px); display: flex; align-items: center; justify-content: center;
+   328→      padding: 4rem 2rem; position: relative; z-index: 10;
+   329→      background: radial-gradient(ellipse at 30% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+   330→                radial-gradient(ellipse at 70% 50%, rgba(6, 182, 212, 0.06) 0%, transparent 50%),
+   331→                var(--space-black);
+   332→    }
+   333→    
+   334→    .hero-content {
+   335→      max-width: 900px; text-align: center; position: relative; z-index: 10;
+   336→    }
+   337→    
+   338→    .hero-badge {
+   339→      display: inline-flex; align-items: center; gap: 0.75rem;
+   340→      padding: 0.6rem 1.5rem; background: rgba(99, 102, 241, 0.1);
+   341→      border: 1px solid rgba(99, 102, 241, 0.25); border-radius: 9999px;
+   342→      font-size: 0.875rem; color: var(--synaptic-glow); margin-bottom: 2.5rem;
+   343→      animation: badgeFloat 3s ease-in-out infinite;
+   344→    }
+   345→    @keyframes badgeFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+   346→    
+   347→    .hero-title {
+   348→      font-size: clamp(2.5rem, 7vw, 5rem); font-weight: 800; line-height: 1.05;
+   349→      margin-bottom: 1.75rem; letter-spacing: -0.04em;
+   350→    }
+   351→    
+   352→    .gradient-text-hero {
+   353→      background: linear-gradient(135deg, var(--neural-core) 0%, var(--data-stream) 35%, var(--quantum-emerald) 70%, var(--predictive-amber) 100%);
+   354→      background-size: 200% auto;
+   355→      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+   356→      animation: gradientShift 5s ease infinite;
+   357→    }
+   358→    @keyframes gradientShift { 0% { background-position: 0% center; } 50% { background-position: 100% center; } 100% { background-position: 0% center; } }
+   359→    
+   360→    .hero-description {
+   361→      font-size: 1.3rem; color: #94a3b8; line-height: 1.8; margin-bottom: 3rem;
+   362→      max-width: 700px; margin-left: auto; margin-right: auto;
+   363→    }
+   364→    
+   365→    .hero-actions {
+   366→      display: flex; gap: 1.25rem; justify-content: center; flex-wrap: wrap; margin-bottom: 4rem;
+   367→    }
+   368→    
+   369→    .btn-hero {
+   370→      padding: 1.15rem 2.5rem; border-radius: 14px; font-size: 1.05rem; font-weight: 700;
+   371→      cursor: pointer; transition: all 0.4s var(--ease-smooth); text-decoration: none;
+   372→      display: inline-flex; align-items: center; gap: 0.75rem;
+   373→    }
+   374→    .btn-hero-primary {
+   375→      background: linear-gradient(135deg, var(--neural-core), var(--data-stream));
+   376→      color: white; border: none; box-shadow: 0 10px 40px rgba(99, 102, 241, 0.4);
+   377→    }
+   378→    .btn-hero-primary:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 15px 50px rgba(99, 102, 241, 0.5); }
+   379→    .btn-hero-secondary {
+   380→      background: rgba(255, 255, 255, 0.05); color: #f1f5f9;
+   381→      border: 2px solid var(--glass-border); backdrop-filter: blur(10px);
+   382→    }
+   383→    .btn-hero-secondary:hover { border-color: var(--neural-core); background: var(--glass-hover); transform: translateY(-4px); }
+   384→    
+   385→    /* Stats Row */
+   386→    .stats-row {
+   387→      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem;
+   388→      max-width: 750px; margin: 0 auto;
+   389→    }
+   390→    .stat-card {
+   391→      background: var(--glass-bg); backdrop-filter: blur(20px);
+   392→      border: 1px solid var(--glass-border); border-radius: 16px;
+   393→      padding: 1.75rem 1.25rem; text-align: center;
+   394→      transition: all 0.4s var(--ease-smooth); position: relative; overflow: hidden;
+   395→    }
+   396→    .stat-card::before {
+   397→      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+   398→      background: linear-gradient(90deg, var(--neural-core), var(--data-stream));
+   399→      transform: scaleX(0); transition: transform 0.4s var(--ease-smooth);
+   400→    }
+   401→    .stat-card:hover::before { transform: scaleX(1); }
+   402→    .stat-card:hover { transform: translateY(-6px); border-color: var(--neural-core); }
+   403→    .stat-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+   404→    .stat-value { font-size: 2rem; font-weight: 800; color: var(--quantum-emerald); }
+   405→    .stat-label { font-size: 0.8rem; color: #94a3b8; margin-top: 0.35rem; }
+   406→
+   407→    /* ═══════════════════════════════════════════════════════════════
+   408→       INNER PAGE LAYOUT (with side visuals)
+   409→       ═══════════════════════════════════════════════════════════════ */
+   410→    
+   411→    .inner-page-layout {
+   412→      min-height: calc(100vh - 72px); padding: 4rem 320px; position: relative; z-index: 10;
+   413→    }
+   414→    
+   415→    .section-header { text-align: center; margin-bottom: 4rem; }
+   416→    .section-badge {
+   417→      display: inline-flex; align-items: center; gap: 0.5rem;
+   418→      padding: 0.5rem 1.25rem; background: rgba(99, 102, 241, 0.1);
+   419→      border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 9999px;
+   420→      font-size: 0.85rem; color: var(--synaptic-glow); margin-bottom: 1.25rem;
+   421→    }
+   422→    .section-title {
+   423→      font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1.25rem;
+   424→    }
+   425→    .gradient-text-section {
+   426→      background: linear-gradient(135deg, var(--neural-core), var(--data-stream), var(--quantum-emerald));
+   427→      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+   428→    }
+   429→    .section-subtitle { font-size: 1.15rem; color: #94a3b8; max-width: 650px; margin: 0 auto; line-height: 1.75; }
+   430→
+   431→    /* Feature Cards */
+   432→    .features-grid {
+   433→      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+   434→      gap: 2rem; margin-top: 3rem;
+   435→    }
+   436→    .feature-card {
+   437→      background: var(--glass-bg); backdrop-filter: blur(20px);
+   438→      border: 1px solid var(--glass-border); border-radius: 20px;
+   439→      padding: 2rem; transition: all 0.4s var(--ease-smooth); position: relative; overflow: hidden;
+   440→    }
+   441→    .feature-card::before {
+   442→      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+   443→      background: linear-gradient(90deg, var(--neural-core), var(--data-stream));
+   444→      transform: scaleX(0); transition: transform 0.4s var(--ease-smooth);
+   445→    }
+   446→    .feature-card:hover::before { transform: scaleX(1); }
+   447→    .feature-card:hover { transform: translateY(-8px); border-color: var(--neural-core); box-shadow: 0 25px 50px rgba(0,0,0,0.3); }
+   448→    .feature-icon {
+   449→      width: 56px; height: 56px; border-radius: 14px;
+   450→      display: flex; align-items: center; justify-content: center;
+   451→      font-size: 1.75rem; margin-bottom: 1.5rem;
+   452→    }
+   453→    .feature-card h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; }
+   454→    .feature-card p { color: #94a3b8; font-size: 0.95rem; line-height: 1.7; }
+   455→
+   456→    /* Solution Cards */
+   457→    .solution-showcase { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin-top: 3rem; }
+   458→    .solution-card {
+   459→      background: linear-gradient(135deg, var(--glass-bg), rgba(99, 102, 241, 0.05));
+   460→      border: 1px solid var(--glass-border); border-radius: 24px;
+   461→      padding: 2.5rem; transition: all 0.4s var(--ease-smooth); position: relative; overflow: hidden;
+   462→    }
+   463→    .solution-card:hover { transform: translateY(-6px); border-color: var(--neural-core); }
+   464→    .solution-number {
+   465→      font-size: 5rem; font-weight: 900; opacity: 0.04; position: absolute; top: 1rem; right: 1.5rem;
+   466→      background: linear-gradient(135deg, var(--neural-core), var(--data-stream));
+   467→      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+   468→    }
+   469→    .solution-card h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; position: relative; }
+   470→    .solution-card p { color: #94a3b8; line-height: 1.7; margin-bottom: 1.5rem; position: relative; }
+   471→    .solution-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; position: relative; }
+   472→    .tag {
+   473→      padding: 0.4rem 0.9rem; background: rgba(99, 102, 241, 0.1);
+   474→      border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 9999px;
+   475→      font-size: 0.75rem; color: var(--synaptic-glow);
+   476→    }
+   477→
+   478→    /* Capabilities Layout */
+   479→    .capabilities-layout { display: grid; grid-template-columns: 1fr 380px; gap: 3rem; margin-top: 3rem; align-items: start; }
+   480→    .capability-list { display: flex; flex-direction: column; gap: 1.25rem; }
+   481→    .capability-item {
+   482→      display: flex; gap: 1.25rem; padding: 1.5rem;
+   483→      background: var(--glass-bg); border: 1px solid var(--glass-border);
+   484→      border-radius: 16px; transition: all 0.3s var(--ease-smooth); cursor: pointer;
+   485→    }
+   486→    .capability-item:hover, .capability-item.active { border-color: var(--neural-core); background: rgba(99, 102, 241, 0.08); }
+   487→    .capability-icon {
+   488→      width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0;
+   489→      display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+   490→    }
+   491→    .capability-info h4 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.35rem; }
+   492→    .capability-info p { font-size: 0.85rem; color: #94a3b8; }
+   493→    .capability-detail {
+   494→      position: sticky; top: 96px; background: var(--glass-bg);
+   495→      border: 1px solid var(--glass-border); border-radius: 24px; padding: 2.5rem;
+   496→    }
+   497→    .detail-header h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+   498→    .detail-header p { color: #94a3b8; }
+   499→    .detail-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 2rem 0; }
+   500→    .metric-box {
+   501→      background: rgba(99, 102, 241, 0.08); border: 1px solid rgba(99, 102, 241, 0.15);
+   502→      border-radius: 12px; padding: 1.25rem; text-align: center;
+   503→    }
+   504→    .metric-value { font-size: 1.75rem; font-weight: 800; color: var(--data-stream); }
+   505→    .metric-label { font-size: 0.75rem; color: #94a3b8; margin-top: 0.25rem; }
+   506→    .detail-list { list-style: none; }
+   507→    .detail-list li { padding: 0.75rem 0; border-bottom: 1px solid var(--glass-border); display: flex; align-items: center; gap: 0.75rem; font-size: 0.9rem; }
+   508→    .detail-list li:last-child { border-bottom: none; }
+   509→    .check-icon { color: var(--quantum-emerald); font-weight: bold; }
+   510→
+   511→    /* Enterprise Features */
+   512→    .enterprise-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin-top: 3rem; }
+   513→    .enterprise-feature {
+   514→      display: flex; gap: 1.5rem; padding: 2rem;
+   515→      background: var(--glass-bg); border: 1px solid var(--glass-border);
+   516→      border-radius: 20px; transition: all 0.3s var(--ease-smooth);
+   517→    }
+   518→    .enterprise-feature:hover { border-color: var(--quantum-emerald); }
+   519→    .enterprise-icon {
+   520→      width: 64px; height: 64px; border-radius: 16px; flex-shrink: 0;
+   521→      display: flex; align-items: center; justify-content: center; font-size: 1.75rem;
+   522→    }
+   523→    .enterprise-content h4 { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; }
+   524→    .enterprise-content p { color: #94a3b8; font-size: 0.9rem; line-height: 1.6; }
+   525→
+   526→    /* Resources Grid */
+   527→    .resources-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+   528→    .resource-card {
+   529→      background: var(--glass-bg); border: 1px solid var(--glass-border);
+   530→      border-radius: 16px; padding: 1.75rem; transition: all 0.3s var(--ease-smooth); cursor: pointer;
+   531→    }
+   532→    .resource-card:hover { border-color: var(--data-stream); transform: translateY(-4px); }
+   533→    .resource-icon { font-size: 2rem; margin-bottom: 1rem; }
+   534→    .resource-card h4 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
+   535→    .resource-card p { font-size: 0.875rem; color: #94a3b8; margin-bottom: 1rem; }
+   536→    .resource-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: var(--data-stream); }
+   537→
+   538→    /* Pricing Cards */
+   539→    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem; max-width: 1100px; margin-left: auto; margin-right: auto; }
+   540→    .pricing-card {
+   541→      background: var(--glass-bg); border: 1px solid var(--glass-border);
+   542→      border-radius: 24px; padding: 2.5rem 2rem; transition: all 0.4s var(--ease-smooth); position: relative;
+   543→    }
+   544→    .pricing-card.featured { border-color: var(--neural-core); transform: scale(1.05); }
+   545→    .pricing-card.featured::before {
+   546→      content: 'POPULAR'; position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+   547→      background: linear-gradient(135deg, var(--neural-core), var(--data-stream));
+   548→      color: white; padding: 0.35rem 1.25rem; border-radius: 9999px;
+   549→      font-size: 0.75rem; font-weight: 700;
+   550→    }
+   551→    .pricing-card:hover { transform: translateY(-8px); }
+   552→    .pricing-card.featured:hover { transform: scale(1.05) translateY(-8px); }
+   553→    .pricing-tier { font-size: 0.9rem; color: var(--neural-core); font-weight: 600; margin-bottom: 0.5rem; }
+   554→    .pricing-price { font-size: 3rem; font-weight: 800; margin-bottom: 0.5rem; }
+   555→    .pricing-price span { font-size: 1rem; color: #94a3b8; font-weight: 400; }
+   556→    .pricing-desc { color: #94a3b8; margin-bottom: 1.75rem; }
+   557→    .pricing-features { list-style: none; margin-bottom: 2rem; }
+   558→    .pricing-features li { padding: 0.6rem 0; border-bottom: 1px solid var(--glass-border); font-size: 0.9rem; display: flex; align-items: center; gap: 0.75rem; }
+   559→    .pricing-features li::before { content: '✓'; color: var(--quantum-emerald); font-weight: bold; }
+   560→    .btn-pricing { width: 100%; padding: 1rem; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s; border: none; font-size: 1rem; }
+   561→    .btn-pricing-primary { background: linear-gradient(135deg, var(--neural-core), var(--data-stream)); color: white; }
+   562→    .btn-pricing-outline { background: transparent; color: #f1f5f9; border: 2px solid var(--glass-border); }
+   563→    .btn-pricing-outline:hover { border-color: var(--neural-core); }
+   564→
+   565→    /* CTA Section */
+   566→    .cta-section {
+   567→      margin-top: 6rem; padding: 4rem 2rem;
+   568→      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(6, 182, 212, 0.05));
+   569→      border: 1px solid var(--glass-border); border-radius: 32px; text-align: center;
+   570→    }
+   571→    .cta-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; }
+   572→    .cta-description { font-size: 1.125rem; color: #94a3b8; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+   573→
+   574→    /* Footer */
+   575→    .footer { margin-top: 6rem; padding: 4rem 2rem 2rem; border-top: 1px solid var(--glass-border); position: relative; z-index: 10; }
+   576→    .footer-grid {
+   577→      max-width: 1400px; margin: 0 auto;
+   578→      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem;
+   579→    }
+   580→    .footer-brand { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; }
+   581→    .footer-col h5 { font-weight: 600; margin-bottom: 1rem; font-size: 0.9rem; }
+   582→    .footer-links { list-style: none; }
+   583→    .footer-links li { margin-bottom: 0.5rem; }
+   584→    .footer-links a { color: #94a3b8; text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+   585→    .footer-links a:hover { color: var(--synaptic-glow); }
+   586→    .footer-bottom {
+   587→      max-width: 1400px; margin: 0 auto; padding-top: 2rem; border-top: 1px solid var(--glass-border);
+   588→      display: flex; justify-content: space-between; align-items: center; font-size: 0.875rem; color: #94a3b8;
+   589→    }
+   590→    .footer-legal { display: flex; gap: 1.5rem; }
+   591→    .footer-legal a { color: #94a3b8; text-decoration: none; }
+   592→    .footer-legal a:hover { color: var(--quantum-emerald); }
+   593→
+   594→    /* Toast Notification */
+   595→    .toast-notification {
+   596→      position: fixed; bottom: 24px; right: 24px;
+   597→      background: linear-gradient(135deg, var(--neural-core), var(--data-stream));
+   598→      color: white; padding: 16px 28px; border-radius: 14px;
+   599→      font-weight: 600; box-shadow: 0 10px 40px rgba(99, 102, 241, 0.4);
+   600→      transform: translateY(120px); opacity: 0; transition: all 0.4s var(--ease-bounce); z-index: 99999;
+   601→    }
+   602→    .toast-notification.show { transform: translateY(0); opacity: 1; }
+   603→
+   604→    /* Neural Background */
+   605→    .neural-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
+   606→    .neuron {
+   607→      position: absolute; width: 4px; height: 4px; border-radius: 50%;
+   608→      background: var(--neural-core); opacity: 0.2; animation: neuronFloat 25s linear infinite;
+   609→    }
+   610→    @keyframes neuronFloat {
+   611→      0% { transform: translateY(100vh) scale(0) rotate(0deg); opacity: 0; }
+   612→      10% { opacity: 0.2; }
+   613→      90% { opacity: 0.2; }
+   614→      100% { transform: translateY(-100vh) scale(1) rotate(720deg); opacity: 0; }
+   615→    }
+   616→
+   617→    /* Responsive */
+   618→    @media (max-width: 1400px) {
+   619→      .visual-left, .visual-right { width: 220px; }
+   620→      .inner-page-layout { padding: 4rem 260px; }
+   621→    }
+   622→    @media (max-width: 1200px) {
+   623→      .compute-status { display: none; }
+   624→      .visual-left, .visual-right { display: none; }
+   625→      .inner-page-layout { padding: 4rem 2rem; }
+   626→      .capabilities-layout { grid-template-columns: 1fr; }
+   627→      .capability-detail { position: static; }
+   628→    }
+   629→    @media (max-width: 900px) {
+   630→      .nav-intelligence { display: none; }
+   631→      .ribbon-inner { padding: 0 1rem; gap: 1rem; }
+   632→      .solution-showcase, .enterprise-grid { grid-template-columns: 1fr; }
+   633→      .resources-grid { grid-template-columns: 1fr 1fr; }
+   634→      .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
+   635→      .pricing-card.featured { transform: scale(1); }
+   636→      .pricing-card.featured:hover { transform: translateY(-8px); }
+   637→      .stats-row { grid-template-columns: repeat(2, 1fr); }
+   638→      .footer-grid { grid-template-columns: 1fr 1fr; }
+   639→    }
+   640→    @media (max-width: 640px) {
+   641→      .brand-subtitle { display: none; }
+   642→      .btn-command span { display: none; }
+   643→      .btn-command { padding: 0.5rem; }
+   644→      .stats-row { grid-template-columns: 1fr 1fr; gap: 1rem; }
+   645→      .resources-grid { grid-template-columns: 1fr; }
+   646→      .footer-grid { grid-template-columns: 1fr; }
+   647→      .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+   648→      .hero-actions { flex-direction: column; align-items: stretch; }
+   649→    }
+   650→  </style>
+   651→</head>
+   652→<body>
+   653→
+   654→  <!-- Neural Background -->
+   655→  <div class="neural-bg" id="neuralBg"></div>
+   656→
+   657→  <!-- Scroll Progress Bar -->
+   658→  <div class="scroll-progress"><div class="scroll-progress-bar" id="scrollBar"></div></div>
+   659→
+   660→  <!-- ═══════════════════════════════════════════════════════════════
+   661→       QUANTUM RIBBON - UNIFIED HEADER WITH NAVIGATION
+   662→       ═══════════════════════════════════════════════════════════════ -->
+   663→  
+   664→  <header class="quantum-ribbon" id="quantumRibbon">
+   665→    <div class="ribbon-inner">
+   666→      
+   667→      <!-- Brand -->
+   668→      <a href="#" class="brand-neural" onclick="showPage('landing'); return false;">
+   669→        <div class="brand-icon-container">
+   670→          <div class="orbit-ring"></div>
+   671→          <div class="neural-core-icon">🧠</div>
+   672→        </div>
+   673→        <div class="brand-text-group">
+   674→          <span class="brand-title">NeuralChain AI</span>
+   675→          <span class="brand-subtitle">Supply Chain Intelligence</span>
+   676→        </div>
+   677→      </a>
+   678→      
+   679→      <!-- Navigation -->
+   680→      <nav class="nav-intelligence">
+   681→        <a class="nav-link active" data-page="landing" onclick="showPage('landing')">Home</a>
+   682→        <a class="nav-link" data-page="solutions" onclick="showPage('solutions')">Solutions <span class="live-dot"></span></a>
+   683→        <a class="nav-link" data-page="capabilities" onclick="showPage('capabilities')">Capabilities</a>
+   684→        <a class="nav-link" data-page="enterprise" onclick="showPage('enterprise')">Enterprise</a>
+   685→        <a class="nav-link" data-page="resources" onclick="showPage('resources')">Resources</a>
+   686→        <a class="nav-link" data-page="pricing" onclick="showPage('pricing')">Pricing</a>
+   687→      </nav>
+   688→      
+   689→      <!-- Status -->
+   690→      <div class="compute-status">
+   691→        <div class="status-item"><span>AI:</span><span class="status-value">LIVE</span></div>
+   692→        <div class="status-item"><span>Risk:</span><span class="status-value">23</span></div>
+   693→        <div class="status-item"><span>Latency:</span><span class="status-value">&lt;5ms</span></div>
+   694→      </div>
+   695→      
+   696→      <!-- Actions: Home + Return + Theme + CTA -->
+   697→      <div class="action-center">
+   698→        
+   699→        <!-- Home Button (Always visible on inner pages) -->
+   700→        <button class="btn-home" id="homeBtn" onclick="showPage('landing')" title="Return to Home">
+   701→          🏠 Home
+   702→        </button>
+   703→        
+   704→        <!-- Return Button (visible on inner pages) -->
+   705→        <button class="btn-return" id="returnBtn" onclick="goBack()" title="Go Back">
+   706→          ← Back
+   707→        </button>
+   708→        
+   709→        <!-- Theme Toggle -->
+   710→        <button class="theme-quantum" onclick="toggleTheme()" title="Toggle theme">
+   711→          <div class="theme-knob" id="themeKnob">☀️</div>
+   712→        </button>
+   713→        
+   714→        <!-- CTA -->
+   715→        <a href="#" class="btn-command btn-primary-quantum" onclick="showToast('Launching platform demo')">
+   716→          Launch Demo →
+   717→        </a>
+   718→        
+   719→      </div>
+   720→    </div>
+   721→  </header>
+   722→
+   723→  <div class="page-spacer"></div>
+   724→
+   725→  <!-- ═══════════════════════════════════════════════════════════════
+   726→       COGNITIVE CANVAS - Left/Right Visual System
+   727→       ═══════════════════════════════════════════════════════════════ -->
+   728→  
+   729→  <div class="visual-left" id="visualLeft">
+   730→    <div class="data-flow-container">
+   731→      <!-- Hex Grid Pattern -->
+   732→      <div class="hex-grid"></div>
+   733→      
+   734→      <!-- Circuit Pattern -->
+   735→      <div class="circuit-pattern"></div>
+   736→      
+   737→      <!-- SVG Connection Lines -->
+   738→      <svg class="connection-lines" viewBox="0 0 280 800">
+   739→        <defs>
+   740→          <linearGradient id="lineGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+   741→            <stop offset="0%" style="stop-color:#6366f1;stop-opacity:0" />
+   742→            <stop offset="50%" style="stop-color:#6366f1;stop-opacity:1" />
+   743→            <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0" />
+   744→          </linearGradient>
+   745→        </defs>
+   746→        <path d="M70,0 Q140,200 70,400 T70,800" />
+   747→        <path d="M140,0 Q70,200 140,400 T140,800" />
+   748→        <path d="M210,0 Q280,200 210,400 T210,800" />
+   749→        <path d="M35,100 Q175,300 35,500 T35,700" />
+   750→        <path d="M245,100 Q105,300 245,500 T245,700" />
+   751→      </svg>
+   752→      
+   753→      <!-- Neural Nodes -->
+   754→      <div class="neural-node" style="top: 15%; left: 20%;"></div>
+   755→      <div class="neural-node" style="top: 25%; left: 65%; animation-delay: 0.5s;"></div>
+   756→      <div class="neural-node" style="top: 40%; left: 35%; animation-delay: 1s;"></div>
+   757→      <div class="neural-node" style="top: 55%; left: 75%; animation-delay: 1.5s;"></div>
+   758→      <div class="neural-node" style="top: 70%; left: 45%; animation-delay: 2s;"></div>
+   759→      <div class="neural-node" style="top: 85%; left: 25%; animation-delay: 2.5s;"></div>
+   760→      
+   761→      <!-- Data Particles -->
+   762→      <div class="data-particle" style="left: 15%; animation-delay: 0s;"></div>
+   763→      <div class="data-particle" style="left: 40%; animation-delay: 2s;"></div>
+   764→      <div class="data-particle" style="left: 65%; animation-delay: 4s;"></div>
+   765→      <div class="data-particle" style="left: 85%; animation-delay: 6s;"></div>
+   766→      
+   767→      <!-- Floating Icons - Representing Data Input -->
+   768→      <div class="float-icon" style="top: 10%; left: 10%;">📊</div>
+   769→      <div class="float-icon" style="top: 30%; left: 80%; animation-delay: 2s;">🔍</div>
+   770→      <div class="float-icon" style="top: 55%; left: 15%; animation-delay: 4s;">📡</div>
+   771→      <div class="float-icon" style="top: 75%; left: 70%; animation-delay: 6s;">⚙️</div>
+   772→      <div class="float-icon" style="top: 90%; left: 40%; animation-delay: 8s;">💾</div>
+   773→    </div>
+   774→  </div>
+   775→  
+   776→  <div class="visual-right" id="visualRight">
+   777→    <div class="insight-container">
+   778→      <!-- Hex Grid Pattern -->
+   779→      <div class="hex-grid"></div>
+   780→      
+   781→      <!-- Prediction Waves -->
+   782→      <div class="prediction-wave" style="top: 20%;"></div>
+   783→      <div class="prediction-wave" style="top: 20%; animation-delay: 1.3s;"></div>
+   784→      <div class="prediction-wave" style="top: 20%; animation-delay: 2.6s;"></div>
+   785→      
+   786→      <div class="prediction-wave" style="top: 55%;"></div>
+   787→      <div class="prediction-wave" style="top: 55%; animation-delay: 1.3s;"></div>
+   788→      <div class="prediction-wave" style="top: 55%; animation-delay: 2.6s;"></div>
+   789→      
+   790→      <!-- Insight Orbs -->
+   791→      <div class="insight-orb" style="width: 100px; height: 100px; top: 15%; left: 20%;"></div>
+   792→      <div class="insight-orb" style="width: 60px; height: 60px; top: 45%; left: 60%; animation-delay: 2s;"></div>
+   793→      <div class="insight-orb" style="width: 80px; height: 80px; top: 70%; left: 25%; animation-delay: 4s;"></div>
+   794→      
+   795→      <!-- Floating Icons - Representing Intelligence Output -->
+   796→      <div class="float-icon" style="top: 12%; left: 15%; animation-delay: 1s;">🎯</div>
+   797→      <div class="float-icon" style="top: 32%; left: 75%; animation-delay: 3s;">🔮</div>
+   798→      <div class="float-icon" style="top: 52%; left: 20%; animation-delay: 5s;">💡</div>
+   799→      <div class="float-icon" style="top: 72%; left: 65%; animation-delay: 7s;">🛡️</div>
+   800→      <div class="float-icon" style="top: 88%; left: 35%; animation-delay: 9s;">✨</div>
+   801→    </div>
+   802→  </div>
+   803→
+   804→  <!-- ═══════════════════════════════════════════════════════════════
+   805→       PAGE: LANDING (Home)
+   806→       ═══════════════════════════════════════════════════════════════ -->
+   807→  
+   808→  <section class="page-section active" id="page-landing">
+   809→    <div class="landing-hero">
+   810→      <div class="hero-content">
+   811→        
+   812→        <div class="hero-badge">
+   813→          <span class="live-dot"></span>
+   814→          Next-Gen AI Supply Chain Intelligence Platform
+   815→        </div>
+   816→        
+   817→        <h1 class="hero-title">
+   818→          Predict Disruptions Before They
+   819→          <br>
+   820→          <span class="gradient-text-hero">Impact Your Supply Chain</span>
+   821→        </h1>
+   822→        
+   823→        <p class="hero-description">
+   824→          Enterprise-grade AI platform harnessing <strong style="color:var(--neural-core)">neural networks</strong>, 
+   825→          <strong style="color:var(--data-stream)">real-time data streams</strong>, and 
+   826→          <strong style="color:var(--quantum-emerald)">computational intelligence</strong> to deliver 
+   827→          <strong>94% prediction accuracy</strong> across <strong style="color:var(--predictive-amber)">190+ countries</strong>.
+   828→        </p>
+   829→        
+   830→        <div class="hero-actions">
+   831→          <a href="#" class="btn-hero btn-hero-primary" onclick="showPage('solutions')">
+   832→            🚀 Explore Solutions →
+   833→          </a>
+   834→          <a href="#" class="btn-hero btn-hero-secondary" onclick="showPage('capabilities')">
+   835→            ⚡ View Capabilities
+   836→          </a>
+   837→        </div>
+   838→        
+   839→        <div class="stats-row">
+   840→          <div class="stat-card" onclick="showToast('Viewing prediction accuracy details')">
+   841→            <div class="stat-icon">🎯</div>
+   842→            <div class="stat-value">94%</div>
+   843→            <div class="stat-label">Prediction Accuracy</div>
+   844→          </div>
+   845→          <div class="stat-card" onclick="showToast('Viewing global coverage map')">
+   846→            <div class="stat-icon">🌍</div>
+   847→            <div class="stat-value">190+</div>
+   848→            <div class="stat-label">Countries Covered</div>
+   849→          </div>
+   850→          <div class="stat-card" onclick="showToast('Viewing alert response metrics')">
+   851→            <div class="stat-icon">⚡</div>
+   852→            <div class="stat-value">&lt;5min</div>
+   853→            <div class="stat-label">Alert Response Time</div>
+   854→          </div>
+   855→          <div class="stat-card" onclick="showToast('Viewing risk mitigation stats')">
+   856→            <div class="stat-icon">💰</div>
+   857→            <div class="stat-value">$12B+</div>
+   858→            <div class="stat-label">Risk Mitigated</div>
+   859→          </div>
+   860→        </div>
+   861→        
+   862→      </div>
+   863→    </div>
+   864→  </section>
+   865→
+   866→  <!-- ═══════════════════════════════════════════════════════════════
+   867→       PAGE: SOLUTIONS
+   868→       ═══════════════════════════════════════════════════════════════ -->
+   869→  
+   870→  <section class="page-section" id="page-solutions">
+   871→    <div class="inner-page-layout">
+   872→      
+   873→      <div class="section-header">
+   874→        <div class="section-badge">🎯 Solutions</div>
+   875→        <h2 class="section-title">AI-Powered Solutions for<br><span class="gradient-text-section">Every Supply Chain Challenge</span></h2>
+   876→        <p class="section-subtitle">Comprehensive solutions leveraging advanced AI to transform your supply chain resilience and operational excellence.</p>
+   877→      </div>
+   878→      
+   879→      <div class="solution-showcase">
+   880→        
+   881→        <div class="solution-card" onclick="showToast('Exploring Risk Prediction Solution')">
+   882→          <div class="solution-number">01</div>
+   883→          <h3>Predictive Risk Intelligence</h3>
+   884→          <p>Advanced machine learning models analyze 10,000+ data points to predict supply chain disruptions up to 30 days in advance with unprecedented accuracy.</p>
+   885→          <div class="solution-tags">
+   886→            <span class="tag">🤖 Deep Learning</span>
+   887→            <span class="tag">📊 Real-time Analytics</span>
+   888→            <span class="tag">🔮 Forecasting</span>
+   889→          </div>
+   890→        </div>
+   891→        
+   892→        <div class="solution-card" onclick="showToast('Exploring Supplier Management Solution')">
+   893→          <div class="solution-number">02</div>
+   894→          <h3>Supplier Network Optimization</h3>
+   895→          <p>AI-driven supplier relationship management with continuous monitoring, risk scoring, and automated compliance verification across your entire supplier ecosystem.</p>
+   896→          <div class="solution-tags">
+   897→            <span class="tag">🔍 Visibility</span>
+   898→            <span class="tag">⚖️ Compliance</span>
+   899→            <span class="tag">📈 Performance</span>
+   900→          </div>
+   901→        </div>
+   902→        
+   903→        <div class="solution-card" onclick="showToast('Exploring Demand Planning Solution')">
+   904→          <div class="solution-number">03</div>
+   905→          <h3>Demand Sensing & Planning</h3>
+   906→          <p>Neural network-powered demand forecasting that integrates market signals, weather patterns, economic indicators, and consumer behavior for precision planning.</p>
+   907→          <div class="solution-tags">
+   908→            <span class="tag">📉 ML Models</span>
+   909→            <span class="tag">🌡️ External Data</span>
+   910→            <span class="tag">🎯 Accuracy</span>
+   911→          </div>
+   912→        </div>
+   913→        
+   914→        <div class="solution-card" onclick="showToast('Exploring Logistics Optimization Solution')">
+   915→          <div class="solution-number">04</div>
+   916→          <h3>Logistics & Route Intelligence</h3>
+   917→          <p>Real-time logistics optimization using reinforcement learning to dynamically adjust routes, modes, and carriers based on conditions, costs, and carbon footprint.</p>
+   918→          <div class="solution-tags">
+   919→            <span class="tag">🚛 Fleet Mgmt</span>
+   920→            <span class="tag">🗺️ Routing</span>
+   921→            <span class="tag">♻️ Sustainability</span>
+   922→          </div>
+   923→        </div>
+   924→        
+   925→      </div>
+   926→      
+   927→      <div class="cta-section">
+   928→        <h3 class="cta-title">Ready to Transform Your Supply Chain?</h3>
+   929→        <p class="cta-description">Schedule a personalized demo to see how our AI solutions can address your specific challenges.</p>
+   930→        <a href="#" class="btn-hero btn-hero-primary" onclick="showToast('Scheduling solution consultation')">Schedule Consultation →</a>
+   931→      </div>
+   932→      
+   933→    </div>
+   934→  </section>
+   935→
+   936→  <!-- ═══════════════════════════════════════════════════════════════
+   937→       PAGE: CAPABILITIES
+   938→       ═══════════════════════════════════════════════════════════════ -->
+   939→  
+   940→  <section class="page-section" id="page-capabilities">
+   941→    <div class="inner-page-layout">
+   942→      
+   943→      <div class="section-header">
+   944→        <div class="section-badge">⚡ Capabilities</div>
+   945→        <h2 class="section-title">Advanced AI/ML Capabilities<br><span class="gradient-text-section">Powering Intelligent Decisions</span></h2>
+   946→        <p class="section-subtitle">Cutting-edge artificial intelligence and machine learning technologies that form the foundation of our platform.</p>
+   947→      </div>
+   948→      
+   949→      <div class="capabilities-layout">
+   950→        
+   951→        <div class="capability-list">
+   952→          
+   953→          <div class="capability-item active" onclick="selectCapability(this, 'nlp')">
+   954→            <div class="capability-icon" style="background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(99,102,241,0.1))">💬</div>
+   955→            <div class="capability-info">
+   956→              <h4>Natural Language Processing</h4>
+   957→              <p>Extract insights from unstructured text data worldwide</p>
+   958→            </div>
+   959→          </div>
+   960→          
+   961→          <div class="capability-item" onclick="selectCapability(this, 'computer-vision')">
+   962→            <div class="capability-icon" style="background:linear-gradient(135deg,rgba(6,182,212,0.2),rgba(6,182,212,0.1))">👁️</div>
+   963→            <div class="capability-info">
+   964→              <h4>Computer Vision Analytics</h4>
+   965→              <p>Visual data analysis for quality control & monitoring</p>
+   966→            </div>
+   967→          </div>
+   968→          
+   969→          <div class="capability-item" onclick="selectCapability(this, 'time-series')">
+   970→            <div class="capability-icon" style="background:linear-gradient(135deg,rgba(16,185,129,0.2),rgba(16,185,129,0.1))">📈</div>
+   971→            <div class="capability-info">
+   972→              <h4>Time Series Forecasting</h4>
+   973→              <p>Advanced temporal pattern recognition & prediction</p>
+   974→            </div>
+   975→          </div>
+   976→          
+   977→          <div class="capability-item" onclick="selectCapability(this, 'graph-networks')">
+   978→            <div class="capability-icon" style="background:linear-gradient(135deg,rgba(245,158,11,0.2),rgba(245,158,11,0.1))">🕸️</div>
+   979→            <div class="capability-info">
+   980→              <h4>Graph Neural Networks</h4>
+   981→              <p>Model complex relationships in supply networks</p>
+   982→            </div>
+   983→          </div>
+   984→          
+   985→          <div class="capability-item" onclick="selectCapability(this, 'reinforcement')">
+   986→            <div class="capability-icon" style="background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(239,68,68,0.1))">🎮</div>
+   987→            <div class="capability-info">
+   988→              <h4>Reinforcement Learning</h4>
+   989→              <p>Autonomous decision optimization in dynamic environments</p>
+   990→            </div>
+   991→          </div>
+   992→          
+   993→          <div class="capability-item" onclick="selectCapability(this, 'explainability')">
+   994→            <div class="capability-icon" style="background:linear-gradient(135deg,rgba(139,92,246,0.2),rgba(139,92,246,0.1))">🔬</div>
+   995→            <div class="capability-info">
+   996→              <h4>SHAP Explainability</h4>
+   997→              <p>Transparent AI decisions with interpretable insights</p>
+   998→            </div>
+   999→          </div>
+  1000→          
+  1001→        </div>
+  1002→        
+  1003→        <div class="capability-detail" id="capabilityDetail">
+  1004→          <div class="detail-header">
+  1005→            <h3>Natural Language Processing</h3>
+  1006→            <p>Advanced NLP capabilities processing global multilingual content</p>
+  1007→          </div>
+  1008→          <div class="detail-metrics">
+  1009→            <div class="metric-box"><div class="metric-value">50+</div><div class="metric-label">Languages Supported</div></div>
+  1010→            <div class="metric-box"><div class="metric-value">99.2%</div><div class="metric-label">Sentiment Accuracy</div></div>
+  1011→            <div class="metric-box"><div class="metric-value">&lt;100ms</div><div class="metric-label">Processing Time</div></div>
+  1012→            <div class="metric-box"><div class="metric-value">1M+</div><div class="metric-label">Docs Processed Daily</div></div>
+  1013→          </div>
+  1014→          <ul class="detail-list">
+  1015→            <li><span class="check-icon">✓</span> Multi-language news & social media analysis</li>
+  1016→            <li><span class="check-icon">✓</span> Entity extraction & relationship mapping</li>
+  1017→            <li><span class="check-icon">✓</span> Sentiment analysis & trend detection</li>
+  1018→            <li><span class="check-icon">✓</span> Automated report generation</li>
+  1019→            <li><span class="check-icon">✓</span> Real-time alert classification</li>
+  1020→          </ul>
+  1021→        </div>
+  1022→        
+  1023→      </div>
+  1024→      
+  1025→    </div>
+  1026→  </section>
+  1027→
+  1028→  <!-- ═══════════════════════════════════════════════════════════════
+  1029→       PAGE: ENTERPRISE
+  1030→       ═══════════════════════════════════════════════════════════════ -->
+  1031→  
+  1032→  <section class="page-section" id="page-enterprise">
+  1033→    <div class="inner-page-layout">
+  1034→      
+  1035→      <div class="section-header">
+  1036→        <div class="section-badge">🏢 Enterprise</div>
+  1037→        <h2 class="section-title">Built for Enterprise<br><span class="gradient-text-section">Scale & Security</span></h2>
+  1038→        <p class="section-subtitle">Enterprise-grade features designed for Fortune 500 companies requiring maximum reliability, security, and scalability.</p>
+  1039→      </div>
+  1040→      
+  1041→      <div class="enterprise-grid">
+  1042→        
+  1043→        <div class="enterprise-feature" onclick="showToast('Learning about Security & Compliance')">
+  1044→          <div class="enterprise-icon" style="background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(99,102,241,0.1))">🔒</div>
+  1045→          <div class="enterprise-content">
+  1046→            <h4>Enterprise Security & Compliance</h4>
+  1047→            <p>SOC 2 Type II certified, GDPR compliant, with end-to-end encryption, SSO integration, and audit logging. Meets the strictest enterprise security requirements.</p>
+  1048→          </div>
+  1049→        </div>
+  1050→        
+  1051→        <div class="enterprise-feature" onclick="showToast('Learning about Scalability')">
+  1052→          <div class="enterprise-icon" style="background:linear-gradient(135deg,rgba(6,182,212,0.2),rgba(6,182,212,0.1))">📊</div>
+  1053→          <div class="enterprise-content">
+  1054→            <h4>Infinite Scalability</h4>
+  1055→            <p>Cloud-native architecture handling millions of transactions daily. Auto-scaling infrastructure ensures performance during peak demand without manual intervention.</p>
+  1056→          </div>
+  1057→        </div>
+  1058→        
+  1059→        <div class="enterprise-feature" onclick="showToast('Learning about Integration')">
+  1060→          <div class="enterprise-icon" style="background:linear-gradient(135deg,rgba(16,185,129,0.2),rgba(16,185,129,0.1))">🔗</div>
+  1061→          <div class="enterprise-content">
+  1062→            <h4>Seamless Integration</h4>
+  1063→            <p>Pre-built connectors for SAP, Oracle, Salesforce, Microsoft Dynamics, and 50+ enterprise systems. RESTful APIs and webhooks for custom integrations.</p>
+  1064→          </div>
+  1065→        </div>
+  1066→        
+  1067→        <div class="enterprise-feature" onclick="showToast('Learning about Support')">
+  1068→          <div class="enterprise-icon" style="background:linear-gradient(135deg,rgba(245,158,11,0.2),rgba(245,158,11,0.1))">🛟</div>
+  1069→          <div class="enterprise-content">
+  1070→            <h4>Dedicated Success Team</h4>
+  1071→            <p>24/7 premium support with dedicated customer success managers, onboarding specialists, and solution architects ensuring your success at every stage.</p>
+  1072→          </div>
+  1073→        </div>
+  1074→        
+  1075→        <div class="enterprise-feature" onclick="showToast('Learning about Customization')">
+  1076→          <div class="enterprise-icon" style="background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(239,68,68,0.1))">⚙️</div>
+  1077→          <div class="enterprise-content">
+  1078→            <h4>White-Label & Customization</h4>
+  1079→            <p>Fully customizable dashboards, reports, and branding options. Embed our intelligence into your existing portals with SDK support.</p>
+  1080→          </div>
+  1081→        </div>
+  1082→        
+  1083→        <div class="enterprise-feature" onclick="showToast('Learning about SLA')">
+  1084→          <div class="enterprise-icon" style="background:linear-gradient(135deg,rgba(139,92,246,0.2),rgba(139,92,246,0.1))">📋</div>
+  1085→          <div class="enterprise-content">
+  1086→            <h4>Guaranteed SLAs</h4>
+  1087→            <p>99.99% uptime guarantee with financial backing. Performance credits for any downtime. Priority incident response within 15 minutes.</p>
+  1088→          </div>
+  1089→        </div>
+  1090→        
+  1091→      </div>
+  1092→      
+  1093→      <div class="cta-section">
+  1094→        <h3 class="cta-title">Enterprise-Ready from Day One</h3>
+  1095→        <p class="cta-description">Join leading Fortune 500 companies trusting NeuralChain AI for their supply chain intelligence needs.</p>
+  1096→        <a href="#" class="btn-hero btn-hero-primary" onclick="showToast('Contacting enterprise sales')">Talk to Sales →</a>
+  1097→      </div>
+  1098→      
+  1099→    </div>
+  1100→  </section>
+  1101→
+  1102→  <!-- ═══════════════════════════════════════════════════════════════
+  1103→       PAGE: RESOURCES
+  1104→       ═══════════════════════════════════════════════════════════════ -->
+  1105→  
+  1106→  <section class="page-section" id="page-resources">
+  1107→    <div class="inner-page-layout">
+  1108→      
+  1109→      <div class="section-header">
+  1110→        <div class="section-badge">📚 Resources</div>
+  1111→        <h2 class="section-title">Resources to Accelerate<br><span class="gradient-text-section">Your AI Journey</span></h2>
+  1112→        <p class="section-subtitle">Comprehensive documentation, guides, tools, and learning materials to maximize value from our platform.</p>
+  1113→      </div>
+  1114→      
+  1115→      <div class="resources-grid">
+  1116→        
+  1117→        <div class="resource-card" onclick="showToast('Opening Documentation')">
+  1118→          <div class="resource-icon">📖</div>
+  1119→          <h4>Documentation</h4>
+  1120→          <p>Complete API references, integration guides, and technical documentation.</p>
+  1121→          <div class="resource-meta"><span>500+ Articles</span><span>→</span></div>
+  1122→        </div>
+  1123→        
+  1124→        <div class="resource-card" onclick="showToast('Opening API Reference')">
+  1125→          <div class="resource-icon">🔌</div>
+  1126→          <h4>API Reference</h4>
+  1127→          <p>RESTful API documentation with interactive examples and code samples.</p>
+  1128→          <div class="resource-meta"><span>v3.0 Stable</span><span>→</span></div>
+  1129→        </div>
+  1130→        
+  1131→        <div class="resource-card" onclick="showToast('Opening Tutorials')">
+  1132→          <div class="resource-icon">🎓</div>
+  1133→          <h4>Tutorials & Guides</h4>
+  1134→          <p>Step-by-step tutorials for common use cases and implementation patterns.</p>
+  1135→          <div class="resource-meta"><span>50+ Tutorials</span><span>→</span></div>
+  1136→        </div>
+  1137→        
+  1138→        <div class="resource-card" onclick="showToast('Opening Case Studies')">
+  1139→          <div class="resource-icon">📊</div>
+  1140→          <h4>Case Studies</h4>
+  1141→          <p>Real-world success stories from enterprises using our platform.</p>
+  1142→          <div class="resource-meta"><span>25+ Stories</span><span>→</span></div>
+  1143→        </div>
+  1144→        
+  1145→        <div class="resource-card" onclick="showToast('Opening Webinars')">
+  1146→          <div class="resource-icon">🎥</div>
+  1147→          <h4>Webinars & Events</h4>
+  1148→          <p>Live and recorded sessions featuring industry experts and product deep-dives.</p>
+  1149→          <div class="resource-meta"><span>Monthly Events</span><span>→</span></div>
+  1150→        </div>
+  1151→        
+  1152→        <div class="resource-card" onclick="showToast('Opening Community')">
+  1153→          <div class="resource-icon">👥</div>
+  1154→          <h4>Community Forum</h4>
+  1155→          <p>Connect with peers, share best practices, and get help from the community.</p>
+  1156→          <div class="resource-meta"><span>10K+ Members</span><span>→</span></div>
+  1157→        </div>
+  1158→        
+  1159→        <div class="resource-card" onclick="showToast('Opening SDK Downloads')">
+  1160→          <div class="resource-icon">📦</div>
+  1161→          <h4>SDK & Libraries</h4>
+  1162→          <p>Official SDKs for Python, JavaScript, Java, Go, and more.</p>
+  1163→          <div class="resource-meta"><span>8 Languages</span><span>→</span></div>
+  1164→        </div>
+  1165→        
+  1166→        <div class="resource-card" onclick="showToast('Opening Status Page')">
+  1167→          <div class="resource-icon">🟢</div>
+  1168→          <h4>Status & Uptime</h4>
+  1169→          <p>Real-time system status, incident history, and maintenance schedules.</p>
+  1170→          <div class="resource-meta"><span>99.99% Uptime</span><span>→</span></div>
+  1171→        </div>
+  1172→        
+  1173→        <div class="resource-card" onclick="showToast('Opening Changelog')">
+  1174→          <div class="resource-icon">📝</div>
+  1175→          <h4>Changelog</h4>
+  1176→          <p>Stay updated with the latest features, improvements, and fixes.</p>
+  1177→          <div class="resource-meta"><span>Updated Weekly</span><span>→</span></div>
+  1178→        </div>
+  1179→        
+  1180→      </div>
+  1181→      
+  1182→    </div>
+  1183→  </section>
+  1184→
+  1185→  <!-- ═══════════════════════════════════════════════════════════════
+  1186→       PAGE: PRICING
+  1187→       ═══════════════════════════════════════════════════════════════ -->
+  1188→  
+  1189→  <section class="page-section" id="page-pricing">
+  1190→    <div class="inner-page-layout">
+  1191→      
+  1192→      <div class="section-header">
+  1193→        <div class="section-badge">💰 Pricing</div>
+  1194→        <h2 class="section-title">Simple, Transparent<br><span class="gradient-text-section">Pricing Plans</span></h2>
+  1195→        <p class="section-subtitle">Choose the plan that fits your organization's needs. All plans include core AI features.</p>
+  1196→      </div>
+  1197→      
+  1198→      <div class="pricing-grid">
+  1199→        
+  1200→        <div class="pricing-card">
+  1201→          <div class="pricing-tier">STARTER</div>
+  1202→          <div class="pricing-price">$499<span>/mo</span></div>
+  1203→          <div class="pricing-desc">Perfect for small teams getting started with supply chain visibility.</div>
+  1204→          <ul class="pricing-features">
+  1205→            <li>Up to 500 suppliers</li>
+  1206→            <li>Basic risk scoring</li>
+  1207→            <li>Email alerts</li>
+  1208→            <li>Standard reports</li>
+  1209→            <li>Email support</li>
+  1210→          </ul>
+  1211→          <button class="btn-pricing btn-pricing-outline" onclick="showToast('Starting Starter trial')">Start Free Trial</button>
+  1212→        </div>
+  1213→        
+  1214→        <div class="pricing-card featured">
+  1215→          <div class="pricing-tier">ENTERPRISE</div>
+  1216→          <div class="pricing-price">$2,499<span>/mo</span></div>
+  1217→          <div class="pricing-desc">For organizations requiring advanced AI and unlimited scale.</div>
+  1218→          <ul class="pricing-features">
+  1219→            <li>Unlimited suppliers</li>
+  1220→            <li>Advanced AI predictions</li>
+  1221→            <li>Real-time alerts (&lt;5 min)</li>
+  1222→            <li>Custom dashboards</li>
+  1223→            <li>API access + webhooks</li>
+  1224→            <li>Dedicated success manager</li>
+  1225→            <li>SLA guarantee (99.99%)</li>
+  1226→          </ul>
+  1227→          <button class="btn-pricing btn-pricing-primary" onclick="showToast('Requesting Enterprise demo')">Request Demo</button>
+  1228→        </div>
+  1229→        
+  1230→        <div class="pricing-card">
+  1231→          <div class="pricing-tier">BUSINESS</div>
+  1232→          <div class="pricing-price">$1,299<span>/mo</span></div>
+  1233→          <div class="pricing-desc">Growing teams that need more power and customization.</div>
+  1234→          <ul class="pricing-features">
+  1235→            <li>Up to 5,000 suppliers</li>
+  1236→            <li>AI risk predictions</li>
+  1237→            <li>Multi-channel alerts</li>
+  1238→            <li>Advanced analytics</li>
+  1239→            <li>Priority support</li>
+  1240→          </ul>
+  1241→          <button class="btn-pricing btn-pricing-outline" onclick="showToast('Starting Business trial')">Start Free Trial</button>
+  1242→        </div>
+  1243→        
+  1244→      </div>
+  1245→      
+  1246→    </div>
+  1247→  </section>
+  1248→
+  1249→  <!-- ═══════════════════════════════════════════════════════════════
+  1250→       FOOTER
+  1251→       ═══════════════════════════════════════════════════════════════ -->
+  1252→  
+  1253→  <footer class="footer">
+  1254→    <div class="footer-grid">
+  1255→      <div>
+  1256→        <div class="footer-brand">🧠 NeuralChain AI</div>
+  1257→        <p style="color: #94a3b8; font-size: 0.875rem; max-width: 280px; margin-top: 0.75rem;">
+  1258→          Enterprise-grade AI supply chain risk prediction platform.
+  1259→        </p>
+  1260→      </div>
+  1261→      <div class="footer-col">
+  1262→        <h5>Product</h5>
+  1263→        <ul class="footer-links">
+  1264→          <li><a href="#" onclick="showPage('landing')">Platform</a></li>
+  1265→          <li><a href="#" onclick="showPage('solutions')">Solutions</a></li>
+  1266→          <li><a href="#" onclick="showPage('capabilities')">Capabilities</a></li>
+  1267→          <li><a href="#" onclick="showPage('pricing')">Pricing</a></li>
+  1268→        </ul>
+  1269→      </div>
+  1270→      <div class="footer-col">
+  1271→        <h5>Company</h5>
+  1272→        <ul class="footer-links">
+  1273→          <li><a href="#" onclick="showToast('Opening About Us')">About Us</a></li>
+  1274→          <li><a href="#" onclick="showToast('Opening Careers')">Careers</a></li>
+  1275→          <li><a href="#" onclick="showToast('Opening Contact')">Contact</a></li>
+  1276→          <li><a href="#" onclick="showToast('Opening Partners')">Partners</a></li>
+  1277→        </ul>
+  1278→      </div>
+  1279→      <div class="footer-col">
+  1280→        <h5>Resources</h5>
+  1281→        <ul class="footer-links">
+  1282→          <li><a href="#" onclick="showPage('resources')">Documentation</a></li>
+  1283→          <li><a href="#" onclick="showToast('Opening API')">API Reference</a></li>
+  1284→          <li><a href="#" onclick="showToast('Opening Guides')">Guides</a></li>
+  1285→          <li><a href="#" onclick="showToast('Opening Blog')">Blog</a></li>
+  1286→        </ul>
+  1287→      </div>
+  1288→      <div class="footer-col">
+  1289→        <h5>Legal</h5>
+  1290→        <ul class="footer-links">
+  1291→          <li><a href="#" onclick="showToast('Opening Privacy Policy')">Privacy Policy</a></li>
+  1292→          <li><a href="#" onclick="showToast('Opening Terms of Service')">Terms of Service</a></li>
+  1293→          <li><a href="#" onclick="showToast('Opening GDPR Compliance')"><strong>GDPR</strong></a></li>
+  1294→          <li><a href="#" onclick="showToast('Opening SOC 2 Report')"><strong>SOC 2</strong></a></li>
+  1295→        </ul>
+  1296→      </div>
+  1297→    </div>
+  1298→    <div class="footer-bottom">
+  1299→      <div>© 2024 NeuralChain AI. All rights reserved.</div>
+  1300→      <div class="footer-legal">
+  1301→        <a href="#" onclick="showToast('Opening Privacy Policy')">Privacy Policy</a>
+  1302→        <a href="#" onclick="showToast('Opening Terms of Service')">Terms of Service</a>
+  1303→        <a href="#" onclick="showToast('Opening GDPR Compliance')"><strong>GDPR</strong></a>
+  1304→        <a href="#" onclick="showToast('Opening SOC 2 Report')"><strong>SOC 2</strong></a>
+  1305→      </div>
+  1306→    </div>
+  1307→  </footer>
+  1308→
+  1309→  <!-- Toast Notification -->
+  1310→  <div id="toast" class="toast-notification"></div>
+  1311→
+  1312→  <script>
+  1313→    // Theme Management
+  1314→    let isDark = true;
+  1315→    function toggleTheme() {
+  1316→      isDark = !isDark;
+  1317→      document.body.setAttribute('data-theme', isDark ? '' : 'light');
+  1318→      document.getElementById('themeKnob').textContent = isDark ? '☀️' : '🌙';
+  1319→      localStorage.setItem('neural-theme', isDark ? 'dark' : 'light');
+  1320→      showToast(`Switched to ${isDark ? 'Quantum Dark' : 'Cosmic Light'} mode`);
+  1321→    }
+  1322→    if (localStorage.getItem('neural-theme') === 'light') toggleTheme();
+  1323→
+  1324→    // Navigation History for Back Button
+  1325→    let pageHistory = ['landing'];
+  1326→    let currentPage = 'landing';
+  1327→
+  1328→    // Page Navigation
+  1329→    function showPage(pageId) {
+  1330→      // Update history (don't duplicate)
+  1331→      if (pageHistory[pageHistory.length - 1] !== pageId) {
+  1332→        pageHistory.push(pageId);
+  1333→      }
+  1334→      
+  1335→      currentPage = pageId;
+  1336→      
+  1337→      // Hide all pages
+  1338→      document.querySelectorAll('.page-section').forEach(page => page.classList.remove('active'));
+  1339→      
+  1340→      // Show selected page
+  1341→      const targetPage = document.getElementById('page-' + pageId);
+  1342→      if (targetPage) targetPage.classList.add('active');
+  1343→      
+  1344→      // Update nav links
+  1345→      document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+  1346→      document.querySelector(`[data-page="${pageId}"]`)?.classList.add('active');
+  1347→      
+  1348→      // Show/hide navigation buttons based on page
+  1349→      updateNavButtons(pageId);
+  1350→      
+  1351→      // Scroll to top
+  1352→      window.scrollTo({ top: 0, behavior: 'smooth' });
+  1353→      
+  1354→      showToast(`Navigated to ${pageId.charAt(0).toUpperCase() + pageId.slice(1)}`);
+  1355→    }
+  1356→
+  1357→    // Update Navigation Buttons Visibility
+  1358→    function updateNavButtons(pageId) {
+  1359→      const homeBtn = document.getElementById('homeBtn');
+  1360→      const returnBtn = document.getElementById('returnBtn');
+  1361→      
+  1362→      if (pageId === 'landing') {
+  1363→        // On landing page, hide home button, hide return button
+  1364→        homeBtn.style.display = 'none';
+  1365→        returnBtn.style.display = 'none';
+  1366→      } else {
+  1367→        // On inner pages, show both
+  1368→        homeBtn.style.display = 'flex';
+  1369→        returnBtn.style.display = 'flex';
+  1370→      }
+  1371→    }
+  1372→
+  1373→    // Go Back Function
+  1374→    function goBack() {
+  1375→      if (pageHistory.length > 1) {
+  1376→        // Remove current page from history
+  1377→        pageHistory.pop();
+  1378→        // Get previous page
+  1379→        const previousPage = pageHistory[pageHistory.length - 1];
+  1380→        showPage(previousPage);
+  1381→      } else {
+  1382→        // If no history, go to landing
+  1383→        showPage('landing');
+  1384→      }
+  1385→    }
+  1386→
+  1387→    // Capability Selection
+  1388→    const capabilityData = {
+  1389→      'nlp': {
+  1390→        title: 'Natural Language Processing',
+  1391→        desc: 'Advanced NLP capabilities processing global multilingual content',
+  1392→        metrics: [
+  1393→          { value: '50+', label: 'Languages Supported' },
+  1394→          { value: '99.2%', label: 'Sentiment Accuracy' },
+  1395→          { value: '<100ms', label: 'Processing Time' },
+  1396→          { value: '1M+', label: 'Docs Processed Daily' }
+  1397→        ],
+  1398→        items: ['Multi-language news & social media analysis', 'Entity extraction & relationship mapping', 'Sentiment analysis & trend detection', 'Automated report generation', 'Real-time alert classification']
+  1399→      },
+  1400→      'computer-vision': {
+  1401→        title: 'Computer Vision Analytics',
+  1402→        desc: 'Visual data analysis for quality control and monitoring systems',
+  1403→        metrics: [
+  1404→          { value: '99.8%', label: 'Detection Accuracy' },
+  1405→          { value: '<50ms', label: 'Inference Time' },
+  1406→          { value: '4K', label: 'Max Resolution' },
+  1407→          { value: '24/7', label: 'Monitoring' }
+  1408→        ],
+  1409→        items: ['Automated defect detection', 'Inventory level monitoring', 'Safety compliance verification', 'Document digitization & OCR', 'Video analytics for logistics']
+  1410→      },
+  1411→      'time-series': {
+  1412→        title: 'Time Series Forecasting',
+  1413→        desc: 'Advanced temporal pattern recognition and predictive modeling',
+  1414→        metrics: [
+  1415→          { value: '94%', label: 'Forecast Accuracy' },
+  1416→          { value: '30 days', label: 'Prediction Window' },
+  1417→          { value: '1000+', label: 'Data Points Analyzed' },
+  1418→          { value: 'Real-time', label: 'Updates' }
+  1419→        ],
+  1420→        items: ['Demand forecasting', 'Seasonality detection', 'Anomaly identification', 'Trend analysis', 'What-if scenario modeling']
+  1421→      },
+  1422→      'graph-networks': {
+  1423→        title: 'Graph Neural Networks',
+  1424→        desc: 'Model complex relationships in multi-tier supply networks',
+  1425→        metrics: [
+  1426→          { value: '10M+', label: 'Nodes Processed' },
+  1427→          { value: '100M+', label: 'Relationships Mapped' },
+  1428→          { value: 'Deep', label: 'Network Analysis' },
+  1429→          { value: 'Auto', label: 'Discovery' }
+  1430→        ],
+  1431→        items: ['Supplier dependency mapping', 'Risk propagation analysis', 'Alternative path identification', 'Network optimization', 'Cascade failure prediction']
+  1432→      },
+  1433→      'reinforcement': {
+  1434→        title: 'Reinforcement Learning',
+  1435→        desc: 'Autonomous decision optimization in dynamic environments',
+  1436→        metrics: [
+  1437→          { value: '23%', label: 'Cost Reduction' },
+  1438→          { value: 'Real-time', label: 'Decision Making' },
+  1439→          { value: 'Adaptive', label: 'Learning' },
+  1440→          { value: 'Safe', label: 'Constraints' }
+  1441→        ],
+  1442→        items: ['Dynamic route optimization', 'Inventory rebalancing', 'Supplier selection automation', 'Resource allocation', 'Emergency response planning']
+  1443→      },
+  1444→      'explainability': {
+  1445→        title: 'SHAP Explainability',
+  1446→        desc: 'Transparent AI decisions with interpretable insights',
+  1447→        metrics: [
+  1448→          { value: '100%', label: 'Explainable' },
+  1449→          { value: 'SHAP', label: 'Methodology' },
+  1450→          { value: 'Visual', label: 'Reports' },
+  1451→          { value: 'Audit', label: 'Ready' }
+  1452→        ],
+  1453→        items: ['Feature importance ranking', 'Decision factor breakdown', 'Confidence intervals', 'Counterfactual explanations', 'Regulatory compliance support']
+  1454→      }
+  1455→    };
+  1456→
+  1457→    function selectCapability(element, capabilityKey) {
+  1458→      document.querySelectorAll('.capability-item').forEach(item => item.classList.remove('active'));
+  1459→      element.classList.add('active');
+  1460→      
+  1461→      const data = capabilityData[capabilityKey];
+  1462→      if (data) {
+  1463→        const detail = document.getElementById('capabilityDetail');
+  1464→        detail.innerHTML = `
+  1465→          <div class="detail-header">
+  1466→            <h3>${data.title}</h3>
+  1467→            <p>${data.desc}</p>
+  1468→          </div>
+  1469→          <div class="detail-metrics">
+  1470→            ${data.metrics.map(m => `<div class="metric-box"><div class="metric-value">${m.value}</div><div class="metric-label">${m.label}</div></div>`).join('')}
+  1471→          </div>
+  1472→          <ul class="detail-list">${data.items.map(item => `<li><span class="check-icon">✓</span> ${item}</li>`).join('')}</ul>
+  1473→        `;
+  1474→      }
+  1475→      showToast(`Viewing: ${data.title}`);
+  1476→    }
+  1477→
+  1478→    // Toast System
+  1479→    function showToast(message) {
+  1480→      const toast = document.getElementById('toast');
+  1481→      toast.textContent = message;
+  1482→      toast.classList.add('show');
+  1483→      setTimeout(() => toast.classList.remove('show'), 3000);
+  1484→    }
+  1485→
+  1486→    // Scroll Progress Bar
+  1487→    function updateScrollProgress() {
+  1488→      const scrollTop = window.pageYOffset;
+  1489→      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  1490→      const scrollPercent = (scrollTop / docHeight) * 100;
+  1491→      document.getElementById('scrollBar').style.width = scrollPercent + '%';
+  1492→    }
+  1493→
+  1494→    // Neural Background
+  1495→    function initNeuralBackground() {
+  1496→      const container = document.getElementById('neuralBg');
+  1497→      for (let i = 0; i < 25; i++) {
+  1498→        const neuron = document.createElement('div');
+  1499→        neuron.className = 'neuron';
+  1500→        neuron.style.left = Math.random() * 100 + '%';
+  1501→        neuron.style.animationDelay = Math.random() * 25 + 's';
+  1502→        neuron.style.animationDuration = (20 + Math.random() * 10) + 's';
+  1503→        const colors = ['#6366f1', '#06b6d4', '#10b981', '#818cf8'];
+  1504→        neuron.style.background = colors[Math.floor(Math.random() * colors.length)];
+  1505→        container.appendChild(neuron);
+  1506→      }
+  1507→    }
+  1508→
+  1509→    // Header Scroll Effect
+  1510→    function initHeaderScroll() {
+  1511→      const ribbon = document.getElementById('quantumRibbon');
+  1512→      window.addEventListener('scroll', () => {
+  1513→        if (window.pageYOffset > 100) {
+  1514→          ribbon.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.3)';
+  1515→        } else {
+  1516→          ribbon.style.boxShadow = 'none';
+  1517→        }
+  1518→        updateScrollProgress();
+  1519→      });
+  1520→    }
+  1521→
+  1522→    // Initialize
+  1523→    document.addEventListener('DOMContentLoaded', () => {
+  1524→      initNeuralBackground();
+  1525→      initHeaderScroll();
+  1526→      updateNavButtons('landing'); // Initial state
+  1527→      console.log('%c⚡ NeuralChain AI Platform v5.0 Initialized', 'color: #6366f1; font-size: 14px; font-weight: bold;');
+  1528→    });
+  1529→  </script>
+  1530→
+  1531→</body>
+  1532→</html>
+  1533→

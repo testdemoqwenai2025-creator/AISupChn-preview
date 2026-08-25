@@ -1,0 +1,502 @@
+     1→     1→<!DOCTYPE html>
+     2→     2→<html lang="en">
+     3→     3→<head>
+     4→     4→  <meta charset="utf-8">
+     5→     5→  <meta name="viewport" content="width=device-width, initial-scale=1">
+     6→     6→  <title>NeuralChain AI | Enterprise Supply Chain Intelligence Platform</title>
+     7→     7→  <style>
+     8→     8→    /* ═══════════════════════════════════════════════════════════════
+     9→     9→       NEURALCHAIN AI - VISUAL DESIGN SYSTEM v5.0
+    10→    10→       "Cognitive Canvas" - Exceptional Left/Right Visual Architecture
+    11→    11→       ═══════════════════════════════════════════════════════════════ */
+    12→    12→    
+    13→    13→    :root {
+    14→    14→      --space-black: #030712;
+    15→    15→      --void-deeper: #0a0f1e;
+    16→    16→      --deep-cosmos: #0f172a;
+    17→    17→      --nebula-blue: #1e293b;
+    18→    18→      --neural-core: #6366f1;
+    19→    19→      --synaptic-glow: #818cf8;
+    20→    20→      --data-stream: #06b6d4;
+    21→    21→      --quantum-emerald: #10b981;
+    22→    22→      --predictive-amber: #f59e0b;
+    23→    23→      --alert-ruby: #ef4444;
+    24→    24→      --glass-bg: rgba(15, 23, 42, 0.75);
+    25→    25→      --glass-border: rgba(99, 102, 241, 0.15);
+    26→    26→      --glass-hover: rgba(99, 102, 241, 0.1);
+    27→    27→      --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    28→    28→      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    29→    29→      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    30→    30→      --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    31→    31→    }
+    32→    32→    
+    33→    33→    [data-theme="light"] {
+    34→    34→      --space-black: #f8fafc; --void-deeper: #f1f5f9; --deep-cosmos: #e2e8f0;
+    35→    35→      --nebula-blue: #cbd5e1; --glass-bg: rgba(255, 255, 255, 0.85); --glass-border: rgba(99, 102, 241, 0.25);
+    36→    36→    }
+    37→    37→    
+    38→    38→    * { margin: 0; padding: 0; box-sizing: border-box; }
+    39→    39→    
+    40→    40→    body {
+    41→    41→      font-family: var(--font-display); background: var(--space-black); color: #f1f5f9;
+    42→    42→      line-height: 1.6; overflow-x: hidden; transition: background 0.5s, color 0.5s;
+    43→    43→    }
+    44→    44→
+    45→    45→    /* ═══════════════════════════════════════════════════════════════
+    46→    46→       SCROLL PROGRESS BAR
+    47→    47→       ═══════════════════════════════════════════════════════════════ */
+    48→    48→    
+    49→    49→    .scroll-progress {
+    50→    50→      position: fixed; top: 72px; left: 0; width: 100%; height: 3px;
+    51→    51→      background: rgba(99, 102, 241, 0.1); z-index: 9999;
+    52→    52→    }
+    53→    53→    .scroll-progress-bar {
+    54→    54→      height: 100%; background: linear-gradient(90deg, var(--neural-core), var(--data-stream), var(--quantum-emerald));
+    55→    55→      width: 0%; transition: width 0.1s linear;
+    56→    56→      box-shadow: 0 0 10px var(--neural-core);
+    57→    57→    }
+    58→    58→
+    59→    59→    /* ═══════════════════════════════════════════════════════════════
+    60→    60→       QUANTUM RIBBON - HEADER WITH HOME BUTTON
+    61→    61→       ═══════════════════════════════════════════════════════════════ */
+    62→    62→    
+    63→    63→    .quantum-ribbon {
+    64→    64→      position: fixed; top: 0; left: 0; right: 0; z-index: 10000;
+    65→    65→      background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%);
+    66→    66→      border-bottom: 1px solid var(--glass-border); transition: all 0.4s var(--ease-smooth);
+    67→    67→    }
+    68→    68→    .quantum-ribbon::before {
+    69→    69→      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+    70→    70→      background: linear-gradient(90deg, transparent, var(--neural-core), var(--data-stream), var(--quantum-emerald), transparent);
+    71→    71→      opacity: 0.6;
+    72→    72→    }
+    73→    73→    .quantum-ribbon::after {
+    74→    74→      content: ''; position: absolute; bottom: -1px; left: 0; width: 100%; height: 2px;
+    75→    75→      background: linear-gradient(90deg, transparent, var(--neural-core), var(--data-stream), var(--quantum-emerald), var(--neural-core), transparent);
+    76→    76→      background-size: 200% 100%; animation: dataStreamFlow 4s linear infinite;
+    77→    77→    }
+    78→    78→    @keyframes dataStreamFlow { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+    79→    79→    
+    80→    80→    .ribbon-inner {
+    81→    81→      max-width: 1600px; margin: 0 auto; padding: 0 2rem; height: 72px;
+    82→    82→      display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+    83→    83→    }
+    84→    84→
+    85→    85→    /* Brand */
+    86→    86→    .brand-neural { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; text-decoration: none; }
+    87→    87→    .brand-icon-container { position: relative; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; }
+    88→    88→    .neural-core-icon {
+    89→    89→      width: 40px; height: 40px; border-radius: 12px;
+    90→    90→      background: linear-gradient(135deg, var(--neural-core), var(--data-stream));
+    91→    91→      display: flex; align-items: center; justify-content: center; font-size: 20px;
+    92→    92→      animation: neuralPulse 3s ease-in-out infinite;
+    93→    93→      box-shadow: 0 0 20px rgba(99, 102, 241, 0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+    94→    94→    }
+    95→    95→    @keyframes neuralPulse {
+    96→    96→      0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(99,102,241,0.4), 0 0 40px rgba(99,102,241,0.2); }
+    97→    97→      50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(99,102,241,0.6), 0 0 60px rgba(99,102,241,0.3); }
+    98→    98→    }
+    99→    99→    .orbit-ring {
+   100→   100→      position: absolute; width: 52px; height: 52px; border: 1px solid rgba(99, 102, 241, 0.3);
+   101→   101→      border-radius: 50%; animation: orbitSpin 8s linear infinite;
+   102→   102→    }
+   103→   103→    .orbit-ring::before, .orbit-ring::after {
+   104→   104→      content: ''; position: absolute; width: 4px; height: 4px; border-radius: 50%;
+   105→   105→      background: var(--data-stream); box-shadow: 0 0 8px var(--data-stream);
+   106→   106→    }
+   107→   107→    .orbit-ring::before { top: 0; left: 50%; transform: translateX(-50%); }
+   108→   108→    .orbit-ring::after { bottom: 0; right: 0; background: var(--quantum-emerald); box-shadow: 0 0 8px var(--quantum-emerald); }
+   109→   109→    @keyframes orbitSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+   110→   110→    .brand-text-group { display: flex; flex-direction: column; gap: 2px; }
+   111→   111→    .brand-title {
+   112→   112→      font-size: 1.125rem; font-weight: 700; letter-spacing: -0.02em;
+   113→   113→      background: linear-gradient(135deg, #f1f5f9 0%, var(--synaptic-glow) 50%, var(--data-stream) 100%);
+   114→   114→      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+   115→   115→    }
+   116→   116→    .brand-subtitle { font-size: 0.7rem; font-weight: 500; color: var(--data-stream); text-transform: uppercase; letter-spacing: 0.15em; font-family: var(--font-mono); }
+   117→   117→
+   118→   118→    /* Navigation */
+   119→   119→    .nav-intelligence { display: flex; align-items: center; gap: 0.25rem; }
+   120→   120→    .nav-link {
+   121→   121→      position: relative; padding: 0.5rem 1rem; color: #94a3b8; text-decoration: none;
+   122→   122→      font-size: 0.875rem; font-weight: 500; border-radius: 8px;
+   123→   123→      transition: all 0.3s var(--ease-smooth); cursor: pointer; display: flex; align-items: center; gap: 0.25rem;
+   124→   124→    }
+   125→   125→    .nav-link::before {
+   126→   126→      content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%) scaleX(0);
+   127→   127→      width: 60%; height: 2px; background: linear-gradient(90deg, var(--neural-core), var(--data-stream));
+   128→   128→      border-radius: 1px; transition: transform 0.3s var(--ease-smooth);
+   129→   129→    }
+   130→   130→    .nav-link:hover { color: #f1f5f9; background: var(--glass-hover); }
+   131→   131→    .nav-link:hover::before { transform: translateX(-50%) scaleX(1); }
+   132→   132→    .nav-link.active { color: var(--synaptic-glow); background: var(--glass-active); }
+   133→   133→    .nav-link.active::before { transform: translateX(-50%) scaleX(1); }
+   134→   134→
+   135→   135→    /* Action Center with Home Button */
+   136→   136→    .action-center { display: flex; align-items: center; gap: 0.75rem; }
+   137→   137→    
+   138→   138→    /* Home Button - Always Visible */
+   139→   139→    .btn-home {
+   140→   140→      padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600;
+   141→   141→      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(6, 182, 212, 0.15));
+   142→   142→      border: 1px solid rgba(16, 185, 129, 0.3); color: var(--quantum-emerald);
+   143→   143→      cursor: pointer; text-decoration: none; transition: all 0.3s var(--ease-smooth);
+   144→   144→      display: flex; align-items: center; gap: 0.5rem;
+   145→   145→    }
+   146→   146→    .btn-home:hover { background: rgba(16, 185, 129, 0.25); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); }
+   147→   147→    
+   148→   148→    /* Return/Back Button */
+   149→   149→    .btn-return {
+   150→   150→      padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600;
+   151→   151→      background: transparent; border: 1px solid var(--glass-border); color: #94a3b8;
+   152→   152→      cursor: pointer; text-decoration: none; transition: all 0.3s var(--ease-smooth);
+   153→   153→      display: flex; align-items: center; gap: 0.5rem;
+   154→   154→    }
+   155→   155→    .btn-return:hover { background: var(--glass-hover); border-color: var(--neural-core); color: #f1f5f9; }
+   156→   156→    
+   157→   157→    .theme-quantum {
+   158→   158→      position: relative; width: 48px; height: 28px; border-radius: 14px;
+   159→   159→      background: linear-gradient(135deg, var(--nebula-blue), var(--deep-cosmos));
+   160→   160→      border: 1px solid var(--glass-border); cursor: pointer; transition: all 0.4s var(--ease-smooth); overflow: hidden;
+   161→   161→    }
+   162→   162→    .theme-knob {
+   163→   163→      position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%;
+   164→   164→      background: linear-gradient(135deg, #fbbf24, #f59e0b); display: flex; align-items: center;
+   165→   165→      justify-content: center; font-size: 12px; transition: all 0.4s var(--ease-bounce);
+   166→   166→      box-shadow: 0 2px 8px rgba(251, 191, 36, 0.4); z-index: 1;
+   167→   167→    }
+   168→   168→    [data-theme="light"] .theme-knob { left: 23px; background: linear-gradient(135deg, #6366f1, #818cf8); box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4); }
+   169→   169→    .theme-quantum:hover { border-color: var(--neural-core); box-shadow: 0 0 20px rgba(99, 102, 241, 0.2); }
+   170→   170→    
+   171→   171→    .btn-command {
+   172→   172→      padding: 0.5rem 1.5rem; border-radius: 10px; font-size: 0.875rem; font-weight: 600;
+   173→   173→      cursor: pointer; transition: all 0.3s var(--ease-smooth); text-decoration: none;
+   174→   174→      display: flex; align-items: center; gap: 0.5rem;
+   175→   175→    }
+   176→   176→    .btn-ghost { background: transparent; border: 1px solid var(--glass-border); color: #f1f5f9; }
+   177→   177→    .btn-ghost:hover { background: var(--glass-hover); border-color: var(--neural-core); }
+   178→   178→    .btn-primary-quantum {
+   179→   179→      background: linear-gradient(135deg, var(--neural-core), var(--data-stream)); border: none; color: white;
+   180→   180→      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35);
+   181→   181→    }
+   182→   182→    .btn-primary-quantum:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(99, 102, 241, 0.45); }
+   183→   183→
+   184→   184→    /* Status Bar */
+   185→   185→    .compute-status {
+   186→   186→      display: flex; align-items: center; gap: 1.5rem; padding: 0.5rem 1rem;
+   187→   187→      background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 10px;
+   188→   188→      font-family: var(--font-mono); font-size: 0.7rem;
+   189→   189→    }
+   190→   190→    .status-item { display: flex; align-items: center; gap: 0.25rem; color: var(--quantum-emerald); }
+   191→   191→    .status-value { color: #f1f5f9; font-weight: 600; }
+   192→   192→    .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--quantum-emerald); box-shadow: 0 0 8px var(--quantum-emerald); animation: livePulse 2s ease-in-out infinite; }
+   193→   193→    @keyframes livePulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.2); } }
+   194→   194→
+   195→   195→    /* Page Container */
+   196→   196→    .page-spacer { height: 72px; }
+   197→   197→    .page-section { min-height: calc(100vh - 72px); display: none; position: relative; overflow: hidden; }
+   198→   198→    .page-section.active { display: block; animation: pageEnter 0.6s var(--ease-smooth); }
+   199→   199→    @keyframes pageEnter { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+   200→   200→
+   201→   201→    /* ═══════════════════════════════════════════════════════════════
+   202→   202→       COGNITIVE CANVAS - Left/Right Visual System
+   203→   203→       "The Thought Process Made Visible"
+   204→   204→       ═══════════════════════════════════════════════════════════════ */
+   205→   205→    
+   206→   206→    .cognitive-canvas {
+   207→   207→      position: fixed; top: 72px; left: 0; right: 0; bottom: 0;
+   208→   208→      pointer-events: none; z-index: 1;
+   209→   209→    }
+   210→   210→    
+   211→   211→    /* Left Visual Panel - "The Input & Processing" */
+   212→   212→    .visual-left {
+   213→   213→      position: fixed; top: 72px; left: 0; width: 280px; height: calc(100vh - 72px);
+   214→   214→      pointer-events: none; z-index: 2; overflow: hidden;
+   215→   215→    }
+   216→   216→    
+   217→   217→    /* Right Visual Panel - "The Output & Intelligence" */
+   218→   218→    .visual-right {
+   219→   219→      position: fixed; top: 72px; right: 0; width: 280px; height: calc(100vh - 72px);
+   220→   220→      pointer-events: none; z-index: 2; overflow: hidden;
+   221→   221→    }
+   222→   222→    
+   223→   223→    /* Data Flow Visualization (Left Side) */
+   224→   224→    .data-flow-container {
+   225→   225→      width: 100%; height: 100%; position: relative;
+   226→   226→      background: linear-gradient(180deg, transparent 0%, rgba(99, 102, 241, 0.03) 50%, transparent 100%);
+   227→   227→    }
+   228→   228→    
+   229→   229→    /* Neural Nodes */
+   230→   230→    .neural-node {
+   231→   231→      position: absolute; width: 8px; height: 8px; border-radius: 50%;
+   232→   232→      background: var(--neural-core); box-shadow: 0 0 15px var(--neural-core);
+   233→   233→      animation: nodePulse 3s ease-in-out infinite;
+   234→   234→    }
+   235→   235→    @keyframes nodePulse { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.5); } }
+   236→   236→    
+   237→   237→    /* Connection Lines (SVG) */
+   238→   238→    .connection-lines {
+   239→   239→      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+   240→   240→    }
+   241→   241→    .connection-lines path {
+   242→   242→      stroke: url(#lineGradient); stroke-width: 1; fill: none;
+   243→   243→      stroke-dasharray: 5, 5; animation: dashMove 20s linear infinite;
+   244→   244→    }
+   245→   245→    @keyframes dashMove { to { stroke-dashoffset: -1000; } }
+   246→   246→    
+   247→   247→    /* Data Particles */
+   248→   248→    .data-particle {
+   249→   249→      position: absolute; width: 3px; height: 3px; border-radius: 50%;
+   250→   250→      background: var(--data-stream); box-shadow: 0 0 8px var(--data-stream);
+   251→   251→      animation: particleFlow 8s linear infinite;
+   252→   252→    }
+   253→   253→    @keyframes particleFlow {
+   254→   254→      0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+   255→   255→      10% { opacity: 1; }
+   256→   256→      90% { opacity: 1; }
+   257→   257→      100% { transform: translateY(-100px) translateX(50px); opacity: 0; }
+   258→   258→    }
+   259→   259→    
+   260→   260→    /* Insight Visualization (Right Side) */
+   261→   261→    .insight-container {
+   262→   262→      width: 100%; height: 100%; position: relative;
+   263→   263→      background: linear-gradient(180deg, transparent 0%, rgba(6, 182, 212, 0.03) 50%, transparent 100%);
+   264→   264→    }
+   265→   265→    
+   266→   266→    /* Insight Orbs */
+   267→   267→    .insight-orb {
+   268→   268→      position: absolute; border-radius: 50%;
+   269→   269→      background: radial-gradient(circle, var(--data-stream) 0%, transparent 70%);
+   270→   270→      animation: orbFloat 6s ease-in-out infinite;
+   271→   271→    }
+   272→   272→    @keyframes orbFloat {
+   273→   273→      0%, 100% { transform: scale(1) translateY(0); opacity: 0.3; }
+   274→   274→      50% { transform: scale(1.2) translateY(-20px); opacity: 0.6; }
+   275→   275→    }
+   276→   276→    
+   277→   277→    /* Prediction Waves */
+   278→   278→    .prediction-wave {
+   279→   279→      position: absolute; left: 50%; transform: translateX(-50%);
+   280→   280→      width: 150px; height: 150px; border: 2px solid var(--quantum-emerald);
+   281→   281→      border-radius: 50%; animation: waveExpand 4s ease-out infinite;
+   282→   282→    }
+   283→   283→    @keyframes waveExpand {
+   284→   284→      0% { transform: translateX(-50%) scale(0.5); opacity: 0.8; }
+   285→   285→      100% { transform: translateX(-50%) scale(2); opacity: 0; }
+   286→   286→    }
+   287→   287→    
+   288→   288→    /* Hex Grid Pattern */
+   289→   289→    .hex-grid {
+   290→   290→      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+   291→   291→      background-image: 
+   292→   292→        linear-gradient(30deg, var(--glass-border) 12%, transparent 12.5%, transparent 87%, var(--glass-border) 87.5%, var(--glass-border)),
+   293→   293→        linear-gradient(150deg, var(--glass-border) 12%, transparent 12.5%, transparent 87%, var(--glass-border) 87.5%, var(--glass-border)),
+   294→   294→        linear-gradient(30deg, var(--glass-border) 12%, transparent 12.5%, transparent 87%, var(--glass-border) 87.5%, var(--glass-border)),
+   295→   295→        linear-gradient(150deg, var(--glass-border) 12%, transparent 12.5%, transparent 87%, var(--glass-border) 87.5%, var(--glass-border));
+   296→   296→      background-size: 80px 140px;
+   297→   297→      background-position: 0 0, 0 0, 40px 70px, 40px 70px;
+   298→   298→      opacity: 0.3;
+   299→   299→    }
+   300→   300→    
+   301→   301→    /* Circuit Lines Pattern */
+   302→   302→    .circuit-pattern {
+   303→   303→      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+   304→   304→      background-image:
+   305→   305→        linear-gradient(90deg, transparent 95%, var(--neural-core) 95%, var(--neural-core) 100%),
+   306→   306→        linear-gradient(0deg, transparent 95%, var(--neural-core) 95%, var(--neural-core) 100%);
+   307→   307→      background-size: 60px 60px;
+   308→   308→      opacity: 0.1;
+   309→   309→    }
+   310→   310→    
+   311→   311→    /* Floating Icons */
+   312→   312→    .float-icon {
+   313→   313→      position: absolute; font-size: 1.5rem; opacity: 0.15;
+   314→   314→      animation: floatIcon 10s ease-in-out infinite;
+   315→   315→    }
+   316→   316→    @keyframes floatIcon {
+   317→   317→      0%, 100% { transform: translateY(0) rotate(0deg); }
+   318→   318→      33% { transform: translateY(-20px) rotate(5deg); }
+   319→   319→      66% { transform: translateY(10px) rotate(-3deg); }
+   320→   320→    }
+   321→   321→
+   322→   322→    /* ═══════════════════════════════════════════════════════════════
+   323→   323→       LANDING PAGE - Hero Section
+   324→   324→       ═══════════════════════════════════════════════════════════════ */
+   325→   325→    
+   326→   326→    .landing-hero {
+   327→   327→      min-height: calc(100vh - 72px); display: flex; align-items: center; justify-content: center;
+   328→   328→      padding: 4rem 2rem; position: relative; z-index: 10;
+   329→   329→      background: radial-gradient(ellipse at 30% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+   330→   330→                radial-gradient(ellipse at 70% 50%, rgba(6, 182, 212, 0.06) 0%, transparent 50%),
+   331→   331→                var(--space-black);
+   332→   332→    }
+   333→   333→    
+   334→   334→    .hero-content {
+   335→   335→      max-width: 900px; text-align: center; position: relative; z-index: 10;
+   336→   336→    }
+   337→   337→    
+   338→   338→    .hero-badge {
+   339→   339→      display: inline-flex; align-items: center; gap: 0.75rem;
+   340→   340→      padding: 0.6rem 1.5rem; background: rgba(99, 102, 241, 0.1);
+   341→   341→      border: 1px solid rgba(99, 102, 241, 0.25); border-radius: 9999px;
+   342→   342→      font-size: 0.875rem; color: var(--synaptic-glow); margin-bottom: 2.5rem;
+   343→   343→      animation: badgeFloat 3s ease-in-out infinite;
+   344→   344→    }
+   345→   345→    @keyframes badgeFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+   346→   346→    
+   347→   347→    .hero-title {
+   348→   348→      font-size: clamp(2.5rem, 7vw, 5rem); font-weight: 800; line-height: 1.05;
+   349→   349→      margin-bottom: 1.75rem; letter-spacing: -0.04em;
+   350→   350→    }
+   351→   351→    
+   352→   352→    .gradient-text-hero {
+   353→   353→      background: linear-gradient(135deg, var(--neural-core) 0%, var(--data-stream) 35%, var(--quantum-emerald) 70%, var(--predictive-amber) 100%);
+   354→   354→      background-size: 200% auto;
+   355→   355→      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+   356→   356→      animation: gradientShift 5s ease infinite;
+   357→   357→    }
+   358→   358→    @keyframes gradientShift { 0% { background-position: 0% center; } 50% { background-position: 100% center; } 100% { background-position: 0% center; } }
+   359→   359→    
+   360→   360→    .hero-description {
+   361→   361→      font-size: 1.3rem; color: #94a3b8; line-height: 1.8; margin-bottom: 3rem;
+   362→   362→      max-width: 700px; margin-left: auto; margin-right: auto;
+   363→   363→    }
+   364→   364→    
+   365→   365→    .hero-actions {
+   366→   366→      display: flex; gap: 1.25rem; justify-content: center; flex-wrap: wrap; margin-bottom: 4rem;
+   367→   367→    }
+   368→   368→    
+   369→   369→    .btn-hero {
+   370→   370→      padding: 1.15rem 2.5rem; border-radius: 14px; font-size: 1.05rem; font-weight: 700;
+   371→   371→      cursor: pointer; transition: all 0.4s var(--ease-smooth); text-decoration: none;
+   372→   372→      display: inline-flex; align-items: center; gap: 0.75rem;
+   373→   373→    }
+   374→   374→    .btn-hero-primary {
+   375→   375→      background: linear-gradient(135deg, var(--neural-core), var(--data-stream));
+   376→   376→      color: white; border: none; box-shadow: 0 10px 40px rgba(99, 102, 241, 0.4);
+   377→   377→    }
+   378→   378→    .btn-hero-primary:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 15px 50px rgba(99, 102, 241, 0.5); }
+   379→   379→    .btn-hero-secondary {
+   380→   380→      background: rgba(255, 255, 255, 0.05); color: #f1f5f9;
+   381→   381→      border: 2px solid var(--glass-border); backdrop-filter: blur(10px);
+   382→   382→    }
+   383→   383→    .btn-hero-secondary:hover { border-color: var(--neural-core); background: var(--glass-hover); transform: translateY(-4px); }
+   384→   384→    
+   385→   385→    /* Stats Row */
+   386→   386→    .stats-row {
+   387→   387→      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem;
+   388→   388→      max-width: 750px; margin: 0 auto;
+   389→   389→    }
+   390→   390→    .stat-card {
+   391→   391→      background: var(--glass-bg); backdrop-filter: blur(20px);
+   392→   392→      border: 1px solid var(--glass-border); border-radius: 16px;
+   393→   393→      padding: 1.75rem 1.25rem; text-align: center;
+   394→   394→      transition: all 0.4s var(--ease-smooth); position: relative; overflow: hidden;
+   395→   395→    }
+   396→   396→    .stat-card::before {
+   397→   397→      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+   398→   398→      background: linear-gradient(90deg, var(--neural-core), var(--data-stream));
+   399→   399→      transform: scaleX(0); transition: transform 0.4s var(--ease-smooth);
+   400→   400→    }
+   401→   401→    .stat-card:hover::before { transform: scaleX(1); }
+   402→   402→    .stat-card:hover { transform: translateY(-6px); border-color: var(--neural-core); }
+   403→   403→    .stat-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+   404→   404→    .stat-value { font-size: 2rem; font-weight: 800; color: var(--quantum-emerald); }
+   405→   405→    .stat-label { font-size: 0.8rem; color: #94a3b8; margin-top: 0.35rem; }
+   406→   406→
+   407→   407→    /* ═══════════════════════════════════════════════════════════════
+   408→   408→       INNER PAGE LAYOUT (with side visuals)
+   409→   409→       ═══════════════════════════════════════════════════════════════ */
+   410→   410→    
+   411→   411→    .inner-page-layout {
+   412→   412→      min-height: calc(100vh - 72px); padding: 4rem 320px; position: relative; z-index: 10;
+   413→   413→    }
+   414→   414→    
+   415→   415→    .section-header { text-align: center; margin-bottom: 4rem; }
+   416→   416→    .section-badge {
+   417→   417→      display: inline-flex; align-items: center; gap: 0.5rem;
+   418→   418→      padding: 0.5rem 1.25rem; background: rgba(99, 102, 241, 0.1);
+   419→   419→      border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 9999px;
+   420→   420→      font-size: 0.85rem; color: var(--synaptic-glow); margin-bottom: 1.25rem;
+   421→   421→    }
+   422→   422→    .section-title {
+   423→   423→      font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1.25rem;
+   424→   424→    }
+   425→   425→    .gradient-text-section {
+   426→   426→      background: linear-gradient(135deg, var(--neural-core), var(--data-stream), var(--quantum-emerald));
+   427→   427→      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+   428→   428→    }
+   429→   429→    .section-subtitle { font-size: 1.15rem; color: #94a3b8; max-width: 650px; margin: 0 auto; line-height: 1.75; }
+   430→   430→
+   431→   431→    /* Feature Cards */
+   432→   432→    .features-grid {
+   433→   433→      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+   434→   434→      gap: 2rem; margin-top: 3rem;
+   435→   435→    }
+   436→   436→    .feature-card {
+   437→   437→      background: var(--glass-bg); backdrop-filter: blur(20px);
+   438→   438→      border: 1px solid var(--glass-border); border-radius: 20px;
+   439→   439→      padding: 2rem; transition: all 0.4s var(--ease-smooth); position: relative; overflow: hidden;
+   440→   440→    }
+   441→   441→    .feature-card::before {
+   442→   442→      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+   443→   443→      background: linear-gradient(90deg, var(--neural-core), var(--data-stream));
+   444→   444→      transform: scaleX(0); transition: transform 0.4s var(--ease-smooth);
+   445→   445→    }
+   446→   446→    .feature-card:hover::before { transform: scaleX(1); }
+   447→   447→    .feature-card:hover { transform: translateY(-8px); border-color: var(--neural-core); box-shadow: 0 25px 50px rgba(0,0,0,0.3); }
+   448→   448→    .feature-icon {
+   449→   449→      width: 56px; height: 56px; border-radius: 14px;
+   450→   450→      display: flex; align-items: center; justify-content: center;
+   451→   451→      font-size: 1.75rem; margin-bottom: 1.5rem;
+   452→   452→    }
+   453→   453→    .feature-card h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; }
+   454→   454→    .feature-card p { color: #94a3b8; font-size: 0.95rem; line-height: 1.7; }
+   455→   455→
+   456→   456→    /* Solution Cards */
+   457→   457→    .solution-showcase { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin-top: 3rem; }
+   458→   458→    .solution-card {
+   459→   459→      background: linear-gradient(135deg, var(--glass-bg), rgba(99, 102, 241, 0.05));
+   460→   460→      border: 1px solid var(--glass-border); border-radius: 24px;
+   461→   461→      padding: 2.5rem; transition: all 0.4s var(--ease-smooth); position: relative; overflow: hidden;
+   462→   462→    }
+   463→   463→    .solution-card:hover { transform: translateY(-6px); border-color: var(--neural-core); }
+   464→   464→    .solution-number {
+   465→   465→      font-size: 5rem; font-weight: 900; opacity: 0.04; position: absolute; top: 1rem; right: 1.5rem;
+   466→   466→      background: linear-gradient(135deg, var(--neural-core), var(--data-stream));
+   467→   467→      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+   468→   468→    }
+   469→   469→    .solution-card h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; position: relative; }
+   470→   470→    .solution-card p { color: #94a3b8; line-height: 1.7; margin-bottom: 1.5rem; position: relative; }
+   471→   471→    .solution-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; position: relative; }
+   472→   472→    .tag {
+   473→   473→      padding: 0.4rem 0.9rem; background: rgba(99, 102, 241, 0.1);
+   474→   474→      border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 9999px;
+   475→   475→      font-size: 0.75rem; color: var(--synaptic-glow);
+   476→   476→    }
+   477→   477→
+   478→   478→    /* Capabilities Layout */
+   479→   479→    .capabilities-layout { display: grid; grid-template-columns: 1fr 380px; gap: 3rem; margin-top: 3rem; align-items: start; }
+   480→   480→    .capability-list { display: flex; flex-direction: column; gap: 1.25rem; }
+   481→   481→    .capability-item {
+   482→   482→      display: flex; gap: 1.25rem; padding: 1.5rem;
+   483→   483→      background: var(--glass-bg); border: 1px solid var(--glass-border);
+   484→   484→      border-radius: 16px; transition: all 0.3s var(--ease-smooth); cursor: pointer;
+   485→   485→    }
+   486→   486→    .capability-item:hover, .capability-item.active { border-color: var(--neural-core); background: rgba(99, 102, 241, 0.08); }
+   487→   487→    .capability-icon {
+   488→   488→      width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0;
+   489→   489→      display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+   490→   490→    }
+   491→   491→    .capability-info h4 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.35rem; }
+   492→   492→    .capability-info p { font-size: 0.85rem; color: #94a3b8; }
+   493→   493→    .capability-detail {
+   494→   494→      position: sticky; top: 96px; background: var(--glass-bg);
+   495→   495→      border: 1px solid var(--glass-border); border-radius: 24px; padding: 2.5rem;
+   496→   496→    }
+   497→   497→    .detail-header h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+   498→   498→    .detail-header p { color: #94a3b8; }
+   499→   499→    .detail-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 2rem 0; }
+   500→   500→    .metric-box {
+
+[showing lines 1-500 of 1533; use offset=501 with limit to continue reading]
