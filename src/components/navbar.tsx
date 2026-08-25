@@ -18,22 +18,22 @@ export function Navbar() {
 
   const mainNavItems = [
     { href: '/', label: 'Home', icon: Shield },
-    { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { href: '/command-center', label: 'Command Center', icon: Command },
+    { href: '/dashboard.html', label: 'Dashboard', icon: LayoutDashboard },
+    { href: '/command-center.html', label: 'Command Center', icon: Command },
   ]
 
   const productNavItems = [
-    { href: '/platform', label: 'Platform', icon: Cpu },
-    { href: '/intelligence', label: 'AI/ML Engine', icon: Brain },
-    { href: '/product', label: 'Product Suite', icon: Shield },
+    { href: '/platform.html', label: 'Platform', icon: Cpu },
+    { href: '/intelligence.html', label: 'AI/ML Engine', icon: Brain },
+    { href: '/product.html', label: 'Product Suite', icon: Shield },
   ]
 
   const companyNavItems = [
-    { href: '/events', label: 'Events', icon: Calendar },
-    { href: '/industries', label: 'Industries', icon: Building2 },
-    { href: '/customers', label: 'Customers', icon: Users },
-    { href: '/support', label: 'Support', icon: LifeBuoy },
-    { href: '/about', label: 'About', icon: Info },
+    { href: '/events.html', label: 'Events', icon: Calendar },
+    { href: '/industries.html', label: 'Industries', icon: Building2 },
+    { href: '/customers.html', label: 'Customers', icon: Users },
+    { href: '/support.html', label: 'Support', icon: LifeBuoy },
+    { href: '/about.html', label: 'About', icon: Info },
   ]
 
   return (
@@ -55,7 +55,9 @@ export function Navbar() {
               {/* Main Nav */}
               {mainNavItems.map((item) => {
                 const Icon = item.icon
-                const isActive = pathname === item.href
+                // Remove .html from href for comparison with pathname
+                const cleanHref = item.href.replace('.html', '')
+                const isActive = pathname === cleanHref || pathname === item.href
                 return (
                   <Link key={item.href} href={item.href}>
                     <Button
@@ -85,7 +87,8 @@ export function Navbar() {
                   <div className="glass rounded-xl border shadow-xl p-2 mt-1">
                     {productNavItems.map((item) => {
                       const Icon = item.icon
-                      const isActive = pathname === item.href
+                      const cleanHref = item.href.replace('.html', '')
+                      const isActive = pathname === cleanHref || pathname === item.href
                       return (
                         <Link key={item.href} href={item.href} className="block">
                           <Button
@@ -115,7 +118,8 @@ export function Navbar() {
                   <div className="glass rounded-xl border shadow-xl p-2 mt-1">
                     {companyNavItems.map((item) => {
                       const Icon = item.icon
-                      const isActive = pathname === item.href
+                      const cleanHref = item.href.replace('.html', '')
+                      const isActive = pathname === cleanHref || pathname === item.href
                       return (
                         <Link key={item.href} href={item.href} className="block">
                           <Button

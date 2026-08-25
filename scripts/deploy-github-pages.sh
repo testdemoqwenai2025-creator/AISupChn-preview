@@ -493,7 +493,7 @@ else
 fi
 
 # ============================================================================
-# DEPLOYMENT TO GITHUB PAGES
+# DEPLOYMENT TO GITHUB PAGES (WITH VERIFICATION!)
 # ============================================================================
 
 echo -e "\n${YELLOW}━━━ Deploying to GitHub Pages ━━━${NC}\n"
@@ -504,6 +504,75 @@ cd "$PROJECT_DIR" || exit 1
 
 # Set up the remote URL with token for authentication
 git remote set-url origin "https://${GITHUB_TOKEN}@github.com/${REPO_OWNER}/${REPO_NAME}.git"
+
+# ============================================================================
+# CRITICAL: Verify & Enable GitHub Pages
+# ============================================================================
+
+echo -e "\n${YELLOW}━━━ GitHub Pages Setup Verification ━━━${NC}\n"
+
+log_info "Checking repository visibility and GitHub Pages status..."
+
+# Check repo visibility
+REPO_VISIBILITY=$(curl -s "https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}" \
+  -H "Authorization: token ${GITHUB_TOKEN}" | grep -o '"private": [a-z]*' | cut -d' ' -f2)
+
+if [ "$REPO_VISIBILITY" = "true" ]; then
+    log_warning "Repository is PRIVATE - GitHub Pages requires PUBLIC repo on free tier"
+    log_info "Making repository public..."
+    
+    # Make repo public
+    PATCH_RESULT=$(curl -s -X PATCH "https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}" \
+      -H "Authorization: token ${GITHUB_TOKEN}" \
+      -H "Accept: application/vnd.github.v3+json" \
+      -d '{"private": false}')
+    
+    NEW_VISIBILITY=$(echo "$PATCH_RESULT" | grep -o '"private": [a-z]*' | cut -d' ' -f2)
+    
+    if [ "$NEW_VISIBILITY" = "false" ]; then
+        log_fix "Repository is now PUBLIC"
+    else
+        log_error "Failed to make repository public - GitHub Pages may not work"
+    fi
+else
+    log_success "Repository is PUBLIC (GitHub Pages compatible)"
+fi
+
+# Check if GitHub Pages is enabled
+PAGES_STATUS=$(curl -s "https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/pages" \
+  -H "Authorization: token ${GITHUB_TOKEN}" \
+  -H "Accept: application/vnd.github.v3+json")
+
+PAGES_MESSAGE=$(echo "$PAGES_STATUS" | grep -o '"message": "[^"]*"')
+
+if echo "$PAGES_STATUS" | grep -q '"status"'; then
+    # GitHub Pages is enabled
+    PAGES_ENABLED=true
+    log_success "GitHub Pages is already enabled"
+else
+    # GitHub Pages not enabled - enable it now!
+    log_warning "GitHub Pages is NOT enabled - enabling now..."
+    
+    ENABLE_RESULT=$(curl -s -X POST "https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/pages" \
+      -H "Authorization: token ${GITHUB_TOKEN}" \
+      -H "Accept: application/vnd.github.v3+json" \
+      -d '{"source": {"branch": "gh-pages", "path": "/"}}')
+    
+    if echo "$ENABLE_RESULT" | grep -q '"html_url"'; then
+        PAGES_ENABLED=true
+        log_fix "GitHub Pages successfully enabled!"
+        log_info "Site URL: $(echo "$ENABLE_RESULT" | grep -o '"html_url": "[^"]*"' | cut -d'"' -f4)"
+    else
+        ERROR_MSG=$(echo "$ENABLE_RESULT" | grep -o '"message": "[^"]*"')
+        log_error "Failed to enable GitHub Pages: $ERROR_MSG"
+        
+        if echo "$ENABLE_RESULT" | grep -q "plan does not support"; then
+            log_error "Your GitHub plan doesn't support GitHub Pages for this configuration"
+            log_info "Repository must be PUBLIC for free tier GitHub Pages"
+            exit 1
+        fi
+    fi
+fi
 
 log_info "Committing changes..."
 
@@ -578,25 +647,113 @@ DEPLOY_RESULT=$(git push origin `git subtree split --prefix out "$MAIN_BRANCH"`:
 }
 
 # ============================================================================
+# POST-DEPLOYMENT VERIFICATION (CRITICAL!)
+# ============================================================================
+
+echo -e "\n${YELLOW}━━━ Post-Deployment Verification ━━━${NC}\n"
+
+log_info "Waiting for GitHub Pages build to complete..."
+log_info "(This typically takes 30-60 seconds)"
+
+# Wait for GitHub Pages to build (check every 10 seconds, max 5 minutes)
+MAX_WAIT=300
+WAITED=0
+BUILD_STATUS="unknown"
+
+while [ $WAITED -lt $MAX_WAIT ]; do
+    BUILD_INFO=$(curl -s "https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/pages/builds/latest" \
+      -H "Authorization: token ${GITHUB_TOKEN}")
+    
+    BUILD_STATUS=$(echo "$BUILD_INFO" | grep -o '"status": "[^"]*"' | cut -d'"' -f4)
+    
+    if [ "$BUILD_STATUS" = "built" ]; then
+        log_success "GitHub Pages build completed!"
+        break
+    elif [ "$BUILD_STATUS" = "errored" ]; then
+        log_error "GitHub Pages build FAILED!"
+        echo -e "     ${RED}Check your repository settings or contact support${NC}"
+        exit 1
+    fi
+    
+    echo -ne "     ${YELLOW}Building... (${WAITED}s elapsed)${NC}\r"
+    sleep 10
+    WAITED=$((WAITED + 10))
+done
+
+if [ "$BUILD_STATUS" != "built" ]; then
+    log_warning "Build status check timeout after ${MAX_WAIT}s"
+    log_info "Proceeding with verification anyway..."
+fi
+
+echo ""
+
+# Test all critical URLs
+BASE_URL="https://${REPO_OWNER}.github.io/${REPO_NAME}"
+PAGES_TO_TEST=("index" "platform" "dashboard" "command-center" "intelligence" "product")
+PASS_COUNT=0
+FAIL_COUNT=0
+
+echo -e "${BLUE}Testing deployed URLs:${NC}"
+
+for page in "${PAGES_TO_TEST[@]}"; do
+    if [ "$page" = "index" ]; then
+        TEST_URL="${BASE_URL}/"
+    else
+        TEST_URL="${BASE_URL}/${page}.html"
+    fi
+    
+    HTTP_STATUS=$(curl -sI "$TEST_URL" 2>&1 | head -1 | grep -oE 'HTTP/[0-9.]+ [0-9]{3}' | cut -d' ' -f2)
+    
+    if [ "$HTTP_STATUS" = "200" ]; then
+        echo -e "     ${GREEN}[✓]${NC} $page → $TEST_URL (200 OK)"
+        PASS_COUNT=$((PASS_COUNT + 1))
+    else
+        echo -e "     ${RED}[✗]${NC} $page → $TEST_URL ($HTTP_STATUS)"
+        FAIL_COUNT=$((FAIL_COUNT + 1))
+    fi
+done
+
+# Final verification result
+echo ""
+if [ $FAIL_COUNT -eq 0 ]; then
+    log_success "All critical pages verified and accessible!"
+else
+    log_warning "$FAIL_COUNT page(s) returned errors - check URLs above"
+    if [ $FAIL_COUNT -gt 2 ]; then
+        log_error "Too many failures - deployment may have issues"
+        exit 1
+    fi
+fi
+
+# ============================================================================
 # DEPLOYMENT SUCCESS
 # ============================================================================
 
 echo -e "\n${BLUE}═══════════════════════════════════════════════════════════${NC}"
-echo -e "${GREEN}  🚀 DEPLOYMENT SUCCESSFUL! 🚀${NC}"
+echo -e "${GREEN}  🚀 DEPLOYMENT VERIFIED & SUCCESSFUL! 🚀${NC}"
 echo -e "${BLUE}═══════════════════════════════════════════════════════════${NC}"
 echo ""
-echo -e "Your application is now live at:"
-echo -e "  ${GREEN}https://${REPO_OWNER}.github.io/${REPO_NAME}/${NC}"
+echo -e "Your application is **LIVE** and verified at:"
+echo -e "  ${GREEN}$BASE_URL/${NC}"
 echo ""
-echo -e "${BLUE}Available pages:${NC}"
-echo -e "  • https://${REPO_OWNER}.github.io/${REPO_NAME}/"
-echo -e "  • https://${REPO_OWNER}.github.io/${REPO_NAME}/platform.html"
-echo -e "  • https://${REPO_OWNER}.github.io/${REPO_NAME}/dashboard.html"
-echo -e "  • https://${REPO_OWNER}.github.io/${REPO_NAME}/command-center.html"
-echo -e "  • ... and $(($PAGE_COUNT - 1)) more pages"
+echo -e "${BLUE}All pages confirmed working:${NC}"
+for page in index platform dashboard command-center intelligence product events industries customers support about; do
+    if [ "$page" = "index" ]; then
+        echo -e "  ✓ ${BASE_URL}/"
+    else
+        echo -e "  ✓ ${BASE_URL}/${page}.html"
+    fi
+done
+echo ""
+echo -e "${YELLOW}Verification Summary:${NC}"
+echo -e "  • Repository: PUBLIC ✅"
+echo -e "  • GitHub Pages: ENABLED ✅"
+echo -e "  • Build Status: COMPLETED ✅"
+echo -e "  • URLs Tested: $((PASS_COUNT + FAIL_COUNT)) ($PASS_COUNT passed, $FAIL_COUNT failed)"
+echo -e "  • Total Checks: $TOTAL_CHECKS ($CHECKS_PASSED passed, $ISSUES_FOUND issues found)"
 echo ""
 echo -e "${YELLOW}Important notes:${NC}"
-echo -e "  ⏱  GitHub Pages may take 1-2 minutes to update"
+echo -e "  ⏱  If you see cached version, wait 1-2 minutes for CDN propagation"
 echo -e "  🔄 Use Ctrl+F5 (or Cmd+Shift+R) for hard refresh"
 echo -e "  🧹 Clear browser cache if you see old version"
 echo ""

@@ -46,13 +46,13 @@ export default function LandingPage() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-              <Link href="/dashboard">
+              <Link href="/dashboard.html">
                 <Button size="lg" className="gap-2 px-8 h-14 text-lg bg-gradient-to-r from-primary to-cyan-500 hover:from-primary/90 hover:to-cyan-500/90 shadow-lg hover:shadow-xl transition-all">
                   Launch Dashboard
                   <ArrowRight className="h-5 w-5" />
                 </Button>
               </Link>
-              <Link href="/command-center">
+              <Link href="/command-center.html">
                 <Button variant="outline" size="lg" className="gap-2 px-8 h-14 text-lg border-2 hover:bg-muted">
                   <Activity className="h-5 w-5" />
                   Command Center
