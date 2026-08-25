@@ -87,7 +87,7 @@ export function PageDecorations({ theme = 'default', variant = 'full' }: PageDec
         </div>
         
         {/* Subtle grid pattern */}
-        <div className="fixed inset-0 pointer-events-none z-0 opacity-[0.03]">
+        <div className="fixed inset-0 pointer-events-none z-0 opacity-[0.15]">
           <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <pattern id="subtleGrid" width="40" height="40" patternUnits="userSpaceOnUse">
@@ -517,7 +517,7 @@ export function PageDecorations({ theme = 'default', variant = 'full' }: PageDec
       </div>
 
       {/* Center subtle grid overlay for depth */}
-      <div className="fixed inset-0 pointer-events-none z-0 opacity-[0.02]">
+      <div className="fixed inset-0 pointer-events-none z-0 opacity-[0.15]">
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="centerGrid" width="60" height="60" patternUnits="userSpaceOnUse">
@@ -544,7 +544,7 @@ export function HeroDecorations() {
       <div className="absolute inset-0 grid-bg opacity-60" />
       
       {/* Animated network nodes scattered across hero */}
-      <svg className="absolute inset-0 w-full h-full opacity-[0.08]" xmlns="http://www.w3.org/2000/svg">
+      <svg className="absolute inset-0 w-full h-full opacity-[0.12]" xmlns="http://www.w3.org/2000/svg">
         {/* Random connection lines */}
         {Array.from({ length: 15 }).map((_, i) => (
           <line
