@@ -1,0 +1,729 @@
+     1→     1→'use client'
+     2→     2→
+     3→     3→import React, { useState, useEffect } from 'react'
+     4→     4→import { 
+     5→     5→  Shield, Brain, Zap, Globe, Lock, Cloud, Cpu, 
+     6→     6→  Database, Network, Plug, BarChart3, Settings,
+     7→     7→  ArrowRight, CheckCircle2, Layers, Box, Play,
+     8→     8→  Rocket, Sparkles, Terminal, Code2, Server,
+     9→     9→  Workflow, Puzzle, Gauge, Activity, TrendingUp,
+    10→    10→  ChevronRight, Star, ArrowUpRight, ExternalLink
+    11→    11→} from 'lucide-react'
+    12→    12→import { Navbar } from '@/components/navbar'
+    13→    13→import { PageDecorations } from '@/components/page-decorations'
+    14→    14→import { Card, CardContent } from '@/components/ui/card'
+    15→    15→import { Button } from '@/components/ui/button'
+    16→    16→import { Badge } from '@/components/ui/badge'
+    17→    17→
+    18→    18→// Animated counter hook
+    19→    19→function useCounter(end: number, duration: number = 2000) {
+    20→    20→  const [count, setCount] = useState(0)
+    21→    21→  
+    22→    22→  useEffect(() => {
+    23→    23→    let start = 0
+    24→    24→    const increment = end / (duration / 16)
+    25→    25→    const timer = setInterval(() => {
+    26→    26→      start += increment
+    27→    27→      if (start >= end) {
+    28→    28→        setCount(end)
+    29→    29→        clearInterval(timer)
+    30→    30→      } else {
+    31→    31→        setCount(Math.floor(start))
+    32→    32→      }
+    33→    33→    }, 16)
+    34→    34→    return () => clearInterval(timer)
+    35→    35→  }, [end, duration])
+    36→    36→  
+    37→    37→  return count
+    38→    38→}
+    39→    39→
+    40→    40→// Animated gradient orb component
+    41→    41→function AnimatedOrb({ className, delay = 0 }: { className?: string, delay?: number }) {
+    42→    42→  return (
+    43→    43→    <div 
+    44→    44→      className={`absolute rounded-full blur-3xl animate-pulse ${className}`}
+    45→    45→      style={{ animationDelay: `${delay}s` }}
+    46→    46→    />
+    47→    47→  )
+    48→    48→}
+    49→    49→
+    50→    50→// Floating card component for 3D effect
+    51→    51→function FloatingCard({ children, className, delay = 0 }: { children: React.ReactNode, className?: string, delay?: number }) {
+    52→    52→  return (
+    53→    53→    <div 
+    54→    54→      className={`group relative animate-float ${className}`}
+    55→    55→      style={{ animationDelay: `${delay}s` }}
+    56→    56→    >
+    57→    57→      <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-cyan-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+    58→    58→      <div className="relative glass rounded-2xl border border-white/10 hover:border-primary/30 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/10">
+    59→    59→        {children}
+    60→    60→      </div>
+    61→    61→    </div>
+    62→    62→  )
+    63→    63→}
+    64→    64→
+    65→    65→// Tech stack icon component
+    66→    66→function TechIcon({ name, icon: Icon, color }: { name: string, icon: React.ComponentType<{ className?: string }>, color: string }) {
+    67→    67→  const [isHovered, setIsHovered] = useState(false)
+    68→    68→  
+    69→    69→  return (
+    70→    70→    <div 
+    71→    71→      className="group relative"
+    72→    72→      onMouseEnter={() => setIsHovered(true)}
+    73→    73→      onMouseLeave={() => setIsHovered(false)}
+    74→    74→    >
+    75→    75→      <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center mb-3 transform transition-all duration-500 ${isHovered ? 'scale-110 rotate-3' : ''}`}>
+    76→    76→        <Icon className="h-8 w-8 text-white" />
+    77→    77→      </div>
+    78→    78→      <div className="text-sm font-medium text-center">{name}</div>
+    79→    79→      {isHovered && (
+    80→    80→        <div className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-primary text-white text-xs rounded whitespace-nowrap animate-fade-in">
+    81→    81→          Click to learn more
+    82→    82→        </div>
+    83→    83→      )}
+    84→    84→    </div>
+    85→    85→  )
+    86→    86→}
+    87→    87→
+    88→    88→export default function PlatformPage() {
+    89→    89→  const [activeLayer, setActiveLayer] = useState(0)
+    90→    90→  const [isPlaying, setIsPlaying] = useState(false)
+    91→    91→  
+    92→    92→  // Counter hooks for animated stats
+    93→    93→  const apiResponse = useCounter(99, 2000)
+    94→    94→  const uptime = useCounter(99, 2500)
+    95→    95→  const accuracy = useCounter(94, 2200)
+    96→    96→  const requests = useCounter(50, 1800)
+    97→    97→
+    98→    98→  const architectureLayers = [
+    99→    99→    {
+   100→   100→      name: 'Edge Layer',
+   101→   101→      description: 'Global CDN & Edge Computing',
+   102→   102→      tech: ['Cloudflare', 'Fastly', 'Akamai'],
+   103→   103→      icon: Globe,
+   104→   104→      color: 'from-cyan-400 to-blue-500',
+   105→   105→      stats: '< 50ms global latency'
+   106→   106→    },
+   107→   107→    {
+   108→   108→      name: 'API Gateway',
+   109→   109→      description: 'Rate Limiting & Authentication',
+   110→   110→      tech: ['Kong', 'AWS API Gateway', 'GraphQL'],
+   111→   111→      icon: Shield,
+   112→   112→      color: 'from-emerald-400 to-green-500',
+   113→   113→      stats: '1M+ requests/second'
+   114→   114→    },
+   115→   115→    {
+   116→   116→      name: 'Microservices',
+   117→   117→      description: 'Containerized Business Logic',
+   118→   118→      tech: ['Kubernetes', 'Docker', 'gRPC'],
+   119→   119→      icon: Server,
+   120→   120→      color: 'from-violet-400 to-purple-500',
+   121→   121→      stats: '150+ microservices'
+   122→   122→    },
+   123→   123→    {
+   124→   124→      name: 'AI/ML Engine',
+   125→   125→      description: 'Deep Learning & Predictions',
+   126→   126→      tech: ['PyTorch', 'TensorFlow', 'SHAP'],
+   127→   127→      icon: Brain,
+   128→   128→      color: 'from-rose-400 to-pink-500',
+   129→   129→      stats: '94.2% accuracy'
+   130→   130→    },
+   131→   131→    {
+   132→   132→      name: 'Data Lake',
+   133→   133→      description: 'Real-time Analytics & Storage',
+   134→   134→      tech: ['Snowflake', 'Databricks', 'Redis'],
+   135→   135→      icon: Database,
+   136→   136→      color: 'from-amber-400 to-orange-500',
+   137→   137→      stats: '50TB+ processed daily'
+   138→   138→    }
+   139→   139→  ]
+   140→   140→
+   141→   141→  const capabilities = [
+   142→   142→    {
+   143→   143→      title: 'Neural Risk Prediction',
+   144→   144→      subtitle: 'Deep learning models that learn from 10M+ historical disruptions',
+   145→   145→      icon: Brain,
+   146→   146→      gradient: 'from-violet-500 via-purple-500 to-fuchsia-500',
+   147→   147→      features: ['Transformer architecture', 'Attention mechanisms', 'Ensemble methods', 'Real-time inference'],
+   148→   148→      stat: { value: '94.2%', label: 'Prediction Accuracy' },
+   149→   149→      cta: 'Explore AI Models'
+   150→   150→    },
+   151→   151→    {
+   152→   152→      title: 'Global Sensor Network',
+   153→   153→      subtitle: '50,000+ data sources monitoring supply chains in real-time',
+   154→   154→      icon: Globe,
+   155→   155→      gradient: 'from-cyan-500 via-blue-500 to-indigo-500',
+   156→   156→      features: ['Satellite imagery', 'IoT sensors', 'News APIs', 'Weather feeds'],
+   157→   157→      stat: { value: '190+', label: 'Countries Covered' },
+   158→   158→      cta: 'View Coverage Map'
+   159→   159→    },
+   160→   160→    {
+   161→   161→      title: 'Quantum-Ready Security',
+   162→   162→      subtitle: 'Post-quantum cryptography with zero-trust architecture',
+   163→   163→      icon: Lock,
+   164→   164→      gradient: 'from-emerald-500 via-green-500 to-teal-500',
+   165→   165→      features: ['AES-256 encryption', 'Zero-knowledge proofs', 'Biometric auth', 'Audit trails'],
+   166→   166→      stat: { value: '99.99%', label: 'Uptime SLA' },
+   167→   167→      cta: 'Security Whitepaper'
+   168→   168→    }
+   169→   169→  ]
+   170→   170→
+   171→   171→  const integrations = [
+   172→   172→    { name: 'SAP S/4HANA', category: 'ERP', logo: '🏢', status: 'Certified Partner' },
+   173→   173→    { name: 'Oracle Cloud', category: 'ERP', logo: '☁️', status: 'Premier Integration' },
+   174→   174→    { name: 'Salesforce', category: 'CRM', logo: '💡', status: 'AppExchange Certified' },
+   175→   175→    { name: 'ServiceNow', category: 'ITSM', logo: '🔧', status: 'Store App Available' },
+   176→   176→    { name: 'Microsoft Dynamics', category: 'ERP', logo: '📊', status: 'Co-Sell Partner' },
+   177→   177→    { name: 'Workday', category: 'HCM', logo: '👥', status: 'Adaptive Integration' },
+   178→   178→    { name: 'Kinaxis', category: 'SCM', logo: '🔗', status: 'Native Connector' },
+   179→   179→    { name: 'Blue Yonder', category: 'SCM', logo: '📦', status: 'API Integration' },
+   180→   180→    { name: 'Coupa', category: 'Spend', logo: '💰', status: 'Certified Connect' },
+   181→   181→    { name: 'Snowflake', category: 'Data', logo: '❄️', status: 'Data Share Partner' },
+   182→   182→    { name: 'Databricks', category: 'AI', logo: '🧠', status: 'MLflow Compatible' },
+   183→   183→    { name: 'Slack', category: 'Comms', logo: '💬', status: 'App Directory Listed' },
+   184→   184→  ]
+   185→   185→
+   186→   186→  return (
+   187→   187→    <div className="min-h-screen bg-background relative overflow-hidden">
+   188→   188→      {/* Enhanced decorations */}
+   189→   189→      <PageDecorations theme="technology" />
+   190→   190→      
+   191→   191→      {/* Additional ambient effects */}
+   192→   192→      <div className="fixed inset-0 pointer-events-none z-0">
+   193→   193→        <AnimatedOrb className="w-[600px] h-[600px] bg-primary/5 top-0 -left-48" delay={0} />
+   194→   194→        <AnimatedOrb className="w-[500px] h-[500px] bg-cyan-500/5 bottom-0 right-0" delay={2} />
+   195→   195→        <AnimatedOrb className="w-[400px] h-[400px] bg-violet-500/5 top-1/2 left-1/3" delay={4} />
+   196→   196→      </div>
+   197→   197→
+   198→   198→      <Navbar />
+   199→   199→
+   200→   200→      {/* HERO SECTION - Completely Redesigned */}
+   201→   201→      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+   202→   202→        {/* Background grid pattern */}
+   203→   203→        <div className="absolute inset-0 grid-bg opacity-30" />
+   204→   204→        
+   205→   205→        {/* Animated background elements */}
+   206→   206→        <div className="absolute inset-0">
+   207→   207→          {[...Array(20)].map((_, i) => (
+   208→   208→            <div
+   209→   209→              key={i}
+   210→   210→              className="absolute w-1 h-1 bg-primary/30 rounded-full animate-pulse"
+   211→   211→              style={{
+   212→   212→                left: `${Math.random() * 100}%`,
+   213→   213→                top: `${Math.random() * 100}%`,
+   214→   214→                animationDelay: `${Math.random() * 5}s`,
+   215→   215→                animationDuration: `${3 + Math.random() * 4}s`
+   216→   216→              }}
+   217→   217→            />
+   218→   218→          ))}
+   219→   219→        </div>
+   220→   220→
+   221→   221→        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+   222→   222→          <div className="grid lg:grid-cols-2 gap-16 items-center">
+   223→   223→            {/* Left Content */}
+   224→   224→            <div className="space-y-8">
+   225→   225→              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 backdrop-blur-sm">
+   226→   226→                <Sparkles className="h-4 w-4 text-primary animate-pulse" />
+   227→   227→                <span className="text-sm font-medium text-primary">Next-Gen AI Infrastructure</span>
+   228→   228→                <Badge variant="secondary" className="text-xs">v4.0</Badge>
+   229→   229→              </div>
+   230→   230→
+   231→   231→              <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
+   232→   232→                Enterprise Platform
+   233→   233→                <span className="block mt-2 bg-gradient-to-r from-primary via-cyan-500 to-violet-500 bg-clip-text text-transparent">
+   234→   234→                  Reimagined
+   235→   235→                </span>
+   236→   236→              </h1>
+   237→   237→
+   238→   238→              <p className="text-xl text-muted-foreground leading-relaxed max-w-lg">
+   239→   239→                The most advanced AI-powered supply chain infrastructure ever built. 
+   240→   240→                Process <span className="text-primary font-semibold">50TB+ of data daily</span> across 
+   241→   241→                <span className="text-cyan-500 font-semibold"> 190+ countries</span> with 
+   242→   242→                <span className="text-violet-500 font-semibold"> quantum-ready security</span>.
+   243→   243→              </p>
+   244→   244→
+   245→   245→              {/* Live Stats Row */}
+   246→   246→              <div className="grid grid-cols-3 gap-6 p-6 glass rounded-2xl border border-white/10">
+   247→   247→                {[
+   248→   248→                  { value: `${apiResponse}%`, label: 'API Uptime', icon: Activity },
+   249→   249→                  { value: `<${requests}ms`, label: 'Response Time', icon: Zap },
+   250→   250→                  { value: `${accuracy}%`, label: 'Accuracy', icon: Target },
+   251→   251→                ].map((stat, i) => (
+   252→   252→                  <div key={i} className="text-center">
+   253→   253→                    <stat.icon className="h-5 w-5 mx-auto mb-2 text-primary" />
+   254→   254→                    <div className="text-2xl font-bold">{stat.value}</div>
+   255→   255→                    <div className="text-xs text-muted-foreground">{stat.label}</div>
+   256→   256→                  </div>
+   257→   257→                ))}
+   258→   258→              </div>
+   259→   259→
+   260→   260→              {/* CTA Buttons */}
+   261→   261→              <div className="flex flex-wrap items-center gap-4">
+   262→   262→                <Button size="lg" className="gap-2 px-8 h-14 text-lg bg-gradient-to-r from-primary via-emerald-500 to-cyan-500 hover:shadow-2xl hover:shadow-primary/25 hover:scale-105 transition-all duration-300">
+   263→   263→                  <Rocket className="h-5 w-5" />
+   264→   264→                  Launch Platform
+   265→   265→                  <ArrowRight className="h-5 w-5" />
+   266→   266→                </Button>
+   267→   267→                
+   268→   268→                <Button variant="outline" size="lg" className="gap-2 px-8 h-14 text-lg border-2 hover:bg-muted hover:scale-105 transition-all duration-300">
+   269→   269→                  <Play className="h-5 w-5" />
+   270→   270→                  Watch Demo
+   271→   271→                </Button>
+   272→   272→
+   273→   273→                <Button variant="ghost" size="lg" className="gap-2 hover:text-primary">
+   274→   274→                  View Documentation
+   275→   275→                  <ExternalLink className="h-4 w-4" />
+   276→   276→                </Button>
+   277→   277→              </div>
+   278→   278→
+   279→   279→              {/* Trust badges */}
+   280→   280→              <div className="flex items-center gap-6 pt-4">
+   281→   281→                <div className="flex items-center gap-2">
+   282→   282→                  {[...Array(5)].map((_, i) => (
+   283→   283→                    <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+   284→   284→                  ))}
+   285→   285→                  <span className="text-sm text-muted-foreground">4.9/5 Gartner Rating</span>
+   286→   286→                </div>
+   287→   287→                <div className="h-4 w-px bg-border" />
+   288→   288→                <span className="text-sm text-muted-foreground">SOC 2 Type II Certified</span>
+   289→   289→              </div>
+   290→   290→            </div>
+   291→   291→
+   292→   292→            {/* Right Side - Interactive Architecture Visualization */}
+   293→   293→            <div className="relative">
+   294→   294→              <FloatingCard className="p-8" delay={0}>
+   295→   295→                <div className="space-y-4">
+   296→   296→                  {/* Architecture Layers */}
+   297→   297→                  {architectureLayers.map((layer, idx) => (
+   298→   298→                    <div
+   299→   299→                      key={idx}
+   300→   300→                      onClick={() => setActiveLayer(idx)}
+   301→   301→                      className={`relative p-4 rounded-xl cursor-pointer transition-all duration-300 ${
+   302→   302→                        activeLayer === idx 
+   303→   303→                          ? `bg-gradient-to-r ${layer.color} text-white scale-[1.02] shadow-lg` 
+   304→   304→                          : 'bg-card/50 hover:bg-card border border-transparent hover:border-border'
+   305→   305→                      }`}
+   306→   306→                    >
+   307→   307→                      <div className="flex items-center justify-between">
+   308→   308→                        <div className="flex items-center gap-3">
+   309→   309→                          <layer.icon className={`h-6 w-6 ${activeLayer === idx ? 'text-white' : 'text-primary'}`} />
+   310→   310→                          <div>
+   311→   311→                            <div className={`font-semibold ${activeLayer === idx ? 'text-white' : ''}`}>
+   312→   312→                              {layer.name}
+   313→   313→                            </div>
+   314→   314→                            <div className={`text-sm ${activeLayer === idx ? 'text-white/80' : 'text-muted-foreground'}`}>
+   315→   315→                              {layer.description}
+   316→   316→                            </div>
+   317→   317→                          </div>
+   318→   318→                        </div>
+   319→   319→                        <ChevronRight className={`h-5 w-5 transition-transform ${activeLayer === idx ? 'rotate-90 text-white' : 'text-muted-foreground'}`} />
+   320→   320→                      </div>
+   321→   321→                      
+   322→   322→                      {activeLayer === idx && (
+   323→   323→                        <div className="mt-4 pt-4 border-t border-white/20 animate-fade-in">
+   324→   324→                          <div className="flex flex-wrap gap-2 mb-3">
+   325→   325→                            {layer.tech.map((tech, i) => (
+   326→   326→                              <Badge key={i} variant="secondary" className="bg-white/20 text-white border-0 text-xs">
+   327→   327→                                {tech}
+   328→   328→                              </Badge>
+   329→   329→                            ))}
+   330→   330→                          </div>
+   331→   331→                          <div className="text-sm font-medium text-white/90">
+   332→   332→                            ⚡ {layer.stats}
+   333→   333→                          </div>
+   334→   334→                        </div>
+   335→   335→                      )}
+   336→   336→                    </div>
+   337→   337→                  ))}
+   338→   338→
+   339→   339→                  {/* Live indicator */}
+   340→   340→                  <div className="flex items-center justify-between pt-4 border-t border-border/50">
+   341→   341→                    <div className="flex items-center gap-2">
+   342→   342→                      <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+   343→   343→                      <span className="text-sm text-muted-foreground">System Status: Operational</span>
+   344→   344→                    </div>
+   345→   345→                    <Button 
+   346→   346→                      variant="ghost" 
+   347→   347→                      size="sm"
+   348→   348→                      onClick={() => setIsPlaying(!isPlaying)}
+   349→   349→                      className="gap-2"
+   350→   350→                    >
+   351→   351→                      <Play className={`h-4 w-4 ${isPlaying ? 'text-primary' : ''}`} />
+   352→   352→                      Live Demo
+   353→   353→                    </Button>
+   354→   354→                  </div>
+   355→   355→                </div>
+   356→   356→              </FloatingCard>
+   357→   357→
+   358→   358→              {/* Floating elements around the main card */}
+   359→   359→              <div className="absolute -top-8 -right-8 glass p-4 rounded-xl animate-float shadow-lg" style={{ animationDelay: '1s' }}>
+   360→   360→                <Terminal className="h-8 w-8 text-primary" />
+   361→   361→                <div className="text-xs font-medium mt-2">CLI Access</div>
+   362→   362→              </div>
+   363→   363→
+   364→   364→              <div className="absolute -bottom-4 -left-8 glass p-4 rounded-xl animate-float shadow-lg" style={{ animationDelay: '2s' }}>
+   365→   365→                <Code2 className="h-8 w-8 text-cyan-500" />
+   366→   366→                <div className="text-xs font-medium mt-2">REST API</div>
+   367→   367→              </div>
+   368→   368→            </div>
+   369→   369→          </div>
+   370→   370→        </div>
+   371→   371→      </section>
+   372→   372→
+   373→   373→      {/* CAPABILITIES SECTION - Enhanced */}
+   374→   374→      <section className="py-32 relative">
+   375→   375→        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+   376→   376→          {/* Section Header */}
+   377→   377→          <div className="text-center mb-20">
+   378→   378→            <Badge variant="outline" className="mb-4 gap-2">
+   379→   379→              <Zap className="h-4 w-4" />
+   380→   380→              Core Capabilities
+   381→   381→            </Badge>
+   382→   382→            <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+   383→   383→              Built for{' '}
+   384→   384→              <span className="gradient-text">Enterprise Scale</span>
+   385→   385→            </h2>
+   386→   386→            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+   387→   387→              Three foundational pillars that power the world's most resilient supply chains
+   388→   388→            </p>
+   389→   389→          </div>
+   390→   390→
+   391→   391→          {/* Capability Cards */}
+   392→   392→          <div className="space-y-24">
+   393→   393→            {capabilities.map((capability, idx) => (
+   394→   394→              <div key={idx} className={`grid lg:grid-cols-2 gap-12 items-center ${idx % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
+   395→   395→                <div className={`${idx % 2 !== 0 ? 'lg:order-2' : ''}`}>
+   396→   396→                  <FloatingCard delay={idx * 0.5}>
+   397→   397→                    <CardContent className="p-8">
+   398→   398→                      <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${capability.gradient} flex items-center justify-center mb-6`}>
+   399→   399→                        <capability.icon className="h-10 w-10 text-white" />
+   400→   400→                      </div>
+   401→   401→                      
+   402→   402→                      <h3 className="text-3xl font-bold mb-4">{capability.title}</h3>
+   403→   403→                      <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+   404→   404→                        {capability.subtitle}
+   405→   405→                      </p>
+   406→   406→
+   407→   407→                      {/* Features Grid */}
+   408→   408→                      <div className="grid grid-cols-2 gap-3 mb-6">
+   409→   409→                        {capability.features.map((feature, i) => (
+   410→   410→                          <div key={i} className="flex items-center gap-2 p-3 rounded-lg bg-card/50">
+   411→   411→                            <CheckCircle2 className="h-4 w-4 text-primary flex-shrink-0" />
+   412→   412→                            <span className="text-sm font-medium">{feature}</span>
+   413→   413→                          </div>
+   414→   414→                        ))}
+   415→   415→                      </div>
+   416→   416→
+   417→   417→                      {/* Stat & CTA */}
+   418→   418→                      <div className="flex items-center justify-between p-4 glass rounded-xl">
+   419→   419→                        <div>
+   420→   420→                          <div className="text-2xl font-bold gradient-text">{capability.stat.value}</div>
+   421→   421→                          <div className="text-sm text-muted-foreground">{capability.stat.label}</div>
+   422→   422→                        </div>
+   423→   423→                        <Button variant="outline" className="gap-2">
+   424→   424→                          {capability.cta}
+   425→   425→                          <ArrowRight className="h-4 w-4" />
+   426→   426→                        </Button>
+   427→   427→                      </div>
+   428→   428→                    </CardContent>
+   429→   429→                  </FloatingCard>
+   430→   430→                </div>
+   431→   431→
+   432→   432→                <div className={`${idx % 2 !== 0 ? 'lg:order-1' : ''} space-y-6`}>
+   433→   433→                  <div className="glass p-6 rounded-2xl">
+   434→   434→                    <h4 className="font-semibold mb-4 flex items-center gap-2">
+   435→   435→                      <Activity className="h-5 w-5 text-primary" />
+   436→   436→                      Real-Time Performance
+   437→   437→                    </h4>
+   438→   438→                    <div className="space-y-4">
+   439→   439→                      {[
+   440→   440→                        { metric: 'Inference Latency', value: 15, unit: 'ms', percentage: 95 },
+   441→   441→                        { metric: 'Throughput', value: '1.2M', unit: 'req/s', percentage: 88 },
+   442→   442→                        { metric: 'Model Accuracy', value: 94.2, unit: '%', percentage: 94.2 },
+   443→   443→                        { metric: 'Data Freshness', value: 45, unit: 'sec', percentage: 92 },
+   444→   444→                      ].map((item, i) => (
+   445→   445→                        <div key={i}>
+   446→   446→                          <div className="flex justify-between text-sm mb-2">
+   447→   447→                            <span>{item.metric}</span>
+   448→   448→                            <span className="font-mono font-bold text-primary">{item.value}{item.unit}</span>
+   449→   449→                          </div>
+   450→   450→                          <div className="h-2 bg-muted rounded-full overflow-hidden">
+   451→   451→                            <div 
+   452→   452→                              className="h-full bg-gradient-to-r from-primary to-cyan-500 rounded-full transition-all duration-1000"
+   453→   453→                              style={{ width: `${item.percentage}%` }}
+   454→   454→                            />
+   455→   455→                          </div>
+   456→   456→                        </div>
+   457→   457→                      ))}
+   458→   458→                    </div>
+   459→   459→                  </div>
+   460→   460→
+   461→   461→                  <div className="grid grid-cols-2 gap-4">
+   462→   462→                    <div className="glass p-4 rounded-xl text-center">
+   463→   463→                      <Gauge className="h-8 w-8 mx-auto mb-2 text-emerald-500" />
+   464→   464→                      <div className="text-2xl font-bold">99.99%</div>
+   465→   465→                      <div className="text-xs text-muted-foreground">Uptime SLA</div>
+   466→   466→                    </div>
+   467→   467→                    <div className="glass p-4 rounded-xl text-center">
+   468→   468→                      <TrendingUp className="h-8 w-8 mx-auto mb-2 text-violet-500" />
+   469→   469→                      <div className="text-2xl font-bold">2.3x</div>
+   470→   470→                      <div className="text-xs text-muted-foreground">ROI Increase</div>
+   471→   471→                    </div>
+   472→   472→                  </div>
+   473→   473→                </div>
+   474→   474→              </div>
+   475→   475→            ))}
+   476→   476→          </div>
+   477→   477→        </div>
+   478→   478→      </section>
+   479→   479→
+   480→   480→      {/* INTEGRATIONS SECTION - Premium Design */}
+   481→   481→      <section className="py-32 relative bg-muted/20">
+   482→   482→        <div className="absolute inset-0 grid-bg opacity-20" />
+   483→   483→        
+   484→   484→        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+   485→   485→          <div className="text-center mb-16">
+   486→   486→            <Badge variant="outline" className="mb-4 gap-2">
+   487→   487→              <Plug className="h-4 w-4" />
+   488→   488→              Ecosystem
+   489→   489→            </Badge>
+   490→   490→            <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+   491→   491→              Seamless{' '}
+   492→   492→              <span className="gradient-text">Integrations</span>
+   493→   493→            </h2>
+   494→   494→            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+   495→   495→              Connect with your existing stack in minutes, not months
+   496→   496→            </p>
+   497→   497→          </div>
+   498→   498→
+   499→   499→          {/* Integration Categories */}
+   500→   500→          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-12">
+   501→   501→            {integrations.map((integration, idx) => (
+   502→   502→              <FloatingCard key={idx} delay={idx * 0.1}>
+   503→   503→                <CardContent className="p-6 text-center">
+   504→   504→                  <div className="text-4xl mb-3">{integration.logo}</div>
+   505→   505→                  <div className="font-semibold text-sm mb-1">{integration.name}</div>
+   506→   506→                  <div className="text-xs text-muted-foreground mb-2">{integration.category}</div>
+   507→   507→                  <Badge variant="secondary" className="text-xs bg-primary/10 text-primary border-0">
+   508→   508→                    {integration.status}
+   509→   509→                  </Badge>
+   510→   510→                </CardContent>
+   511→   511→              </FloatingCard>
+   512→   512→            ))}
+   513→   513→          </div>
+   514→   514→
+   515→   515→          {/* CTA */}
+   516→   516→          <div className="text-center">
+   517→   517→            <div className="inline-flex flex-col sm:flex-row items-center gap-4 p-8 glass rounded-2xl">
+   518→   518→              <div className="text-left">
+   519→   519→                <div className="font-semibold text-lg mb-1">Need a custom integration?</div>
+   520→   520→                <div className="text-muted-foreground text-sm">Our API supports 200+ endpoints</div>
+   521→   521→              </div>
+   522→   522→              <Button size="lg" className="gap-2 bg-gradient-to-r from-primary to-cyan-500">
+   523→   523→                <Puzzle className="h-5 w-5" />
+   524→   524→                Explore API Docs
+   525→   525→                <ArrowUpRight className="h-4 w-4" />
+   526→   526→              </Button>
+   527→   527→            </div>
+   528→   528→          </div>
+   529→   529→        </div>
+   530→   530→      </section>
+   531→   531→
+   532→   532→      {/* SECURITY & COMPLIANCE - Trust Section */}
+   533→   533→      <section className="py-32 relative">
+   534→   534→        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+   535→   535→          <div className="grid lg:grid-cols-2 gap-16 items-start">
+   536→   536→            {/* Left - Security Features */}
+   537→   537→            <div>
+   538→   538→              <Badge variant="outline" className="mb-4 gap-2">
+   539→   539→                <Shield className="h-4 w-4" />
+   540→   540→                Enterprise Security
+   541→   541→              </Badge>
+   542→   542→              
+   543→   543→              <h2 className="text-4xl font-bold mb-6">
+   544→   544→                Bank-Grade Security
+   545→   545→                <span className="block text-2xl font-normal text-muted-foreground mt-2">
+   546→   546→                  You can bet your business on it
+   547→   547→                </span>
+   548→   548→              </h2>
+   549→   549→
+   550→   550→              <div className="space-y-6">
+   551→   551→                {[
+   552→   552→                  {
+   553→   553→                    title: 'Zero Trust Architecture',
+   554→   554→                    desc: 'Every request authenticated and authorized, regardless of origin',
+   555→   555→                    icon: Lock,
+   556→   556→                    features: ['mTLS everywhere', 'JWT tokens', 'RBAC + ABAC']
+   557→   557→                  },
+   558→   558→                  {
+   559→   559→                    title: 'Data Sovereignty',
+   560→   560→                    desc: 'Your data stays where you want it, encrypted at rest and in transit',
+   561→   561→                    icon: Globe,
+   562→   562→                    features: ['GDPR compliant', 'Data residency', 'Encryption keys']
+   563→   563→                  },
+   564→   564→                  {
+   565→   565→                    title: 'Continuous Compliance',
+   566→   566→                    desc: 'Automated audits and real-time compliance monitoring',
+   567→   567→                    icon: CheckCircle2,
+   568→   568→                    features: ['SOC 2 Type II', 'ISO 27001', 'PCI DSS']
+   569→   569→                  }
+   570→   570→                ].map((item, idx) => (
+   571→   571→                  <FloatingCard key={idx} delay={idx * 0.2}>
+   572→   572→                    <CardContent className="p-6">
+   573→   573→                      <div className="flex items-start gap-4">
+   574→   574→                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-cyan-500/20 flex items-center justify-center flex-shrink-0">
+   575→   575→                          <item.icon className="h-6 w-6 text-primary" />
+   576→   576→                        </div>
+   577→   577→                        <div className="flex-1">
+   578→   578→                          <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
+   579→   579→                          <p className="text-muted-foreground text-sm mb-3">{item.desc}</p>
+   580→   580→                          <div className="flex flex-wrap gap-2">
+   581→   581→                            {item.features.map((feature, i) => (
+   582→   582→                              <Badge key={i} variant="secondary" className="text-xs">
+   583→   583→                                {feature}
+   584→   584→                              </Badge>
+   585→   585→                            ))}
+   586→   586→                          </div>
+   587→   587→                        </div>
+   588→   588→                      </div>
+   589→   589→                    </CardContent>
+   590→   590→                  </FloatingCard>
+   591→   591→                ))}
+   592→   592→              </div>
+   593→   593→            </div>
+   594→   594→
+   595→   595→            {/* Right - Certifications & Metrics */}
+   596→   596→            <div className="space-y-8">
+   597→   597→              {/* Certifications Grid */}
+   598→   598→              <FloatingCard>
+   599→   599→                <CardContent className="p-8">
+   600→   600→                  <h3 className="font-semibold text-xl mb-6 text-center">Certifications & Standards</h3>
+   601→   601→                  <div className="grid grid-cols-2 gap-4">
+   602→   602→                    {[
+   603→   603→                      { name: 'SOC 2 Type II', status: '✅ Certified' },
+   604→   604→                      { name: 'ISO 27001', status: '✅ Certified' },
+   605→   605→                      { name: 'GDPR', status: '✅ Compliant' },
+   606→   606→                      { name: 'HIPAA', status: '✅ Ready' },
+   607→   607→                      { name: 'PCI DSS', status: '✅ Level 1' },
+   608→   608→                      { name: 'CSA STAR', status: '✅ Level 2' },
+   609→   609→                      { name: 'FedRAMP', status: '⏳ In Process' },
+   610→   610→                      { name: 'SOX', status: '✅ Compliant' },
+   611→   611→                    ].map((cert, idx) => (
+   612→   612→                      <div key={idx} className="p-3 rounded-lg bg-card/50 text-center">
+   613→   613→                        <div className="font-medium text-sm">{cert.name}</div>
+   614→   614→                        <div className="text-xs text-primary mt-1">{cert.status}</div>
+   615→   615→                      </div>
+   616→   616→                    ))}
+   617→   617→                  </div>
+   618→   618→                </CardContent>
+   619→   619→              </FloatingCard>
+   620→   620→
+   621→   621→              {/* Performance SLAs */}
+   622→   622→              <FloatingCard delay={0.5}>
+   623→   623→                <CardContent className="p-8">
+   624→   624→                  <h3 className="font-semibold text-xl mb-6 flex items-center gap-2">
+   625→   625→                    <Gauge className="h-6 w-6 text-primary" />
+   626→   626→                    Service Level Agreements
+   627→   627→                  </h3>
+   628→   628→                  
+   629→   629→                  <div className="space-y-6">
+   630→   630→                    {[
+   631→   631→                      { metric: 'Platform Uptime', target: '99.99%', actual: '99.997%', met: true },
+   632→   632→                      { metric: 'API Response (P95)', target: '< 200ms', actual: '87ms', met: true },
+   633→   633→                      { metric: 'Data Loss Prevention', target: '0 incidents', actual: '0', met: true },
+   634→   634→                      { metric: 'Security Incidents', target: '0 critical', actual: '0', met: true },
+   635→   635→                      { metric: 'Recovery Time Objective', target: '< 1 hour', actual: '23 min', met: true },
+   636→   636→                      { metric: 'Backup Frequency', target: 'Every 15 min', actual: 'Real-time', met: true },
+   637→   637→                    ].map((sla, idx) => (
+   638→   638→                      <div key={idx} className="space-y-2">
+   639→   639→                        <div className="flex justify-between text-sm">
+   640→   640→                          <span>{sla.metric}</span>
+   641→   641→                          <span className="font-mono font-medium text-primary">{sla.actual}</span>
+   642→   642→                        </div>
+   643→   643→                        <div className="flex items-center gap-2">
+   644→   644→                          <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
+   645→   645→                            <div className="h-full bg-gradient-to-r from-emerald-500 to-green-500 rounded-full w-full" />
+   646→   646→                          </div>
+   647→   647→                          <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+   648→   648→                        </div>
+   649→   649→                      </div>
+   650→   650→                    ))}
+   651→   651→                  </div>
+   652→   652→                </CardContent>
+   653→   653→              </FloatingCard>
+   654→   654→            </div>
+   655→   655→          </div>
+   656→   656→        </div>
+   657→   657→      </section>
+   658→   658→
+   659→   659→      {/* FINAL CTA - Epic Finish */}
+   660→   660→      <section className="py-32 relative overflow-hidden">
+   661→   661→        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-primary/5" />
+   662→   662→        <div className="absolute inset-0 grid-bg opacity-10" />
+   663→   663→        
+   664→   664→        {/* Background orbs */}
+   665→   665→        <AnimatedOrb className="w-[800px] h-[800px] bg-primary/10 -bottom-40 -left-40" delay={0} />
+   666→   666→        <AnimatedOrb className="w-[600px] h-[600px] bg-cyan-500/10 -top-20 -right-20" delay={2} />
+   667→   667→
+   668→   668→        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+   669→   669→          <FloatingCard>
+   670→   670→            <CardContent className="p-16">
+   671→   671→              <div className="w-24 h-24 mx-auto mb-8 rounded-3xl bg-gradient-to-br from-primary via-emerald-500 to-cyan-500 flex items-center justify-center animate-pulse">
+   672→   672→                <Rocket className="h-12 w-12 text-white" />
+   673→   673→              </div>
+   674→   674→
+   675→   675→              <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+   676→   676→                Ready to Transform Your
+   677→   677→                <span className="gradient-text block">Supply Chain Intelligence?</span>
+   678→   678→              </h2>
+   679→   679→
+   680→   680→              <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
+   681→   681→                Join 500+ Fortune 500 companies already using our platform to predict risks, 
+   682→   682→                optimize operations, and build resilient supply chains.
+   683→   683→              </p>
+   684→   684→
+   685→   685→              {/* Final CTA Buttons */}
+   686→   686→              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+   687→   687→                <Button size="lg" className="gap-2 px-12 h-16 text-lg bg-gradient-to-r from-primary via-emerald-500 to-cyan-500 hover:shadow-2xl hover:shadow-primary/30 hover:scale-105 transition-all duration-300">
+   688→   688→                  Start Free Trial
+   689→   689→                  <ArrowRight className="h-5 w-5" />
+   690→   690→                </Button>
+   691→   691→                <Button variant="outline" size="lg" className="gap-2 px-12 h-16 text-lg border-2 hover:scale-105 transition-all duration-300">
+   692→   692→                  Schedule Demo
+   693→   693→                </Button>
+   694→   694→              </div>
+   695→   695→
+   696→   696→              {/* Social Proof */}
+   697→   697→              <div className="flex items-center justify-center gap-8 text-sm text-muted-foreground">
+   698→   698→                <div className="flex items-center gap-2">
+   699→   699→                  <CheckCircle2 className="h-4 w-4 text-primary" />
+   700→   700→                  No credit card required
+   701→   701→                </div>
+   702→   702→                <div className="flex items-center gap-2">
+   703→   703→                  <CheckCircle2 className="h-4 w-4 text-primary" />
+   704→   704→                  14-day free trial
+   705→   705→                </div>
+   706→   706→                <div className="flex items-center gap-2">
+   707→   707→                  <CheckCircle2 className="h-4 w-4 text-primary" />
+   708→   708→                  Cancel anytime
+   709→   709→                </div>
+   710→   710→              </div>
+   711→   711→            </CardContent>
+   712→   712→          </FloatingCard>
+   713→   713→        </div>
+   714→   714→      </section>
+   715→   715→    </div>
+   716→   716→  )
+   717→   717→}
+   718→   718→
+   719→   719→// Missing import for Target icon
+   720→   720→function Target({ className }: { className?: string }) {
+   721→   721→  return (
+   722→   722→    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+   723→   723→      <circle cx="12" cy="12" r="10" strokeWidth="2"/>
+   724→   724→      <circle cx="12" cy="12" r="6" strokeWidth="2"/>
+   725→   725→      <circle cx="12" cy="12" r="2" strokeWidth="2"/>
+   726→   726→    </svg>
+   727→   727→  )
+   728→   728→}
+   729→   729→

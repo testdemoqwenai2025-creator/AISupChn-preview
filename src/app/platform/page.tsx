@@ -7,7 +7,7 @@ import {
   ArrowRight, CheckCircle2, Layers, Box, Play,
   Rocket, Sparkles, Terminal, Code2, Server,
   Workflow, Puzzle, Gauge, Activity, TrendingUp,
-  ChevronRight, Star, ArrowUpRight, ExternalLink
+  ChevronRight, Star, ArrowUpRight, ExternalLink, Target
 } from 'lucide-react'
 import { Navbar } from '@/components/navbar'
 import { PageDecorations } from '@/components/page-decorations'
@@ -716,13 +716,3 @@ export default function PlatformPage() {
   )
 }
 
-// Missing import for Target icon
-function Target({ className }: { className?: string }) {
-  return (
-    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="10" strokeWidth="2"/>
-      <circle cx="12" cy="12" r="6" strokeWidth="2"/>
-      <circle cx="12" cy="12" r="2" strokeWidth="2"/>
-    </svg>
-  )
-}
