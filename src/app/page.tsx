@@ -1,8 +1,8 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import Link from 'next/link'
-import { Shield, Activity, Brain, AlertTriangle, ArrowRight, Zap, Globe, TrendingUp, Target, Star, Sparkles, Rocket, Users, Building2, CheckCircle2, ArrowDown, Clock, Radio, BarChart3, Lock, HeadphonesIcon, Sun, Moon } from 'lucide-react'
+import { Shield, Activity, Brain, AlertTriangle, ArrowRight, Zap, Globe, TrendingUp, Target, Star, Sparkles, Rocket, Users, Building2, CheckCircle2, ArrowDown, Clock, Radio, BarChart3, Lock, HeadphonesIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
@@ -11,35 +11,6 @@ import { EnhancedNewsIntelligenceFeed } from '@/components/enhanced-news-feed'
 import { FreemiumSubscription } from '@/components/freemium-subscription'
 
 export default function LandingPage() {
-  const [isDark, setIsDark] = useState(true)
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme')
-    if (savedTheme === 'light') {
-      setIsDark(false)
-      document.documentElement.classList.remove('dark')
-      document.documentElement.classList.add('light')
-    } else {
-      setIsDark(true)
-      document.documentElement.classList.add('dark')
-      document.documentElement.classList.remove('light')
-    }
-  }, [])
-
-  const toggleTheme = () => {
-    const newTheme = !isDark
-    setIsDark(newTheme)
-    if (newTheme) {
-      document.documentElement.classList.add('dark')
-      document.documentElement.classList.remove('light')
-      localStorage.setItem('theme', 'dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-      document.documentElement.classList.add('light')
-      localStorage.setItem('theme', 'light')
-    }
-  }
-
   return (
     <div className="min-h-screen bg-background relative">
       {/* Simple Navigation */}
@@ -54,21 +25,6 @@ export default function LandingPage() {
               <Link href="/dashboard" className="text-sm hover:text-primary">Dashboard</Link>
               <Link href="/command-center" className="text-sm hover:text-primary">Command Center</Link>
               <Link href="/subscription" className="text-sm hover:text-primary">Pricing</Link>
-              
-              {/* 🌓 Dark/Light Theme Toggle Button */}
-              <button
-                onClick={toggleTheme}
-                className="p-2 rounded-lg bg-muted/50 hover:bg-muted border border-border transition-all hover:scale-105 group"
-                aria-label="Toggle dark/light theme"
-                title="Toggle Dark/Light Mode"
-              >
-                {isDark ? (
-                  <Sun className="h-5 w-5 text-amber-400 group-hover:rotate-45 transition-transform duration-300" />
-                ) : (
-                  <Moon className="h-5 w-5 text-violet-500 group-hover:-rotate-12 transition-transform duration-300" />
-                )}
-              </button>
-
               <Button size="sm" variant="outline" className="gap-2">Login</Button>
             </div>
           </div>
